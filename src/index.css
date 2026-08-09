@@ -2,13 +2,13 @@
 @import url('https://fonts.maateen.me/solaiman-lipi/font.css');
 
 html {
-  font-size: 112.5%; /* Base font scale: 18px for clear, comfortable Bengali reading */
+  font-size: 100%; /* Standard base font scale (~16px) for perfectly proportioned SolaimanLipi typography */
 }
 
 body {
   font-family: 'SolaimanLipi', 'Hind Siliguri', 'Anek Bangla', 'Noto Sans Bengali', 'Plus Jakarta Sans', sans-serif;
-  line-height: 1.7;
-  letter-spacing: 0.015em;
+  line-height: 1.65;
+  letter-spacing: 0.01em;
 }
 
 @layer utilities {
@@ -19,44 +19,44 @@ body {
     font-family: 'SolaimanLipi', 'Hind Siliguri', 'Anek Bangla', 'Plus Jakarta Sans', sans-serif;
   }
 
-  /* Enhanced Bengali text size readability globally */
+  /* Well-balanced Bengali SolaimanLipi typography scale */
   .text-xs {
-    font-size: 0.9rem !important; /* ~14px */
-    line-height: 1.5 !important;
+    font-size: 0.825rem !important; /* ~13.2px */
+    line-height: 1.45 !important;
   }
 
   .text-sm {
-    font-size: 1.05rem !important; /* ~18.9px */
-    line-height: 1.6 !important;
+    font-size: 0.925rem !important; /* ~14.8px */
+    line-height: 1.55 !important;
   }
 
   .text-base {
-    font-size: 1.18rem !important; /* ~21.2px */
-    line-height: 1.65 !important;
+    font-size: 1.05rem !important; /* ~16.8px */
+    line-height: 1.6 !important;
   }
 
   .text-lg {
-    font-size: 1.3rem !important; /* ~23.4px */
-    line-height: 1.65 !important;
+    font-size: 1.18rem !important; /* ~18.8px */
+    line-height: 1.6 !important;
   }
 
   .text-xl {
-    font-size: 1.45rem !important; /* ~26.1px */
+    font-size: 1.32rem !important; /* ~21.1px */
     line-height: 1.5 !important;
   }
 
   .text-2xl {
-    font-size: 1.75rem !important; /* ~31.5px */
+    font-size: 1.55rem !important; /* ~24.8px */
     line-height: 1.4 !important;
   }
 
   .text-3xl {
-    font-size: 2.15rem !important; /* ~38.7px */
+    font-size: 1.85rem !important; /* ~29.6px */
     line-height: 1.3 !important;
   }
 
   .text-4xl {
-    font-size: 2.65rem !important; /* ~47.7px */
+    font-size: 2.25rem !important; /* ~36px */
     line-height: 1.25 !important;
   }
 }
