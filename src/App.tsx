@@ -423,7 +423,7 @@ export default function App() {
                         const target = e.target as HTMLImageElement;
                         if (!target.dataset.tried) {
                           target.dataset.tried = '1';
-                          target.src = 'https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fphoto%2F%3Ffbid%3D122135743335016051%26set%3Da.122096307393016051&show_text=true&width=500" width="500" height="590" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share';
+                          target.src = 'https://drive.google.com/file/d/1WCQFnMT2k7sDUxUNaHwoWJTuyCe_u7Xf/preview" width="640" height="480';
                         }
                       }}
                     />
