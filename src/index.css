@@ -21,7 +21,7 @@ body {
 
   /* Enhanced Bengali text size readability globally */
   .text-xs {
-    font-size: 0.9rem !important; /* ~16px */
+    font-size: 0.9rem !important; /* ~14px */
     line-height: 1.5 !important;
   }
 
