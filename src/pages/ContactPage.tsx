@@ -94,6 +94,11 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                   <a href={`tel:${agencyInfo.hotline}`} className="text-base font-extrabold text-[#0D472B] hover:underline">
                     {agencyInfo.hotline}
                   </a>
+                  <p className="text-xs text-slate-600 mt-0.5">
+                    <strong className="text-[#0D472B]">{lang === 'bn' ? 'বিকল্প যোগাযোগ: ' : 'Alt Phone: '}</strong>
+                    <a href="tel:01785970008" className="hover:underline font-semibold">01785970008</a>,{' '}
+                    <a href="tel:01920825145" className="hover:underline font-semibold">01920825145</a>
+                  </p>
                 </div>
               </div>
 

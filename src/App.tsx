@@ -416,14 +416,14 @@ export default function App() {
                   
                   <div className="relative w-32 h-32 mx-auto rounded-full overflow-hidden border-2 border-emerald-400/90 shadow-2xl bg-emerald-950 flex items-center justify-center">
                     <img
-                      src="/developer.jpg"
+                      src="https://lh3.googleusercontent.com/d/1WCQFnMT2k7sDUxUNaHwoWJTuyCe_u7Xf"
                       alt="Miraj Ahmed"
                       className="w-full h-full object-cover object-top"
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;
                         if (!target.dataset.tried) {
                           target.dataset.tried = '1';
-                          target.src = 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80';
+                          target.src = 'https://drive.google.com/uc?export=view&id=1WCQFnMT2k7sDUxUNaHwoWJTuyCe_u7Xf';
                         }
                       }}
                     />

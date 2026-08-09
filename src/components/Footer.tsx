@@ -174,8 +174,10 @@ export const Footer: React.FC<FooterProps> = ({
               </div>
 
               <div className="pt-3 border-t border-emerald-800/80 text-xs text-emerald-200/90 flex flex-col gap-1 font-sans">
-                <p>
-                  <strong className="text-emerald-300">{lang === 'bn' ? 'বিকল্প যোগাযোগ:' : 'Alt Phone:'}</strong> 01711-209217, 01778-918424
+                <p className="text-xs sm:text-sm">
+                  <strong className="text-emerald-300">{lang === 'bn' ? 'বিকল্প যোগাযোগ:' : 'Alt Phone:'}</strong>{' '}
+                  <a href="tel:01785970008" className="hover:text-[#D4AF37] transition-colors underline">01785970008</a>,{' '}
+                  <a href="tel:01920825145" className="hover:text-[#D4AF37] transition-colors underline">01920825145</a>
                 </p>
                 <p className="text-[11px] text-emerald-400/80 mt-1">
                   {lang === 'bn' ? agencyInfo.addressBn : agencyInfo.addressEn}
@@ -186,17 +188,9 @@ export const Footer: React.FC<FooterProps> = ({
 
         </div>
 
-        {/* Bottom Bar matching reference image */}
-        <div className="pt-6 border-t border-emerald-800/60 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-emerald-300/80 text-center sm:text-left">
+        {/* Bottom Bar */}
+        <div className="pt-6 border-t border-emerald-800/60 flex flex-col sm:flex-row justify-center items-center gap-3 text-xs text-emerald-300/80 text-center">
           <p>{getTranslation(lang, 'copyrightText')}</p>
-
-          <button
-            onClick={() => setShowDevModal(true)}
-            className="hover:text-[#D4AF37] transition-colors group flex items-center gap-1.5"
-          >
-            <span>Developed & Maintained by</span>
-            <strong className="text-white group-hover:text-[#D4AF37] underline underline-offset-2">Miraj Ahmed</strong>
-          </button>
         </div>
       </div>
 
