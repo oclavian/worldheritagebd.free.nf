@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+@layer utilities {
+  .font-bengali {
+    font-family: 'SolaimanLipi', 'Hind Siliguri', 'Plus Jakarta Sans', sans-serif;
+  }
+  .font-sans {
+    font-family: 'Plus Jakarta Sans', 'SolaimanLipi', 'Hind Siliguri', sans-serif;
+  }
+}
+
+/* Book Page Turning 3D Perspective Context */
+.perspective-container {
+  perspective: 1800px;
+  perspective-origin: 50% 50%;
+}
+
+.page-flip-wrapper {
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+/* Subtle Islamic Star Pattern Overlay */
+.islamic-pattern {
+  background-color: #FAF8F5;
+  background-image: radial-gradient(#0A5C36 0.75px, transparent 0.75px), radial-gradient(#D4AF37 0.75px, #FAF8F5 0.75px);
+  background-size: 30px 30px;
+  background-position: 0 0, 15px 15px;
+  opacity: 0.95;
+}
+
+.islamic-pattern-dark {
+  background-color: #0A5C36;
+  background-image: radial-gradient(rgba(212, 175, 55, 0.25) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Gold Gradient Text & Accents */
+.gold-gradient-text {
+  background: linear-gradient(135deg, #D4AF37 0%, #F3E0A0 50%, #B38712 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gold-border {
+  border-color: #D4AF37;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #FAF8F5;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #0A5C36;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #053B21;
+}
