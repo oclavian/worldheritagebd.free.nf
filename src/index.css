@@ -101,6 +101,17 @@ body {
   border-color: #D4AF37;
 }
 
+/* Custom Halftone Dot Pattern for Wave Accents */
+.halftone-dots {
+  background-image: radial-gradient(rgba(212, 175, 55, 0.4) 1.5px, transparent 1.5px);
+  background-size: 10px 10px;
+}
+
+.halftone-dots-light {
+  background-image: radial-gradient(rgba(10, 92, 54, 0.2) 1.5px, transparent 1.5px);
+  background-size: 10px 10px;
+}
+
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;

@@ -404,7 +404,7 @@ export default function App() {
               <div className="flex items-center justify-center mb-6">
                 <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-semibold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 shadow-inner">
                   <ShieldCheck className="w-4 h-4 text-emerald-400" />
-                  <span className="font-english tracking-widest uppercase">Hey Bro You ar The Lucky Person </span>
+                  <span className="font-english tracking-widest uppercase">SECRET CODE 64725 UNLOCKED</span>
                 </span>
               </div>
 
@@ -423,7 +423,7 @@ export default function App() {
                         const target = e.target as HTMLImageElement;
                         if (!target.dataset.tried) {
                           target.dataset.tried = '1';
-                          target.src = '<iframe src="https://drive.google.com/file/d/1WCQFnMT2k7sDUxUNaHwoWJTuyCe_u7Xf/preview" width="640" height="480"></iframe>';
+                          target.src = 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80';
                         }
                       }}
                     />
@@ -473,7 +473,7 @@ export default function App() {
 
                 <div className="mt-5 flex items-center justify-center gap-1.5 text-[11px] text-emerald-400/60 font-mono tracking-wider">
                   <Sparkles className="w-3 h-3 text-amber-400" />
-                  <span>PROTECTED DEVELOPER CORE • ACCESS CODE</span>
+                  <span>PROTECTED DEVELOPER CORE • ACCESS CODE: 64725</span>
                 </div>
               </div>
             </motion.div>
