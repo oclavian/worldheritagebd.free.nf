@@ -423,7 +423,7 @@ export default function App() {
                         const target = e.target as HTMLImageElement;
                         if (!target.dataset.tried) {
                           target.dataset.tried = '1';
-                          target.src = 'https://drive.google.com/file/d/1WCQFnMT2k7sDUxUNaHwoWJTuyCe_u7Xf/preview" width="640" height="480';
+                          target.src = '<iframe src="https://drive.google.com/file/d/1WCQFnMT2k7sDUxUNaHwoWJTuyCe_u7Xf/preview" width="640" height="480"></iframe>';
                         }
                       }}
                     />
