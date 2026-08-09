@@ -1,11 +1,63 @@
 @import "tailwindcss";
+@import url('https://fonts.maateen.me/solaiman-lipi/font.css');
+
+html {
+  font-size: 112.5%; /* Base font scale: 18px for clear, comfortable Bengali reading */
+}
+
+body {
+  font-family: 'SolaimanLipi', 'Hind Siliguri', 'Anek Bangla', 'Noto Sans Bengali', 'Plus Jakarta Sans', sans-serif;
+  line-height: 1.7;
+  letter-spacing: 0.015em;
+}
 
 @layer utilities {
   .font-bengali {
-    font-family: 'SolaimanLipi', 'Hind Siliguri', 'Plus Jakarta Sans', sans-serif;
+    font-family: 'SolaimanLipi', 'Hind Siliguri', 'Anek Bangla', 'Noto Sans Bengali', sans-serif;
   }
   .font-sans {
-    font-family: 'Plus Jakarta Sans', 'SolaimanLipi', 'Hind Siliguri', sans-serif;
+    font-family: 'SolaimanLipi', 'Hind Siliguri', 'Anek Bangla', 'Plus Jakarta Sans', sans-serif;
+  }
+
+  /* Enhanced Bengali text size readability globally */
+  .text-xs {
+    font-size: 0.9rem !important; /* ~16px */
+    line-height: 1.5 !important;
+  }
+
+  .text-sm {
+    font-size: 1.05rem !important; /* ~18.9px */
+    line-height: 1.6 !important;
+  }
+
+  .text-base {
+    font-size: 1.18rem !important; /* ~21.2px */
+    line-height: 1.65 !important;
+  }
+
+  .text-lg {
+    font-size: 1.3rem !important; /* ~23.4px */
+    line-height: 1.65 !important;
+  }
+
+  .text-xl {
+    font-size: 1.45rem !important; /* ~26.1px */
+    line-height: 1.5 !important;
+  }
+
+  .text-2xl {
+    font-size: 1.75rem !important; /* ~31.5px */
+    line-height: 1.4 !important;
+  }
+
+  .text-3xl {
+    font-size: 2.15rem !important; /* ~38.7px */
+    line-height: 1.3 !important;
+  }
+
+  .text-4xl {
+    font-size: 2.65rem !important; /* ~47.7px */
+    line-height: 1.25 !important;
   }
 }
 
