@@ -1,0 +1,6 @@
+{
+  "name": "World Heritage Tours & Travels",
+  "description": "Your Trusted Travel Partner for Hajj, Umrah, Air Tickets, Visa Services, and Domestic & International Tours.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
