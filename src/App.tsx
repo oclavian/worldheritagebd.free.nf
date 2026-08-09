@@ -404,7 +404,7 @@ export default function App() {
               <div className="flex items-center justify-center mb-6">
                 <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-semibold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 shadow-inner">
                   <ShieldCheck className="w-4 h-4 text-emerald-400" />
-                  <span className="font-english tracking-widest uppercase">SECRET CODE 64725 UNLOCKED</span>
+                  <span className="font-english tracking-widest uppercase">Hey Bro You ar The Lucky Person </span>
                 </span>
               </div>
 
@@ -423,7 +423,7 @@ export default function App() {
                         const target = e.target as HTMLImageElement;
                         if (!target.dataset.tried) {
                           target.dataset.tried = '1';
-                          target.src = 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80';
+                          target.src = 'https://scontent.fdac19-1.fna.fbcdn.net/v/t39.30808-6/739243171_122135743341016051_2765896838342755799_n.jpg?stp=dst-jpg_tt6&cstp=mx1536x1535&ctp=s1536x1535&_nc_cat=111&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeEZVnDr5wMXMWVQtDfLJJLVgy_TRfzy_xCDL9NF_PL_EDA7Pwcgd9N1qK8y1vstbL_OPAG4h2EstgFrbSch5USr&_nc_ohc=-X_EN8anBloQ7kNvwEpUiQZ&_nc_oc=AdpNqh2SKhUoXaTTzwLnUilzVIO4K7R_59n3K6qworjsFJvLTadxcHK0zF3KMbUJXGo&_nc_zt=23&_nc_ht=scontent.fdac19-1.fna&_nc_gid=aBx0PU-9Uzdhke5h2zvTsA&_nc_ss=7b2a8&oh=00_AQF_JwMKPFKI3AfXr4L777aNYtLYg4DRMxF0VbYHw9CxwQ&oe=6A7EA306?w=300&auto=format&fit=crop&q=80';
                         }
                       }}
                     />
@@ -473,7 +473,7 @@ export default function App() {
 
                 <div className="mt-5 flex items-center justify-center gap-1.5 text-[11px] text-emerald-400/60 font-mono tracking-wider">
                   <Sparkles className="w-3 h-3 text-amber-400" />
-                  <span>PROTECTED DEVELOPER CORE • ACCESS CODE: 64725</span>
+                  <span>PROTECTED DEVELOPER CORE • ACCESS CODE</span>
                 </div>
               </div>
             </motion.div>
