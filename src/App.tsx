@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { X, ShieldCheck, Code2, CheckCircle2, ExternalLink, Facebook, Sparkles } from 'lucide-react';
 import { Language, PageId, UmrahPackage, HajjPackage, TourPackage, Review, BlogPost, GalleryItem, BookingInquiry, AgencyInfo } from './types';
 import { 
   initialAgencyInfo, 
@@ -125,42 +123,6 @@ export default function App() {
   const [prefilledService, setPrefilledService] = useState('Umrah');
   const [prefilledPackageTitle, setPrefilledPackageTitle] = useState('');
   const [activeLightboxItem, setActiveLightboxItem] = useState<GalleryItem | null>(null);
-
-  // Secret Developer Modal (64725 key sequence trigger)
-  const [devModalOpen, setDevModalOpen] = useState(false);
-
-  useEffect(() => {
-    let keyBuffer: string[] = [];
-    const SECRET_CODE = '64725';
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      const activeEl = document.activeElement;
-      if (
-        activeEl &&
-        (activeEl.tagName === 'INPUT' ||
-          activeEl.tagName === 'TEXTAREA' ||
-          activeEl.getAttribute('contenteditable') === 'true')
-      ) {
-        return;
-      }
-
-      if (e.key >= '0' && e.key <= '9') {
-        keyBuffer.push(e.key);
-        if (keyBuffer.length > 5) {
-          keyBuffer.shift();
-        }
-        if (keyBuffer.join('') === SECRET_CODE) {
-          setDevModalOpen(true);
-          keyBuffer = [];
-        }
-      } else if (e.key === 'Escape') {
-        setDevModalOpen(false);
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
 
   // Sync states to localStorage
   useEffect(() => {
@@ -374,111 +336,6 @@ export default function App() {
         onNavigate={handleNavigate}
         agencyInfo={agencyInfo}
       />
-
-      {/* Secret Developer Modal (Triggered by keyboard code 64725) */}
-      <AnimatePresence>
-        {devModalOpen && (
-          <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.88, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.88, y: 20 }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="relative w-full max-w-md overflow-hidden bg-gradient-to-b from-[#0B1E17] via-[#122A21] to-[#07140F] border border-emerald-500/40 rounded-3xl shadow-[0_0_80px_rgba(16,185,129,0.35)] text-white p-6 sm:p-8"
-            >
-              {/* Glowing Background Orbs */}
-              <div className="absolute -top-20 -left-20 w-44 h-44 bg-emerald-500/20 rounded-full blur-3xl pointer-events-none" />
-              <div className="absolute -bottom-20 -right-20 w-44 h-44 bg-teal-400/20 rounded-full blur-3xl pointer-events-none" />
-
-              {/* Close Button */}
-              <button
-                onClick={() => setDevModalOpen(false)}
-                className="absolute top-4 right-4 p-2 text-emerald-300/70 hover:text-white bg-emerald-950/60 hover:bg-emerald-900/80 rounded-full transition-colors border border-emerald-500/30"
-                title="Close"
-              >
-                <X className="w-5 h-5" />
-              </button>
-
-              {/* Secret Code Header Badge */}
-              <div className="flex items-center justify-center mb-6">
-                <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-semibold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 shadow-inner">
-                  <ShieldCheck className="w-4 h-4 text-emerald-400" />
-                  <span className="font-english tracking-widest uppercase">SECRET CODE 64725 UNLOCKED</span>
-                </span>
-              </div>
-
-              {/* Developer Avatar & Info */}
-              <div className="text-center">
-                <div className="relative inline-block mb-4">
-                  {/* Animated outer ring */}
-                  <div className="absolute -inset-2 bg-gradient-to-r from-emerald-500 via-teal-300 to-emerald-600 rounded-full blur opacity-80 animate-pulse" />
-                  
-                  <div className="relative w-32 h-32 mx-auto rounded-full overflow-hidden border-2 border-emerald-400/90 shadow-2xl bg-emerald-950 flex items-center justify-center">
-                    <img
-                      src="https://lh3.googleusercontent.com/d/1WCQFnMT2k7sDUxUNaHwoWJTuyCe_u7Xf"
-                      alt="Miraj Ahmed"
-                      className="w-full h-full object-cover object-top"
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        if (!target.dataset.tried) {
-                          target.dataset.tried = '1';
-                          target.src = 'https://drive.google.com/uc?export=view&id=1WCQFnMT2k7sDUxUNaHwoWJTuyCe_u7Xf';
-                        }
-                      }}
-                    />
-                  </div>
-                  <div className="absolute bottom-1 right-1 p-1.5 bg-emerald-500 text-white rounded-full border-2 border-[#0B1E17] shadow-lg">
-                    <Code2 className="w-4 h-4" />
-                  </div>
-                </div>
-
-                <h3 className="text-2xl font-bold font-english text-white flex items-center justify-center gap-2">
-                  Miraj Ahmed
-                  <CheckCircle2 className="w-5 h-5 text-emerald-400 fill-emerald-400/20" />
-                </h3>
-                
-                <p className="text-emerald-300/90 text-sm font-semibold mt-1 font-english">
-                  Lead Web Application Developer
-                </p>
-
-                <div className="flex flex-wrap justify-center gap-2 mt-4 text-xs font-medium">
-                  <span className="px-3 py-1 rounded-lg bg-emerald-900/50 text-emerald-200 border border-emerald-500/30">
-                    Full-Stack Engineer
-                  </span>
-                  <span className="px-3 py-1 rounded-lg bg-emerald-900/50 text-emerald-200 border border-emerald-500/30">
-                    UI/UX Designer
-                  </span>
-                  <span className="px-3 py-1 rounded-lg bg-emerald-900/50 text-emerald-200 border border-emerald-500/30">
-                    React & Node.js
-                  </span>
-                </div>
-
-                <div className="mt-6 pt-5 border-t border-emerald-500/25">
-                  <p className="text-xs text-emerald-200/80 mb-4 font-bengali">
-                    ওয়েবসাইট ডেভলপমেন্ট ও কারিগরি সহায়তার জন্য যোগাযোগ করুন
-                  </p>
-
-                  <a
-                    href="https://www.facebook.com/mirajmun.fb"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2.5 w-full py-3.5 px-6 rounded-xl font-medium text-white bg-gradient-to-r from-[#1877F2] to-[#0052CC] hover:from-[#166FE5] hover:to-[#0047B3] transition-all shadow-lg shadow-blue-600/30 hover:shadow-blue-600/50 hover:scale-[1.02] active:scale-[0.98]"
-                  >
-                    <Facebook className="w-5 h-5 fill-current" />
-                    <span className="font-english font-bold text-base">Miraj Ahmed on Facebook</span>
-                    <ExternalLink className="w-4 h-4 opacity-80" />
-                  </a>
-                </div>
-
-                <div className="mt-5 flex items-center justify-center gap-1.5 text-[11px] text-emerald-400/60 font-mono tracking-wider">
-                  <Sparkles className="w-3 h-3 text-amber-400" />
-                  <span>PROTECTED DEVELOPER CORE • ACCESS CODE: 64725</span>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
 
     </div>
   );

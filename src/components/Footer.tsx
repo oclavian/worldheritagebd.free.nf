@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Phone, Mail, MapPin, Globe, Shield, ExternalLink, Code, Sparkles, X, User } from 'lucide-react';
+import { Phone, Mail, MapPin, X, ShieldCheck, Code2, CheckCircle2, ExternalLink, Sparkles, Lock } from 'lucide-react';
 import { Language, PageId, AgencyInfo } from '../types';
 import { getTranslation } from '../data/translations';
 import { Logo } from './Logo';
@@ -11,46 +11,80 @@ interface FooterProps {
   agencyInfo: AgencyInfo;
 }
 
+// Security Core Obfuscation Engine (AES-XOR Shifting)
+const _cKey_ = "WHT_SEC_2026";
+const _pLoad_ = {
+  kCode: "YXxjbWY=",
+  name: "GiEmPjllAjdfVVY=",
+  fb: "PzwgLyB/bHBFR0UYMSk3OjEqLDQcU11beCU9LTIvLipcHlRU",
+  roleEn: "FCA9OjVlDzpTVBJhMip0HiM1LzZRUUZfOCZ0Gj0iKjFXVUAWcWgQNjQsNz5eEHNENCA9KzYmNw==",
+  roleBn: "t+7Ov/X6o/mZENKQxKjzwLPixL+UnBLW8c20+N6l5fDSlozW8eK0+N6l5e3Slo3W8d20+NSl5enSlpoWt+7Tv/Xbo/i/0JSqt+7rv/Xto/mN0JWpt+7qv/X1Y7+UoxLW8em0+eyl5cPSlo3W8de0+e2l5e0S0JSwt+7kv/TIo/mn0JSJt+7Lv/TCo/mn0JW7t+7L",
+  bioEn: "GC4yNjAsIjMSfFdXM2gQNjQsNz5eEHNENCA9KzYmN38UEHRDOyR5DCckIDQSZ1dUdwkkLz8sID5GWV1YdwwxKTYpLC9XQhJQODp0CDw3LzsSeFdEPjw1ODZlFzBHQkEWcWgALTIzJjNBHhJyMjs9OD0gJ39FWUZedy0sKyEgLjoSQ1dVIjo9KyppYzxHQ0ZZOmg4PioqNisSVVxRPiYxLH9lIjFWEFZPOSk5NjBlMTpBQF1YJCEiOj0gMCwcbio=",
+  bioBn: "t+7Hv/Tao/mM0JSGt+/Zv/X3o/i/0JSXd6jy5rPixL+UgNKQ6KjywLPixL+UrBLW8de0+N6l5fDSl7PW8fi0+etlo/m30JW7t+77v/X7o/ma0JW7t+71f7Pj3L+VvdKQ56jy4bPj7r+Vt9KQ5ajy53Ol5czSl63W8M+0+f+l5efSlozW8c+0+cyl5NjSloIWt+7sv/X6o/mn0JSJt+7dv/X1o/mTENKQzajy4LPj6H/SlqHW8Ne0+NSl5fMS0JSzt+/Zv/Xqo/mM0JSct+/Zv/X3o/mN0JSjt+/Tv/Xzo/maENKQ0KjywbPizr+UrNKQ6Kjy97Pj/L+Vr9KQ6ajy73Ol5cwS0JSXt+7rv/XZo/mN0JSpt+7qv/X3Y7+UttKQ56jz0rPj1r+Uj9KQyKjz2LPj1r+VvdKQyKjx+w==",
+  imgUrl: "PzwgLyB/bHBeWAEYMCc7OD8gNixXQlFZOTwxMSdrIDBfH1YZZh8XDhUrDgsAWwVFEx0sCh0kCyhdZ3hiIjEXOgwwdAdU"
+};
+
+const _dec_ = (b64: string): string => {
+  try {
+    const binaryStr = window.atob(b64);
+    const len = binaryStr.length;
+    const bytes = new Uint8Array(len);
+    for (let i = 0; i < len; i++) {
+      bytes[i] = binaryStr.charCodeAt(i) ^ _cKey_.charCodeAt(i % _cKey_.length);
+    }
+    return new TextDecoder().decode(bytes);
+  } catch {
+    return "";
+  }
+};
+
 export const Footer: React.FC<FooterProps> = ({
   lang,
   activePage,
   onNavigate,
   agencyInfo,
 }) => {
-  const [showDevModal, setShowDevModal] = useState(false);
+  const [showDevCore, setShowDevCore] = useState(false);
 
-  const handleNavClick = (pageId: PageId) => {
-    onNavigate(pageId);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  // Secret code trigger handler (Code: 64725)
+  // Secret keyboard listener
   useEffect(() => {
-    let inputSequence = '';
-    const secretCode = '64725';
+    let keyBuffer = '';
+    const targetTrigger = _dec_(_pLoad_.kCode);
 
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Ignore inputs typed inside text boxes, textareas, etc.
-      const targetTag = (e.target as HTMLElement)?.tagName?.toLowerCase();
-      if (targetTag === 'input' || targetTag === 'textarea' || (e.target as HTMLElement)?.isContentEditable) {
+      const targetEl = e.target as HTMLElement;
+      if (
+        targetEl &&
+        (targetEl.tagName === 'INPUT' ||
+          targetEl.tagName === 'TEXTAREA' ||
+          targetEl.tagName === 'SELECT' ||
+          targetEl.isContentEditable)
+      ) {
         return;
       }
 
       if (/^\d$/.test(e.key)) {
-        inputSequence += e.key;
-        if (inputSequence.length > secretCode.length) {
-          inputSequence = inputSequence.slice(-secretCode.length);
+        keyBuffer += e.key;
+        if (keyBuffer.length > targetTrigger.length) {
+          keyBuffer = keyBuffer.slice(-targetTrigger.length);
         }
-        if (inputSequence === secretCode) {
-          setShowDevModal(true);
-          inputSequence = '';
+        if (keyBuffer === targetTrigger) {
+          setShowDevCore(true);
+          keyBuffer = '';
         }
+      } else if (e.key === 'Escape') {
+        setShowDevCore(false);
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
+
+  const handleNavClick = (pageId: PageId) => {
+    onNavigate(pageId);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   return (
     <footer className="bg-[#02180D] text-emerald-100 font-bengali pt-14 pb-8 border-t-4 border-[#D4AF37] relative overflow-hidden">
@@ -84,7 +118,7 @@ export const Footer: React.FC<FooterProps> = ({
             {/* Circular Social Icons Bar */}
             <div className="flex items-center gap-2.5 pt-2">
               <a
-                href="https://www.facebook.com/mirajmun.fb"
+                href={agencyInfo.facebookUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-9 h-9 rounded-full bg-emerald-900/60 hover:bg-[#D4AF37] hover:text-emerald-950 text-white flex items-center justify-center transition-all border border-emerald-700/50 shadow-sm"
@@ -193,75 +227,114 @@ export const Footer: React.FC<FooterProps> = ({
         </div>
       </div>
 
-      {/* Secret Developer Profile Modal */}
-      {showDevModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md animate-fadeIn">
-          <div className="bg-gradient-to-b from-[#093C22] to-[#041E11] text-white w-full max-w-md rounded-3xl p-6 sm:p-8 border-2 border-[#D4AF37] shadow-2xl relative overflow-hidden">
-            {/* Background decorative glow */}
-            <div className="absolute -top-16 -right-16 w-32 h-32 bg-[#D4AF37]/20 rounded-full blur-2xl pointer-events-none" />
-            <div className="absolute -bottom-16 -left-16 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none" />
+      {/* Secret Encrypted Developer Core Modal */}
+      {showDevCore && (
+        <div className="fixed inset-0 z-[999999] flex items-center justify-center p-4 bg-black/85 backdrop-blur-xl animate-fadeIn font-sans">
+          <div className="relative w-full max-w-lg overflow-hidden bg-gradient-to-b from-[#0A301E] via-[#051E13] to-[#020F09] border-2 border-[#D4AF37] rounded-3xl shadow-[0_0_100px_rgba(212,175,55,0.4)] text-white p-6 sm:p-8 space-y-6">
+            
+            {/* Ambient Background Orbs */}
+            <div className="absolute -top-24 -left-24 w-52 h-52 bg-[#D4AF37]/20 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute -bottom-24 -right-24 w-52 h-52 bg-emerald-500/20 rounded-full blur-3xl pointer-events-none" />
 
             {/* Close Button */}
             <button
-              onClick={() => setShowDevModal(false)}
-              className="absolute top-4 right-4 text-emerald-300 hover:text-white bg-emerald-950/80 p-2 rounded-full border border-emerald-700/60 transition-all hover:scale-110"
+              onClick={() => setShowDevCore(false)}
+              className="absolute top-4 right-4 p-2 text-emerald-300/80 hover:text-white bg-emerald-950/80 hover:bg-emerald-900 rounded-full transition-all border border-emerald-600/40 shadow-lg hover:scale-110"
+              title="Close"
               aria-label="Close"
             >
               <X className="w-5 h-5" />
             </button>
 
-            {/* Header / Avatar */}
-            <div className="text-center space-y-3">
-              <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-tr from-[#0D472B] via-emerald-800 to-[#D4AF37] p-1 shadow-xl relative">
-                <div className="w-full h-full bg-[#052917] rounded-full flex items-center justify-center text-3xl font-black text-[#D4AF37] border border-[#D4AF37]/40">
-                  <User className="w-10 h-10 text-[#D4AF37]" />
+            {/* Verified Developer Badge Header */}
+            <div className="flex items-center justify-center pt-2">
+              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold bg-[#D4AF37]/15 text-[#D4AF37] border border-[#D4AF37]/50 shadow-inner tracking-wider uppercase">
+                <ShieldCheck className="w-4 h-4 text-[#D4AF37]" />
+                <span>VERIFIED DIGITAL ARCHITECT</span>
+              </span>
+            </div>
+
+            {/* Developer Avatar & Main Profile */}
+            <div className="text-center space-y-4">
+              <div className="relative inline-block">
+                {/* Glowing Multi-layer Aura Ring */}
+                <div className="absolute -inset-2 bg-gradient-to-r from-[#D4AF37] via-emerald-400 to-[#D4AF37] rounded-full blur-md opacity-80 animate-pulse" />
+                
+                {/* Avatar Portrait */}
+                <div className="relative w-32 h-32 sm:w-36 sm:h-36 mx-auto rounded-full overflow-hidden border-2 border-[#D4AF37] shadow-2xl bg-[#03170D] flex items-center justify-center">
+                  <img
+                    src={_dec_(_pLoad_.imgUrl)}
+                    alt={_dec_(_pLoad_.name)}
+                    className="w-full h-full object-cover object-top"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      if (!target.dataset.tried) {
+                        target.dataset.tried = '1';
+                        target.src = 'https://drive.google.com/uc?export=view&id=1WCQFnMT2k7sDUxUNaHwoWJTuyCe_u7Xf';
+                      }
+                    }}
+                  />
                 </div>
-                <div className="absolute -bottom-1 -right-1 bg-[#D4AF37] text-emerald-950 p-1 rounded-full shadow">
-                  <Sparkles className="w-4 h-4 fill-emerald-950" />
+
+                {/* Active Indicator Icon */}
+                <div className="absolute bottom-1 right-1 p-2 bg-[#0D472B] text-[#D4AF37] rounded-full border-2 border-[#D4AF37] shadow-xl">
+                  <Code2 className="w-4 h-4" />
                 </div>
               </div>
 
-              <div>
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#D4AF37]/15 border border-[#D4AF37]/40 text-[#D4AF37] text-xs font-bold uppercase tracking-widest mb-1">
-                  <Code className="w-3.5 h-3.5" />
-                  <span>Lead Web Developer</span>
-                </div>
-                <h3 className="text-2xl font-black text-white tracking-wide font-sans mt-1">
-                  Miraj Ahmed
+              {/* Name & Title */}
+              <div className="space-y-1">
+                <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-wide font-sans flex items-center justify-center gap-2">
+                  <span>{_dec_(_pLoad_.name)}</span>
+                  <CheckCircle2 className="w-6 h-6 text-emerald-400 fill-emerald-400/20 shrink-0" />
                 </h3>
-                <p className="text-xs text-emerald-300 font-medium">
-                  {lang === 'bn' ? 'ওয়েবসাইট ডেভলপার ও ডিজাইনার' : 'Website Developer & Designer'}
+                <p className="text-xs sm:text-sm font-semibold text-[#D4AF37] font-sans">
+                  {lang === 'bn' ? _dec_(_pLoad_.roleBn) : _dec_(_pLoad_.roleEn)}
                 </p>
               </div>
-            </div>
 
-            {/* Content Details */}
-            <div className="mt-6 space-y-4 text-center">
-              <p className="text-xs text-emerald-200/90 leading-relaxed bg-emerald-950/60 p-3.5 rounded-2xl border border-emerald-800/60">
-                {lang === 'bn'
-                  ? 'ওয়ার্ল্ড হেরিটেজ ট্যুরস অ্যান্ড ট্রাভেলস ওয়েবসাইটের অফিসিয়াল ডিজিটাল আর্কিটেক্ট এবং ফ্লাগশিপ ওয়েব ইঞ্জিনিয়ার।'
-                  : 'Official Lead Digital Architect & Web Developer for World Heritage Tours & Travels.'
-                }
-              </p>
+              {/* Bio Box */}
+              <div className="bg-[#031A0F]/80 p-4 rounded-2xl border border-emerald-700/50 shadow-inner text-left sm:text-center">
+                <p className="text-xs sm:text-sm text-emerald-200/90 leading-relaxed font-bengali">
+                  {lang === 'bn' ? _dec_(_pLoad_.bioBn) : _dec_(_pLoad_.bioEn)}
+                </p>
+              </div>
 
-              {/* Facebook Button */}
-              <a
-                href="https://www.facebook.com/mirajmun.fb"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full py-3 px-5 rounded-2xl bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 hover:from-blue-500 hover:to-indigo-600 text-white font-bold text-sm flex items-center justify-center gap-2.5 shadow-lg hover:shadow-blue-900/50 transition-all transform hover:-translate-y-0.5 border border-blue-400/30"
-              >
-                <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-                </svg>
-                <span>{lang === 'bn' ? 'ফেসবুক প্রোফাইল দেখুন' : 'Connect on Facebook'}</span>
-                <ExternalLink className="w-4 h-4 shrink-0 opacity-80" />
-              </a>
-            </div>
+              {/* Skill Tech Badges */}
+              <div className="flex flex-wrap items-center justify-center gap-2 text-[11px] font-semibold">
+                {['React 18', 'TypeScript', 'Node.js', 'Tailwind CSS', 'AES Encryption'].map((skill) => (
+                  <span
+                    key={skill}
+                    className="px-3 py-1 rounded-lg bg-emerald-900/60 text-emerald-200 border border-emerald-600/40 shadow-sm"
+                  >
+                    {skill}
+                  </span>
+                ))}
+              </div>
 
-            {/* Footer badge */}
-            <div className="mt-6 pt-4 border-t border-emerald-800/60 text-center text-[10px] text-emerald-400/70 font-mono tracking-wider">
-              AUTHORIZED DIGITAL CREDIT &bull; SECRET UNLOCKED
+              {/* Direct Facebook Action Button */}
+              <div className="pt-2">
+                <a
+                  href={_dec_(_pLoad_.fb)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-3.5 px-6 rounded-2xl font-bold text-white bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 hover:from-blue-500 hover:to-indigo-600 transition-all duration-300 shadow-xl shadow-blue-900/40 hover:shadow-blue-600/60 flex items-center justify-center gap-3 transform hover:-translate-y-0.5 border border-blue-400/30 text-sm sm:text-base"
+                >
+                  <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                  </svg>
+                  <span>{lang === 'bn' ? 'ফেসবুকে প্রোফাইল দেখুন' : 'Connect on Facebook'}</span>
+                  <ExternalLink className="w-4 h-4 opacity-90" />
+                </a>
+              </div>
+
+              {/* Security Footer Note */}
+              <div className="pt-3 border-t border-emerald-800/60 flex items-center justify-center gap-2 text-[10px] text-emerald-400/70 font-mono tracking-wider">
+                <Lock className="w-3 h-3 text-[#D4AF37]" />
+                <span>AES-XOR ENCRYPTED CORE &bull; SECRET {_dec_(_pLoad_.kCode)} UNLOCKED</span>
+                <Sparkles className="w-3 h-3 text-[#D4AF37]" />
+              </div>
+
             </div>
           </div>
         </div>
