@@ -331,7 +331,7 @@ export const Footer: React.FC<FooterProps> = ({
               {/* Security Footer Note */}
               <div className="pt-3 border-t border-emerald-800/60 flex items-center justify-center gap-2 text-[10px] text-emerald-400/70 font-mono tracking-wider">
                 <Lock className="w-3 h-3 text-[#D4AF37]" />
-                <span>AES-XOR ENCRYPTED CORE &bull; SECRET {_dec_(_pLoad_.kCode)} UNLOCKED</span>
+                <span>ENCRYPTED CORE &bull; SECRET {_dec_(_pLoad_.kCode)} UNLOCKED</span>
                 <Sparkles className="w-3 h-3 text-[#D4AF37]" />
               </div>
 
