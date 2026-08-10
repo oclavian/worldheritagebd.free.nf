@@ -20,7 +20,7 @@ import {
   HeartHandshake,
   Headphones
 } from 'lucide-react';
-import { Language, PageId, UmrahPackage, HajjPackage, Review, BlogPost, AgencyInfo } from '../types';
+import { Language, PageId, UmrahPackage, HajjPackage, BlogPost, AgencyInfo } from '../types';
 import { getTranslation } from '../data/translations';
 
 interface HomePageProps {
@@ -28,7 +28,6 @@ interface HomePageProps {
   onNavigate: (page: PageId) => void;
   umrahPackages: UmrahPackage[];
   hajjPackage: HajjPackage;
-  reviews: Review[];
   blogPosts: BlogPost[];
   agencyInfo: AgencyInfo;
   onOpenBookingModal: (service?: string, packageTitle?: string) => void;
@@ -39,7 +38,6 @@ export const HomePage: React.FC<HomePageProps> = ({
   onNavigate,
   umrahPackages,
   hajjPackage,
-  reviews,
   blogPosts,
   agencyInfo,
   onOpenBookingModal,

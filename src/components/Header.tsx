@@ -43,7 +43,6 @@ export const Header: React.FC<HeaderProps> = ({
     { id: 'air-tickets', labelKey: 'navAirTickets' },
     { id: 'tours-visas', labelKey: 'navToursVisas' },
     { id: 'gallery', labelKey: 'navGallery' },
-    { id: 'reviews', labelKey: 'navReviews' },
     { id: 'blog', labelKey: 'navBlog' },
     { id: 'contact', labelKey: 'navContact' },
   ];

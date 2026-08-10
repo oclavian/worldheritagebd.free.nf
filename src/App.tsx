@@ -319,7 +319,6 @@ export default function App() {
             onNavigate={handleNavigate}
             umrahPackages={umrahPackages}
             hajjPackage={hajjPackage}
-            reviews={reviews}
             blogPosts={blogPosts}
             agencyInfo={agencyInfo}
             onOpenBookingModal={handleOpenBookingModal}
