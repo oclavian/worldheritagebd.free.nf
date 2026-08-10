@@ -1,7 +1,10 @@
-import React from 'react';
-import { CheckCircle2, ChevronRight, ShieldCheck, Award, HeartHandshake, PhoneCall, FileText } from 'lucide-react';
+import React, { useState } from 'react';
+import { ChevronRight, FileText, CheckCircle2 } from 'lucide-react';
 import { Language, HajjPackage } from '../types';
 import { getTranslation } from '../data/translations';
+import { PackageCard } from '../components/PackageCard';
+import { PackageDetailView } from '../components/PackageDetailView';
+import { adaptHajjPackage, StandardPackageItem } from '../utils/packageAdapter';
 
 interface HajjPageProps {
   lang: Language;
@@ -14,6 +17,21 @@ export const HajjPage: React.FC<HajjPageProps> = ({
   hajjPackage,
   onOpenBookingModal,
 }) => {
+  const [selectedDetailPackage, setSelectedDetailPackage] = useState<StandardPackageItem | null>(null);
+  const adaptedHajj = adaptHajjPackage(hajjPackage);
+
+  // If a package detail is selected, render full page view
+  if (selectedDetailPackage) {
+    return (
+      <PackageDetailView
+        lang={lang}
+        pkg={selectedDetailPackage}
+        onBack={() => setSelectedDetailPackage(null)}
+        onBookNow={(service, packageTitle) => onOpenBookingModal(service, packageTitle)}
+      />
+    );
+  }
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 space-y-12 font-bengali">
       
@@ -50,7 +68,7 @@ export const HajjPage: React.FC<HajjPageProps> = ({
 
           <div>
             <button
-              onClick={() => onOpenBookingModal('Hajj', '২০২৭ সালের পবিত্র হজ্ব রেজিস্ট্রেশন')}
+              onClick={() => onOpenBookingModal('Hajj', lang === 'bn' ? '২০২৭ সালের পবিত্র হজ্ব রেজিস্ট্রেশন' : 'Holy Hajj 2027 Registration')}
               className="bg-[#D4AF37] hover:bg-[#C59B27] text-emerald-950 px-8 py-4 rounded-2xl font-extrabold text-base shadow-xl hover:shadow-2xl transition-all transform active:scale-95 border border-white/20 flex items-center gap-3"
             >
               <span>🕋 {getTranslation(lang, 'registerNowCTA')}</span>
@@ -59,6 +77,26 @@ export const HajjPage: React.FC<HajjPageProps> = ({
           </div>
         </div>
 
+      </div>
+
+      {/* Featured Hajj Post / Package Card (Akij Air Style) */}
+      <div className="space-y-6">
+        <div className="border-b border-slate-200 pb-3">
+          <h2 className="text-2xl font-black text-[#0D472B]">
+            {lang === 'bn' ? 'পবিত্র হজ্ব প্যাকেজসমূহ' : 'Holy Hajj Packages'}
+          </h2>
+          <p className="text-xs sm:text-sm text-slate-600 mt-1">
+            {lang === 'bn' ? 'আমাদের ২০২৭ হজ্ব কাফেলার পোস্ট ও সম্পূর্ণ তথ্য দেখুন' : 'View full details & itineraries for our Hajj 2027 delegation'}
+          </p>
+        </div>
+
+        <div className="max-w-md">
+          <PackageCard
+            lang={lang}
+            pkg={adaptedHajj}
+            onViewDetails={(item) => setSelectedDetailPackage(item)}
+          />
+        </div>
       </div>
 
       {/* Detailed Package Specifications Grid */}
@@ -159,7 +197,9 @@ export const HajjPage: React.FC<HajjPageProps> = ({
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs sm:text-sm text-slate-800">
           <div className="p-4 rounded-2xl bg-[#FAF8F5] border border-slate-200 space-y-2">
-            <span className="font-bold text-[#0D472B] block">০১. পাসপোর্ট ও ছবি</span>
+            <span className="font-bold text-[#0D472B] block">
+              {lang === 'bn' ? '০১. পাসপোর্ট ও ছবি' : '01. Passport & Photos'}
+            </span>
             <p className="text-slate-600 leading-relaxed">
               {lang === 'bn'
                 ? 'কমপক্ষে হজ্ব্বের পর পর্যন্ত মেয়াদী আসল পাসপোর্ট এবং পাসপোর্ট সাইজের সাদা ব্যাকগ্রাউন্ড ছবি।'
@@ -169,7 +209,9 @@ export const HajjPage: React.FC<HajjPageProps> = ({
           </div>
 
           <div className="p-4 rounded-2xl bg-[#FAF8F5] border border-slate-200 space-y-2">
-            <span className="font-bold text-[#0D472B] block">০২. জাতীয় পরিচয়পত্র (NID)</span>
+            <span className="font-bold text-[#0D472B] block">
+              {lang === 'bn' ? '০২. জাতীয় পরিচয়পত্র (NID)' : '02. National ID (NID)'}
+            </span>
             <p className="text-slate-600 leading-relaxed">
               {lang === 'bn'
                 ? 'জাতীয় পরিচয়পত্র বা স্মার্ট কার্ডের স্পষ্ট ফটোকপি (১৮ বছরের কম হলে জন্ম সনদ)।'
@@ -179,7 +221,9 @@ export const HajjPage: React.FC<HajjPageProps> = ({
           </div>
 
           <div className="p-4 rounded-2xl bg-[#FAF8F5] border border-slate-200 space-y-2">
-            <span className="font-bold text-[#0D472B] block">০৩. মেডিকেল ও ফি</span>
+            <span className="font-bold text-[#0D472B] block">
+              {lang === 'bn' ? '০৩. মেডিকেল ও ফি' : '03. Medical & Fees'}
+            </span>
             <p className="text-slate-600 leading-relaxed">
               {lang === 'bn'
                 ? 'প্রাক-নিবন্ধন ফি মাত্র ৩০,০০০ টাকা এবং স্বাস্থ্য পরীক্ষা সনদপত্র।'
@@ -191,7 +235,7 @@ export const HajjPage: React.FC<HajjPageProps> = ({
 
         <div className="text-center pt-4">
           <button
-            onClick={() => onOpenBookingModal('Hajj', '২০ ২৭ সালের হজ্ব প্রাক-নিবন্ধন')}
+            onClick={() => onOpenBookingModal('Hajj', lang === 'bn' ? '২০২৭ সালের হজ্ব প্রাক-নিবন্ধন' : 'Hajj 2027 Pre-Registration')}
             className="bg-[#0D472B] text-white px-8 py-3.5 rounded-xl font-bold text-sm shadow-md hover:bg-[#053B21] transition-all border border-[#D4AF37]"
           >
             {getTranslation(lang, 'registerNowCTA')}

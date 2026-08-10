@@ -6,7 +6,7 @@ html {
 }
 
 body {
-  font-family: 'SolaimanLipi', 'Hind Siliguri', 'Anek Bangla', 'Noto Sans Bengali', 'Times New Roman', Times, serif;
+  font-family: 'SolaimanLipi', 'Times New Roman', Times, serif;
   line-height: 1.65;
   letter-spacing: 0.01em;
 }
@@ -15,11 +15,11 @@ body {
   .font-bengali {
     font-family: 'SolaimanLipi', 'Hind Siliguri', 'Anek Bangla', 'Noto Sans Bengali', sans-serif;
   }
-  .font-sans {
-    font-family: 'SolaimanLipi', 'Hind Siliguri', 'Anek Bangla', 'Times New Roman', Times, serif;
-  }
   .font-english {
-    font-family: 'Times New Roman', Times, serif;
+    font-family: 'Times New Roman', Times, Georgia, serif !important;
+  }
+  .font-sans {
+    font-family: 'Times New Roman', Times, 'SolaimanLipi', 'Hind Siliguri', serif;
   }
 
   /* Well-balanced Bengali SolaimanLipi typography scale */

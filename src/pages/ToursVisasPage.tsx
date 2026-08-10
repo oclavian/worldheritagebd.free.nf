@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import { Compass, CheckCircle2, ChevronRight, Globe2, ShieldCheck, Sparkles, MapPin } from 'lucide-react';
+import { Compass, ShieldCheck, Sparkles, MapPin } from 'lucide-react';
 import { Language, TourPackage } from '../types';
 import { getTranslation } from '../data/translations';
+import { PackageCard } from '../components/PackageCard';
+import { PackageDetailView } from '../components/PackageDetailView';
+import { adaptTourPackage, StandardPackageItem } from '../utils/packageAdapter';
 
 interface ToursVisasPageProps {
   lang: Language;
@@ -15,6 +18,7 @@ export const ToursVisasPage: React.FC<ToursVisasPageProps> = ({
   onOpenBookingModal,
 }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [selectedDetailPackage, setSelectedDetailPackage] = useState<StandardPackageItem | null>(null);
 
   const destinations = [
     { key: 'Saudi Arabia', nameBn: 'সৌদি আরব', nameEn: 'Saudi Arabia', flag: '🇸🇦' },
@@ -31,6 +35,18 @@ export const ToursVisasPage: React.FC<ToursVisasPageProps> = ({
     if (selectedCategory === 'all') return true;
     return pkg.countryEn.toLowerCase().includes(selectedCategory.toLowerCase());
   });
+
+  // If a package detail is selected, render full page view
+  if (selectedDetailPackage) {
+    return (
+      <PackageDetailView
+        lang={lang}
+        pkg={selectedDetailPackage}
+        onBack={() => setSelectedDetailPackage(null)}
+        onBookNow={(service, packageTitle) => onOpenBookingModal(service, packageTitle)}
+      />
+    );
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 space-y-12 font-bengali">
@@ -87,62 +103,18 @@ export const ToursVisasPage: React.FC<ToursVisasPageProps> = ({
       </div>
 
       {/* Tour Packages Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
-        {filteredTours.map((pkg) => (
-          <div
-            key={pkg.id}
-            className="bg-white rounded-2xl overflow-hidden border-2 border-[#E6DEC8] shadow-sm hover:shadow-lg transition-all grid grid-cols-1 sm:grid-cols-12"
-          >
-            <div className="sm:col-span-5 relative aspect-4/3 sm:aspect-auto bg-slate-100">
-              <img
-                src={pkg.image}
-                alt={lang === 'bn' ? pkg.titleBn : pkg.titleEn}
-                className="w-full h-full object-cover"
-                referrerPolicy="no-referrer"
-              />
-              <span className="absolute top-3 left-3 bg-[#0D472B] text-white font-bold text-[10px] px-2.5 py-1 rounded-full border border-[#D4AF37]">
-                {lang === 'bn' ? pkg.countryBn : pkg.countryEn}
-              </span>
-            </div>
-
-            <div className="sm:col-span-7 p-5 flex flex-col justify-between space-y-4">
-              <div className="space-y-2">
-                <span className="text-xs font-bold text-[#B38712] uppercase tracking-wider block">
-                  {lang === 'bn' ? pkg.durationBn : pkg.durationEn}
-                </span>
-                <h3 className="text-base font-bold text-[#0D472B]">
-                  {lang === 'bn' ? pkg.titleBn : pkg.titleEn}
-                </h3>
-
-                <div className="space-y-1 pt-1">
-                  {(lang === 'bn' ? pkg.highlightsBn : pkg.highlightsEn).map((hl, i) => (
-                    <div key={i} className="flex items-center gap-1.5 text-xs text-slate-700">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-[#0D472B] shrink-0" />
-                      <span>{hl}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="pt-3 border-t border-slate-100 space-y-2">
-                <div className="flex items-baseline justify-between">
-                  <span className="text-[11px] text-slate-500 font-medium">{getTranslation(lang, 'perPerson')}</span>
-                  <span className="text-lg font-extrabold text-[#0D472B]">
-                    ৳{pkg.priceBDT.toLocaleString()} {getTranslation(lang, 'priceBDTLabel')}
-                  </span>
-                </div>
-
-                <button
-                  onClick={() => onOpenBookingModal('Tour & Visa', lang === 'bn' ? pkg.titleBn : pkg.titleEn)}
-                  className="w-full bg-[#0D472B] hover:bg-[#053B21] text-white py-2 rounded-xl text-xs font-bold transition-all border border-[#D4AF37] flex items-center justify-center gap-1"
-                >
-                  <span>{getTranslation(lang, 'bookPackage')}</span>
-                  <ChevronRight className="w-3.5 h-3.5 text-[#D4AF37]" />
-                </button>
-              </div>
-            </div>
-          </div>
-        ))}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {filteredTours.map((pkg) => {
+          const adapted = adaptTourPackage(pkg);
+          return (
+            <PackageCard
+              key={pkg.id}
+              lang={lang}
+              pkg={adapted}
+              onViewDetails={(item) => setSelectedDetailPackage(item)}
+            />
+          );
+        })}
       </div>
 
       {/* Visa Services & Custom Tour Section */}
@@ -173,7 +145,7 @@ export const ToursVisasPage: React.FC<ToursVisasPageProps> = ({
             }
           </p>
           <button
-            onClick={() => onOpenBookingModal('Tour & Visa', 'কাস্টম ট্যুর পরামর্শ')}
+            onClick={() => onOpenBookingModal('Tour & Visa', lang === 'bn' ? 'কাস্টম ট্যুর পরামর্শ' : 'Custom Tour Consultation')}
             className="bg-[#0D472B] text-white px-5 py-2 rounded-xl text-xs font-bold shadow-sm hover:bg-[#053B21] transition-all border border-[#D4AF37]"
           >
             {lang === 'bn' ? 'কাস্টম ট্যুর ইনকোয়ারি' : 'Request Custom Itinerary'}

@@ -328,7 +328,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-[#FAF8F5] text-[#1A2E26] flex flex-col min-h-screen font-bengali">
+    <div className={`min-[#FAF8F5] text-[#1A2E26] flex flex-col min-h-screen ${lang === 'bn' ? 'font-bengali' : 'font-english'}`}>
       
       {/* Top Header */}
       <Header

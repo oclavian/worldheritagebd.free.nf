@@ -2,26 +2,23 @@ import React, { useState } from 'react';
 import { 
   CheckCircle2, 
   ChevronRight, 
-  Plane, 
-  Calendar, 
   Sparkles, 
   ShieldCheck, 
   Award, 
-  Clock, 
-  Users, 
   Star, 
-  Compass, 
   ArrowRight,
   Phone,
   Building2,
   MapPin,
-  Search,
-  Check,
   HeartHandshake,
-  Headphones
+  Headphones,
+  Plane
 } from 'lucide-react';
 import { Language, PageId, UmrahPackage, HajjPackage, BlogPost, AgencyInfo } from '../types';
 import { getTranslation } from '../data/translations';
+import { PackageCard } from '../components/PackageCard';
+import { PackageDetailView } from '../components/PackageDetailView';
+import { adaptUmrahPackage, adaptHajjPackage, StandardPackageItem } from '../utils/packageAdapter';
 
 interface HomePageProps {
   lang: Language;
@@ -45,6 +42,19 @@ export const HomePage: React.FC<HomePageProps> = ({
   const [activeTab, setActiveTab] = useState<'umrah' | 'hajj' | 'air' | 'tour'>('umrah');
   const [packageCategory, setPackageCategory] = useState<'all' | 'umrah' | 'hajj'>('all');
   const [openAccordion, setOpenAccordion] = useState<number | null>(0);
+  const [selectedDetailPackage, setSelectedDetailPackage] = useState<StandardPackageItem | null>(null);
+
+  // If a package detail is selected, render full page view
+  if (selectedDetailPackage) {
+    return (
+      <PackageDetailView
+        lang={lang}
+        pkg={selectedDetailPackage}
+        onBack={() => setSelectedDetailPackage(null)}
+        onBookNow={(service, packageTitle) => onOpenBookingModal(service, packageTitle)}
+      />
+    );
+  }
 
   return (
     <div className="space-y-12 font-bengali pb-12">
@@ -95,19 +105,27 @@ export const HomePage: React.FC<HomePageProps> = ({
               {/* Quick Stat Badges Row */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 text-left">
                 <div className="bg-white/10 backdrop-blur-md p-3 rounded-2xl border border-white/15">
-                  <span className="text-xl sm:text-2xl font-black text-[#D4AF37] block font-sans">১৫,০০০+</span>
+                  <span className="text-xl sm:text-2xl font-black text-[#D4AF37] block font-sans">
+                    {lang === 'bn' ? '১৫,০০০+' : '15,000+'}
+                  </span>
                   <span className="text-[11px] text-emerald-200">{lang === 'bn' ? 'সফল হাজী সেবা' : 'Pilgrims Served'}</span>
                 </div>
                 <div className="bg-white/10 backdrop-blur-md p-3 rounded-2xl border border-white/15">
-                  <span className="text-xl sm:text-2xl font-black text-[#D4AF37] block font-sans">১০+ বছর</span>
-                  <span className="text-[11px] text-emerald-200">{lang === 'bn' ? 'অভিজ্ঞতা' : 'Years Experience'}</span>
+                  <span className="text-xl sm:text-2xl font-black text-[#D4AF37] block font-sans">
+                    {lang === 'bn' ? '১০+ বছর' : '10+ Years'}
+                  </span>
+                  <span className="text-[11px] text-emerald-200">{lang === 'bn' ? 'অভিজ্ঞতা' : 'Experience'}</span>
                 </div>
                 <div className="bg-white/10 backdrop-blur-md p-3 rounded-2xl border border-white/15">
-                  <span className="text-xl sm:text-2xl font-black text-[#D4AF37] block font-sans">১০০%</span>
+                  <span className="text-xl sm:text-2xl font-black text-[#D4AF37] block font-sans">
+                    {lang === 'bn' ? '১০০%' : '100%'}
+                  </span>
                   <span className="text-[11px] text-emerald-200">{lang === 'bn' ? 'শরীয়তসম্মত' : 'Shariah Compliant'}</span>
                 </div>
                 <div className="bg-white/10 backdrop-blur-md p-3 rounded-2xl border border-white/15">
-                  <span className="text-xl sm:text-2xl font-black text-[#D4AF37] block font-sans">২৪/৭</span>
+                  <span className="text-xl sm:text-2xl font-black text-[#D4AF37] block font-sans">
+                    {lang === 'bn' ? '২৪/৭' : '24/7'}
+                  </span>
                   <span className="text-[11px] text-emerald-200">{lang === 'bn' ? 'হটলাইন সাপোর্ট' : 'Hotline Support'}</span>
                 </div>
               </div>
@@ -413,65 +431,17 @@ export const HomePage: React.FC<HomePageProps> = ({
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {umrahPackages.slice(0, 3).map((pkg) => (
-              <div 
-                key={pkg.id} 
-                className="bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
-              >
-                <div>
-                  <div className="relative aspect-16/9 overflow-hidden bg-slate-100">
-                    <img 
-                      src={pkg.image} 
-                      alt={lang === 'bn' ? pkg.titleBn : pkg.titleEn}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      referrerPolicy="no-referrer"
-                    />
-                    {pkg.badgeBn && (
-                      <span className="absolute top-3 right-3 bg-[#D4AF37] text-emerald-950 font-black text-xs px-3 py-1 rounded-full shadow-md">
-                        {lang === 'bn' ? pkg.badgeBn : pkg.badgeEn}
-                      </span>
-                    )}
-                  </div>
-
-                  <div className="p-5 sm:p-6 space-y-3">
-                    <h3 className="text-base font-bold text-[#0D472B] line-clamp-2">
-                      {lang === 'bn' ? pkg.titleBn : pkg.titleEn}
-                    </h3>
-
-                    <div className="text-xs text-slate-600 space-y-2 pt-2 border-t border-slate-100">
-                      <p className="flex items-center gap-1.5">
-                        <MapPin className="w-3.5 h-3.5 text-[#D4AF37] shrink-0" />
-                        <span><strong>{getTranslation(lang, 'makkahHotel')}:</strong> {lang === 'bn' ? pkg.makkahHotelBn : pkg.makkahHotelEn}</span>
-                      </p>
-                      <p className="flex items-center gap-1.5">
-                        <MapPin className="w-3.5 h-3.5 text-[#D4AF37] shrink-0" />
-                        <span><strong>{getTranslation(lang, 'madinahHotel')}:</strong> {lang === 'bn' ? pkg.madinahHotelBn : pkg.madinahHotelEn}</span>
-                      </p>
-                      <p className="flex items-center gap-1.5">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                        <span><strong>{getTranslation(lang, 'food')}:</strong> {lang === 'bn' ? pkg.foodBn : pkg.foodEn}</span>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="p-5 sm:p-6 pt-0 border-t border-slate-100 mt-2 space-y-3">
-                  <div className="flex items-baseline justify-between pt-3">
-                    <span className="text-xs text-slate-500 font-semibold">{getTranslation(lang, 'perPerson')}</span>
-                    <span className="text-2xl font-black text-[#0D472B]">
-                      ৳{pkg.priceBDT.toLocaleString()}
-                    </span>
-                  </div>
-
-                  <button
-                    onClick={() => onOpenBookingModal('Umrah', lang === 'bn' ? pkg.titleBn : pkg.titleEn)}
-                    className="w-full bg-[#0D472B] hover:bg-[#053B21] text-white py-3 rounded-2xl text-xs font-bold transition-all shadow-md hover:shadow-lg border border-[#D4AF37]"
-                  >
-                    {getTranslation(lang, 'bookPackage')}
-                  </button>
-                </div>
-              </div>
-            ))}
+            {umrahPackages.slice(0, 3).map((pkg) => {
+              const adapted = adaptUmrahPackage(pkg);
+              return (
+                <PackageCard
+                  key={pkg.id}
+                  lang={lang}
+                  pkg={adapted}
+                  onViewDetails={(item) => setSelectedDetailPackage(item)}
+                />
+              );
+            })}
           </div>
 
           <div className="text-center pt-8">

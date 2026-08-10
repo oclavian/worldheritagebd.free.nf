@@ -54,90 +54,39 @@ export const Header: React.FC<HeaderProps> = ({
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-[#052917] text-white shadow-lg border-b border-[#D4AF37]/40 font-bengali">
-      {/* Top Bar for Desktop */}
-      <div className="bg-[#02180D] text-emerald-100 text-xs py-1.5 px-4 border-b border-emerald-900/80 hidden md:block">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
-          <div className="flex items-center gap-6 flex-wrap">
-            <a href={`tel:${agencyInfo.hotline}`} className="flex items-center gap-1.5 hover:text-[#D4AF37] transition-colors">
-              <Phone className="w-3.5 h-3.5 text-[#D4AF37]" />
-              <span>{lang === 'bn' ? 'হটলাইন:' : 'Hotline:'} <strong className="tracking-wider text-white">{agencyInfo.hotline}</strong></span>
-            </a>
-            <a href={`mailto:${agencyInfo.email}`} className="flex items-center gap-1.5 hover:text-[#D4AF37] transition-colors">
-              <Mail className="w-3.5 h-3.5 text-[#D4AF37]" />
-              <span>{agencyInfo.email}</span>
-            </a>
-            <div className="flex items-center gap-1.5 text-emerald-300 text-xs">
-              <MapPin className="w-3.5 h-3.5 text-[#D4AF37] shrink-0" />
-              <span className="truncate max-w-xs">{lang === 'bn' ? agencyInfo.addressBn : agencyInfo.addressEn}</span>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-1 text-[11px] text-emerald-200 bg-emerald-900/60 px-2.5 py-0.5 rounded-full border border-emerald-700/50">
-              <ShieldCheck className="w-3 h-3 text-[#D4AF37]" />
-              <span>{lang === 'bn' ? 'অনুমোদিত ট্রাভেল এজেন্সী' : 'Authorized Agency'}</span>
-            </div>
-
-            {/* Language Switcher */}
-            <div className="flex items-center bg-emerald-950/90 rounded-full p-0.5 border border-[#D4AF37]/50">
-              <button
-                onClick={() => onLanguageChange('bn')}
-                className={`px-2.5 py-0.5 rounded-full text-xs font-medium transition-all ${
-                  lang === 'bn' 
-                    ? 'bg-[#D4AF37] text-emerald-950 font-bold shadow-sm' 
-                    : 'text-emerald-200 hover:text-white'
-                }`}
-              >
-                বাংলা
-              </button>
-              <button
-                onClick={() => onLanguageChange('en')}
-                className={`px-2.5 py-0.5 rounded-full text-xs font-medium transition-all ${
-                  lang === 'en' 
-                    ? 'bg-[#D4AF37] text-emerald-950 font-bold shadow-sm' 
-                    : 'text-emerald-200 hover:text-white'
-                }`}
-              >
-                English
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
+    <header className={`sticky top-0 z-40 bg-[#052917] text-white shadow-lg border-b border-[#D4AF37]/40 ${lang === 'bn' ? 'font-bengali' : 'font-english'}`}>
       {/* Main Header Navigation Bar */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2.5 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 py-2.5 flex items-center justify-between gap-2">
         {/* Brand Logo & Name */}
         <button 
           onClick={() => handleNavClick('home')}
-          className="flex items-center gap-3 text-left group focus:outline-none"
+          className="flex items-center gap-2.5 text-left group focus:outline-none shrink-0"
         >
           {/* Agency Official Logo */}
-          <Logo className="w-11 h-11 sm:w-13 sm:h-13 transform group-hover:scale-105 transition-all drop-shadow-md" />
+          <Logo className="w-10 h-10 sm:w-12 sm:h-12 transform group-hover:scale-105 transition-all drop-shadow-md" />
 
           <div>
-            <h1 className="text-lg sm:text-xl font-extrabold text-white tracking-tight leading-none font-sans">
+            <h1 className="text-base sm:text-lg xl:text-xl font-extrabold text-white tracking-tight leading-none font-sans">
               {lang === 'bn' ? agencyInfo.nameBn : agencyInfo.nameEn}
             </h1>
-            <p className="text-xs sm:text-sm font-semibold text-[#D4AF37] mt-1 tracking-wide flex items-center gap-1 font-sans">
-              <Sparkles className="w-3 h-3 text-[#D4AF37] inline" />
+            <p className="text-[11px] sm:text-xs font-semibold text-[#D4AF37] mt-1 tracking-wide flex items-center gap-1 font-sans">
+              <Sparkles className="w-3 h-3 text-[#D4AF37] inline shrink-0" />
               <span>{lang === 'bn' ? agencyInfo.taglineBn : agencyInfo.taglineEn}</span>
             </p>
           </div>
         </button>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden lg:flex items-center gap-1 xl:gap-1.5">
+        <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1.5">
           {navItems.map((item) => {
             const isActive = activePage === item.id;
             return (
               <button
                 key={item.id}
                 onClick={() => handleNavClick(item.id)}
-                className={`px-2.5 xl:px-3 py-1.5 rounded-full text-xs xl:text-sm font-semibold transition-all whitespace-nowrap ${
+                className={`px-2 xl:px-3 py-1.5 rounded-full text-xs xl:text-sm font-bold transition-all whitespace-nowrap ${
                   isActive
-                    ? 'bg-white text-[#052917] font-bold shadow-md'
+                    ? 'bg-white text-[#052917] shadow-md'
                     : 'text-emerald-100 hover:text-white hover:bg-white/10'
                 }`}
               >
@@ -147,28 +96,8 @@ export const Header: React.FC<HeaderProps> = ({
           })}
         </nav>
 
-        {/* Right CTA & Mobile Controls */}
+        {/* Right CTA & Language Switcher */}
         <div className="flex items-center gap-2 sm:gap-3">
-          {/* Language Switcher Mobile */}
-          <div className="flex lg:hidden items-center bg-emerald-950 rounded-full p-0.5 border border-[#D4AF37]/40 text-xs text-white">
-            <button
-              onClick={() => onLanguageChange('bn')}
-              className={`px-2 py-0.5 rounded-full text-[11px] font-medium ${
-                lang === 'bn' ? 'bg-[#D4AF37] text-emerald-950 font-bold' : 'text-emerald-200'
-              }`}
-            >
-              বাংলা
-            </button>
-            <button
-              onClick={() => onLanguageChange('en')}
-              className={`px-2 py-0.5 rounded-full text-[11px] font-medium ${
-                lang === 'en' ? 'bg-[#D4AF37] text-emerald-950 font-bold' : 'text-emerald-200'
-              }`}
-            >
-              EN
-            </button>
-          </div>
-
           <button
             onClick={() => onOpenBookingModal()}
             className="hidden sm:inline-flex items-center gap-2 bg-white text-[#052917] hover:bg-[#D4AF37] hover:text-emerald-950 px-4 py-2 rounded-full text-xs sm:text-sm font-extrabold shadow-md hover:shadow-lg transition-all transform active:scale-95 border border-white/40"
@@ -176,6 +105,30 @@ export const Header: React.FC<HeaderProps> = ({
             <span>{getTranslation(lang, 'bookNowCTA')}</span>
             <ChevronRight className="w-4 h-4 text-emerald-800 group-hover:text-emerald-950" />
           </button>
+
+          {/* Language Switcher next to Book Now button */}
+          <div className="flex items-center bg-[#02180D] rounded-full p-1 border border-[#D4AF37]/60 text-xs shadow-inner">
+            <button
+              onClick={() => onLanguageChange('bn')}
+              className={`px-2.5 py-1 rounded-full text-xs font-extrabold transition-all ${
+                lang === 'bn' 
+                  ? 'bg-[#D4AF37] text-emerald-950 shadow-sm' 
+                  : 'text-emerald-200 hover:text-white'
+              }`}
+            >
+              বাংলা
+            </button>
+            <button
+              onClick={() => onLanguageChange('en')}
+              className={`px-2.5 py-1 rounded-full text-xs font-extrabold transition-all ${
+                lang === 'en' 
+                  ? 'bg-[#D4AF37] text-emerald-950 shadow-sm' 
+                  : 'text-emerald-200 hover:text-white'
+              }`}
+            >
+              English
+            </button>
+          </div>
 
           {/* Hamburger Toggle */}
           <button

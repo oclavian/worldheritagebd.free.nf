@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import { CheckCircle2, ChevronRight, Sparkles, Building, MapPin, Bus, Utensils, ShieldCheck } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 import { Language, UmrahPackage } from '../types';
 import { getTranslation } from '../data/translations';
+import { PackageCard } from '../components/PackageCard';
+import { PackageDetailView } from '../components/PackageDetailView';
+import { adaptUmrahPackage, StandardPackageItem } from '../utils/packageAdapter';
 
 interface UmrahPageProps {
   lang: Language;
@@ -15,6 +18,7 @@ export const UmrahPage: React.FC<UmrahPageProps> = ({
   onOpenBookingModal,
 }) => {
   const [filter, setFilter] = useState<'all' | 'economy' | 'deluxe' | 'ramadan'>('all');
+  const [selectedDetailPackage, setSelectedDetailPackage] = useState<StandardPackageItem | null>(null);
 
   const filteredPackages = packages.filter((pkg) => {
     if (filter === 'economy') return pkg.id.includes('economy');
@@ -22,6 +26,18 @@ export const UmrahPage: React.FC<UmrahPageProps> = ({
     if (filter === 'ramadan') return pkg.id.includes('ramadan');
     return true;
   });
+
+  // If a package detail is selected, render full page view
+  if (selectedDetailPackage) {
+    return (
+      <PackageDetailView
+        lang={lang}
+        pkg={selectedDetailPackage}
+        onBack={() => setSelectedDetailPackage(null)}
+        onBookNow={(service, packageTitle) => onOpenBookingModal(service, packageTitle)}
+      />
+    );
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 space-y-12 font-bengali">
@@ -70,106 +86,18 @@ export const UmrahPage: React.FC<UmrahPageProps> = ({
       </div>
 
       {/* Package List Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {filteredPackages.map((pkg) => (
-          <div
-            key={pkg.id}
-            className="bg-white rounded-2xl overflow-hidden border-2 border-[#E6DEC8] shadow-sm hover:shadow-xl transition-all flex flex-col justify-between"
-          >
-            <div>
-              {/* Image & Badge */}
-              <div className="relative aspect-16/9 bg-slate-100">
-                <img
-                  src={pkg.image}
-                  alt={lang === 'bn' ? pkg.titleBn : pkg.titleEn}
-                  className="w-full h-full object-cover"
-                  referrerPolicy="no-referrer"
-                />
-                {pkg.badgeBn && (
-                  <span className="absolute top-3 right-3 bg-[#D4AF37] text-emerald-950 font-bold text-xs px-3 py-1 rounded-full shadow-md">
-                    {lang === 'bn' ? pkg.badgeBn : pkg.badgeEn}
-                  </span>
-                )}
-              </div>
-
-              {/* Package Content */}
-              <div className="p-6 space-y-4">
-                <div className="space-y-1">
-                  <span className="text-xs font-bold text-[#B38712] uppercase tracking-wider block">
-                    {lang === 'bn' ? pkg.durationBn : pkg.durationEn}
-                  </span>
-                  <h3 className="text-lg font-bold text-[#0D472B]">
-                    {lang === 'bn' ? pkg.titleBn : pkg.titleEn}
-                  </h3>
-                </div>
-
-                {/* Details Breakdown */}
-                <div className="bg-[#FAF8F5] p-4 rounded-xl border border-slate-200 space-y-2.5 text-xs text-slate-800">
-                  <div className="flex items-start gap-2">
-                    <Building className="w-4 h-4 text-[#0D472B] shrink-0 mt-0.5" />
-                    <div>
-                      <strong className="block font-bold">{getTranslation(lang, 'makkahHotel')}:</strong>
-                      <span>{lang === 'bn' ? pkg.makkahHotelBn : pkg.makkahHotelEn} ({lang === 'bn' ? pkg.makkahDistanceBn : pkg.makkahDistanceEn})</span>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-2">
-                    <Building className="w-4 h-4 text-[#0D472B] shrink-0 mt-0.5" />
-                    <div>
-                      <strong className="block font-bold">{getTranslation(lang, 'madinahHotel')}:</strong>
-                      <span>{lang === 'bn' ? pkg.madinahHotelBn : pkg.madinahHotelEn} ({lang === 'bn' ? pkg.madinahDistanceBn : pkg.madinahDistanceEn})</span>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <Utensils className="w-4 h-4 text-[#0D472B] shrink-0" />
-                    <span><strong>{getTranslation(lang, 'food')}:</strong> {lang === 'bn' ? pkg.foodBn : pkg.foodEn}</span>
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <Bus className="w-4 h-4 text-[#0D472B] shrink-0" />
-                    <span><strong>{getTranslation(lang, 'transport')}:</strong> {lang === 'bn' ? pkg.transportBn : pkg.transportEn}</span>
-                  </div>
-                </div>
-
-                {/* Inclusions Checklist */}
-                <div className="space-y-1.5 text-xs text-slate-700">
-                  <span className="font-bold text-[#0D472B] block">
-                    {lang === 'bn' ? 'প্যাকেজ সুবিধাসমূহ:' : 'Package Inclusions:'}
-                  </span>
-                  <div className="grid grid-cols-2 gap-1.5">
-                    {(lang === 'bn' ? pkg.inclusionsBn : pkg.inclusionsEn).map((inc, i) => (
-                      <div key={i} className="flex items-center gap-1.5">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-[#0D472B] shrink-0" />
-                        <span>{inc}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
-            {/* Price & Action */}
-            <div className="p-6 pt-0 border-t border-slate-100 mt-2 space-y-3">
-              <div className="flex items-baseline justify-between pt-3">
-                <span className="text-xs text-slate-500 font-semibold">{getTranslation(lang, 'perPerson')}</span>
-                <span className="text-2xl font-extrabold text-[#0D472B]">
-                  ৳{pkg.priceBDT.toLocaleString()} {getTranslation(lang, 'priceBDTLabel')}
-                </span>
-              </div>
-
-              <button
-                onClick={() => onOpenBookingModal('Umrah', lang === 'bn' ? pkg.titleBn : pkg.titleEn)}
-                className="w-full bg-gradient-to-r from-[#0D472B] to-[#053B21] text-white py-3 rounded-xl font-bold text-sm shadow-md hover:shadow-lg transition-all border border-[#D4AF37] flex items-center justify-center gap-2"
-              >
-                <span>{getTranslation(lang, 'bookPackage')}</span>
-                <ChevronRight className="w-4 h-4 text-[#D4AF37]" />
-              </button>
-            </div>
-
-          </div>
-        ))}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {filteredPackages.map((pkg) => {
+          const adapted = adaptUmrahPackage(pkg);
+          return (
+            <PackageCard
+              key={pkg.id}
+              lang={lang}
+              pkg={adapted}
+              onViewDetails={(item) => setSelectedDetailPackage(item)}
+            />
+          );
+        })}
       </div>
 
       {/* Booking Steps Section */}
@@ -180,25 +108,33 @@ export const UmrahPage: React.FC<UmrahPageProps> = ({
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-center">
           <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-100 space-y-2">
-            <span className="w-8 h-8 rounded-full bg-[#0D472B] text-white font-bold inline-flex items-center justify-center text-sm">১</span>
+            <span className="w-8 h-8 rounded-full bg-[#0D472B] text-white font-bold inline-flex items-center justify-center text-sm">
+              {lang === 'bn' ? '১' : '1'}
+            </span>
             <h4 className="font-bold text-[#0D472B] text-sm">{lang === 'bn' ? 'প্যাকেজ নির্বাচন' : 'Select Package'}</h4>
             <p className="text-xs text-slate-600">{lang === 'bn' ? 'আপনার বাজেট ও সুবিধামত পছন্দসই প্যাকেজ বাছুন।' : 'Choose your desired package within budget.'}</p>
           </div>
 
           <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-100 space-y-2">
-            <span className="w-8 h-8 rounded-full bg-[#0D472B] text-white font-bold inline-flex items-center justify-center text-sm">২</span>
+            <span className="w-8 h-8 rounded-full bg-[#0D472B] text-white font-bold inline-flex items-center justify-center text-sm">
+              {lang === 'bn' ? '২' : '2'}
+            </span>
             <h4 className="font-bold text-[#0D472B] text-sm">{lang === 'bn' ? 'পাসপোর্ট জমা' : 'Submit Passport'}</h4>
             <p className="text-xs text-slate-600">{lang === 'bn' ? 'ন্যূনতম ৬ মাস মেয়াদী পাসপোর্ট ও এনআইডি প্রদান করুন।' : 'Provide passport with min 6-month validity.'}</p>
           </div>
 
           <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-100 space-y-2">
-            <span className="w-8 h-8 rounded-full bg-[#0D472B] text-white font-bold inline-flex items-center justify-center text-sm">৩</span>
+            <span className="w-8 h-8 rounded-full bg-[#0D472B] text-white font-bold inline-flex items-center justify-center text-sm">
+              {lang === 'bn' ? '৩' : '3'}
+            </span>
             <h4 className="font-bold text-[#0D472B] text-sm">{lang === 'bn' ? 'ভিসা ও টিকেট ইস্যু' : 'Visa & Flight Approval'}</h4>
             <p className="text-xs text-slate-600">{lang === 'bn' ? 'সৌদি উমরাহ্ ভিসা ও বায়োমেট্রিক সম্পন্ন করা।' : 'Process Saudi e-visa & biometric approval.'}</p>
           </div>
 
           <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-100 space-y-2">
-            <span className="w-8 h-8 rounded-full bg-[#0D472B] text-white font-bold inline-flex items-center justify-center text-sm">৪</span>
+            <span className="w-8 h-8 rounded-full bg-[#0D472B] text-white font-bold inline-flex items-center justify-center text-sm">
+              {lang === 'bn' ? '৪' : '4'}
+            </span>
             <h4 className="font-bold text-[#0D472B] text-sm">{lang === 'bn' ? 'পবিত্র যাত্রার সূচনা' : 'Embark Journey'}</h4>
             <p className="text-xs text-slate-600">{lang === 'bn' ? 'আমাদের মোয়াল্লেমের দিকনির্দেশনায় নিরাপদ যাত্রা।' : 'Depart safely with our Moallem guidance.'}</p>
           </div>
