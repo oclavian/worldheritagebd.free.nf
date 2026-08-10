@@ -16,6 +16,7 @@ import { PageTransition } from './components/PageTransition';
 import { FloatingActions } from './components/FloatingActions';
 import { BookingModal } from './components/BookingModal';
 import { LightboxModal } from './components/LightboxModal';
+import { IslamicPreloader } from './components/IslamicPreloader';
 
 // Pages
 import { HomePage } from './pages/HomePage';
@@ -292,6 +293,9 @@ export default function App() {
   return (
     <div className={`min-[#FAF8F5] text-[#1A2E26] flex flex-col min-h-screen ${lang === 'bn' ? 'font-bengali' : 'font-english'}`}>
       
+      {/* Custom Islamic Preloader */}
+      <IslamicPreloader lang={lang} />
+
       {/* Top Header */}
       <Header
         lang={lang}
