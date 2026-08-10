@@ -60,18 +60,18 @@ export const Header: React.FC<HeaderProps> = ({
         {/* Brand Logo & Name */}
         <button 
           onClick={() => handleNavClick('home')}
-          className="flex items-center gap-2.5 text-left group focus:outline-none shrink-0"
+          className="flex items-center gap-2 sm:gap-2.5 text-left group focus:outline-none min-w-0 shrink"
         >
           {/* Agency Official Logo */}
-          <Logo className="w-10 h-10 sm:w-12 sm:h-12 transform group-hover:scale-105 transition-all drop-shadow-md" />
+          <Logo className="w-9 h-9 sm:w-12 sm:h-12 transform group-hover:scale-105 transition-all drop-shadow-md shrink-0" />
 
-          <div>
-            <h1 className="text-base sm:text-lg xl:text-xl font-extrabold text-white tracking-tight leading-none font-sans">
+          <div className="min-w-0">
+            <h1 className="text-sm sm:text-lg xl:text-xl font-extrabold text-white tracking-tight leading-tight font-sans truncate">
               {lang === 'bn' ? agencyInfo.nameBn : agencyInfo.nameEn}
             </h1>
-            <p className="text-[11px] sm:text-xs font-semibold text-[#D4AF37] mt-1 tracking-wide flex items-center gap-1 font-sans">
+            <p className="text-[10px] sm:text-xs font-semibold text-[#D4AF37] mt-0.5 sm:mt-1 tracking-wide flex items-center gap-1 font-sans truncate">
               <Sparkles className="w-3 h-3 text-[#D4AF37] inline shrink-0" />
-              <span>{lang === 'bn' ? agencyInfo.taglineBn : agencyInfo.taglineEn}</span>
+              <span className="truncate">{lang === 'bn' ? agencyInfo.taglineBn : agencyInfo.taglineEn}</span>
             </p>
           </div>
         </button>

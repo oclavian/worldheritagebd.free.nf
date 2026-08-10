@@ -3,12 +3,29 @@
 
 html {
   font-size: 100%; /* Standard base font scale (~16px) for perfectly proportioned SolaimanLipi typography */
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden !important;
+  margin: 0;
+  padding: 0;
 }
 
 body {
   font-family: 'SolaimanLipi', 'Times New Roman', Times, serif;
   line-height: 1.65;
   letter-spacing: 0.01em;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden !important;
+  margin: 0;
+  padding: 0;
+  -webkit-overflow-scrolling: touch;
+}
+
+#root {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 
 @layer utilities {

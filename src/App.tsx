@@ -291,7 +291,7 @@ export default function App() {
   };
 
   return (
-    <div className={`min-[#FAF8F5] text-[#1A2E26] flex flex-col min-h-screen ${lang === 'bn' ? 'font-bengali' : 'font-english'}`}>
+    <div className={`bg-[#FAF8F5] text-[#1A2E26] flex flex-col min-h-screen w-full max-w-full overflow-x-hidden ${lang === 'bn' ? 'font-bengali' : 'font-english'}`}>
       
       {/* Custom Islamic Preloader */}
       <IslamicPreloader lang={lang} />

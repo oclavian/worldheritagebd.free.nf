@@ -123,7 +123,7 @@ export const IslamicPreloader: React.FC<IslamicPreloaderProps> = ({ lang, onFini
             </motion.div>
 
             {/* Custom Islamic Gold Progress Bar */}
-            <div className="w-64 sm:w-72 space-y-2">
+            <div className="w-full max-w-xs space-y-2">
               <div className="relative h-2.5 w-full bg-[#02180D] rounded-full p-0.5 border border-[#D4AF37]/40 overflow-hidden shadow-inner">
                 {/* Glowing Progress Fill */}
                 <motion.div
