@@ -9,7 +9,7 @@ export const agencyInfo: AgencyInfo = {
   email: 'worldheritagebd@gmail.com',
   addressBn: 'পশ্চিম পান্থপথ জামে-মসজিদের বিপরীত পাশে, ৪৩-আর/৮, ইন্দিরা রোড, ঢাকা-১২১৫, বাংলাদেশ।',
   addressEn: 'Opposite West Panthapath Jame Mosque, 43-R/8, Indira Road, Dhaka-1215, Bangladesh.',
-  facebookUrl: 'https://facebook.com',
+  facebookUrl: 'https://facebook.com/worldharitage/',
   youtubeUrl: 'https://youtube.com',
   whatsappNumber: '8801627737741',
   googleMapsUrl: 'https://maps.app.goo.gl/UPBBAFVHkWo6ZVST6',
