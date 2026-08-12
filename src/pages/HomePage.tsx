@@ -19,6 +19,7 @@ import { getTranslation } from '../data/translations';
 import { PackageCard } from '../components/PackageCard';
 import { PackageDetailView } from '../components/PackageDetailView';
 import { adaptUmrahPackage, adaptHajjPackage, StandardPackageItem } from '../utils/packageAdapter';
+import { toBengaliDigits } from '../utils/formatters';
 
 interface HomePageProps {
   lang: Language;
@@ -594,18 +595,18 @@ export const HomePage: React.FC<HomePageProps> = ({
           <div className="flex flex-wrap items-center gap-3">
             <a
               href={`tel:${agencyInfo.hotline}`}
-              className="bg-[#D4AF37] text-emerald-950 px-6 py-3 rounded-full font-extrabold text-sm shadow-md hover:bg-[#C59B27] transition-all flex items-center gap-2"
+              className="bg-[#D4AF37] text-emerald-950 px-7 py-3.5 rounded-full font-extrabold text-base sm:text-lg shadow-md hover:bg-[#C59B27] transition-all flex items-center gap-2.5"
             >
-              <Phone className="w-4 h-4" />
-              <span>{agencyInfo.hotline}</span>
-              <span className="text-xs font-semibold text-emerald-900/90 font-bengali">
+              <Phone className="w-5 h-5 text-emerald-950 shrink-0" />
+              <span>{lang === 'bn' ? toBengaliDigits(agencyInfo.hotline) : agencyInfo.hotline}</span>
+              <span className="text-sm sm:text-base font-bold text-emerald-900 font-bengali">
                 ({lang === 'bn' ? 'হোয়াটসঅ্যাপ & ইমো' : 'WhatsApp & Imo'})
               </span>
             </a>
 
             <button
               onClick={() => onNavigate('contact')}
-              className="bg-emerald-900 border border-emerald-700 text-white px-6 py-3 rounded-full font-bold text-sm hover:bg-emerald-800 transition-all"
+              className="bg-emerald-900 border border-emerald-700 text-white px-7 py-3.5 rounded-full font-bold text-base hover:bg-emerald-800 transition-all"
             >
               {getTranslation(lang, 'contactCTA')}
             </button>

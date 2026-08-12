@@ -1,6 +1,7 @@
 import React from 'react';
 import { X, Phone, MessageCircle, MapPin, Sparkles } from 'lucide-react';
 import { Language, BookingInquiry } from '../types';
+import { toBengaliDigits } from '../utils/formatters';
 
 interface BookingModalProps {
   isOpen: boolean;
@@ -75,17 +76,17 @@ export const BookingModal: React.FC<BookingModalProps> = ({
               </div>
 
               <div>
-                <span className="text-xs sm:text-sm font-bold text-emerald-300 uppercase tracking-wider block">
+                <span className="text-xs sm:text-sm font-bold text-emerald-300 uppercase tracking-wider block mb-0.5">
                   {isBn ? 'হটলাইন সার্বক্ষণিক' : '24/7 Hotline'}
                 </span>
                 <div className="flex items-baseline gap-2 flex-wrap">
                   <a
                     href="tel:01627737741"
-                    className="text-2xl sm:text-3xl font-extrabold text-white tracking-wider hover:text-[#D4AF37] transition-colors font-sans"
+                    className="text-3xl sm:text-4xl font-extrabold text-white tracking-wider hover:text-[#D4AF37] transition-colors font-sans"
                   >
-                    01627737741
+                    {isBn ? toBengaliDigits('01627737741') : '01627737741'}
                   </a>
-                  <span className="text-xs sm:text-sm font-bold text-[#D4AF37] font-bengali">
+                  <span className="text-sm sm:text-base font-bold text-[#D4AF37] font-bengali">
                     ({isBn ? 'হোয়াটসঅ্যাপ & ইমো' : 'WhatsApp & Imo'})
                   </span>
                 </div>
@@ -97,14 +98,14 @@ export const BookingModal: React.FC<BookingModalProps> = ({
 
             {/* Alternative Contact */}
             <div className="space-y-1">
-              <p className="text-xs sm:text-sm leading-relaxed">
+              <p className="text-sm sm:text-base leading-relaxed">
                 <strong className="text-emerald-300 font-bold">{isBn ? 'বিকল্প যোগাযোগ:' : 'Alt Phone:'}</strong>{' '}
                 <a href="tel:01785970008" className="hover:text-[#D4AF37] transition-colors font-bold font-sans underline text-white">
-                  01785970008-9
+                  {isBn ? toBengaliDigits('01785970008') + '-৯' : '01785970008-9'}
                 </a>
                 ,{' '}
                 <a href="tel:01920825145" className="hover:text-[#D4AF37] transition-colors font-bold font-sans underline text-white">
-                  01920825145
+                  {isBn ? toBengaliDigits('01920825145') : '01920825145'}
                 </a>
               </p>
             </div>

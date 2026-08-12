@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Phone, Mail, MapPin, Send, CheckCircle2, Clock, Building2, ShieldCheck, MessageCircle } from 'lucide-react';
 import { Language, AgencyInfo, BookingInquiry } from '../types';
 import { getTranslation } from '../data/translations';
+import { toBengaliDigits } from '../utils/formatters';
 
 interface ContactPageProps {
   lang: Language;
@@ -92,17 +93,21 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                 <div>
                   <strong className="block text-[#0D472B] font-bold text-xs uppercase">{getTranslation(lang, 'hotlineLabel')}</strong>
                   <div className="flex items-center gap-2 flex-wrap">
-                    <a href={`tel:${agencyInfo.hotline}`} className="text-base font-extrabold text-[#0D472B] hover:underline">
-                      {agencyInfo.hotline}
+                    <a href={`tel:${agencyInfo.hotline}`} className="text-lg font-extrabold text-[#0D472B] hover:underline font-sans">
+                      {lang === 'bn' ? toBengaliDigits(agencyInfo.hotline) : agencyInfo.hotline}
                     </a>
-                    <span className="text-xs font-semibold text-amber-600 font-bengali">
+                    <span className="text-xs sm:text-sm font-bold text-amber-600 font-bengali">
                       ({lang === 'bn' ? 'হোয়াটসঅ্যাপ & ইমো' : 'WhatsApp & Imo'})
                     </span>
                   </div>
-                  <p className="text-xs text-slate-600 mt-0.5">
-                    <strong className="text-[#0D472B]">{lang === 'bn' ? 'বিকল্প যোগাযোগ: ' : 'Alt Phone: '}</strong>
-                    <a href="tel:01785970008" className="hover:underline font-semibold">01785970008-9</a>,{' '}
-                    <a href="tel:01920825145" className="hover:underline font-semibold">01920825145</a>
+                  <p className="text-xs sm:text-sm text-slate-700 mt-1">
+                    <strong className="text-[#0D472B] font-bold">{lang === 'bn' ? 'বিকল্প যোগাযোগ: ' : 'Alt Phone: '}</strong>
+                    <a href="tel:01785970008" className="hover:underline font-bold">
+                      {lang === 'bn' ? toBengaliDigits('01785970008') + '-৯' : '01785970008-9'}
+                    </a>,{' '}
+                    <a href="tel:01920825145" className="hover:underline font-bold">
+                      {lang === 'bn' ? toBengaliDigits('01920825145') : '01920825145'}
+                    </a>
                   </p>
                 </div>
               </div>

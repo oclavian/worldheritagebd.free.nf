@@ -3,6 +3,7 @@ import { Phone, Mail, MapPin, X, ShieldCheck, Code2, CheckCircle2, ExternalLink,
 import { Language, PageId, AgencyInfo } from '../types';
 import { getTranslation } from '../data/translations';
 import { Logo } from './Logo';
+import { toBengaliDigits } from '../utils/formatters';
 
 interface FooterProps {
   lang: Language;
@@ -194,30 +195,35 @@ export const Footer: React.FC<FooterProps> = ({
                   <Phone className="w-6 h-6 animate-pulse" />
                 </div>
                 <div>
-                  <span className="text-[11px] font-bold text-emerald-300 uppercase tracking-wider block">
+                  <span className="text-xs sm:text-sm font-bold text-emerald-300 uppercase tracking-wider block mb-0.5">
                     {lang === 'bn' ? 'হটলাইন সার্বক্ষণিক' : '24/7 Hotline'}
                   </span>
                   <div className="flex items-baseline gap-2 flex-wrap">
                     <a
                       href={`tel:${agencyInfo.hotline}`}
-                      className="text-2xl sm:text-3xl font-extrabold text-white tracking-wider hover:text-[#D4AF37] transition-colors font-sans"
+                      className="text-3xl sm:text-4xl font-extrabold text-white tracking-wider hover:text-[#D4AF37] transition-colors font-sans"
                     >
-                      {agencyInfo.hotline}
+                      {lang === 'bn' ? toBengaliDigits(agencyInfo.hotline) : agencyInfo.hotline}
                     </a>
-                    <span className="text-xs sm:text-sm font-semibold text-[#D4AF37] font-bengali">
+                    <span className="text-sm sm:text-base font-bold text-[#D4AF37] font-bengali">
                       ({lang === 'bn' ? 'হোয়াটসঅ্যাপ & ইমো' : 'WhatsApp & Imo'})
                     </span>
                   </div>
                 </div>
               </div>
 
-              <div className="pt-3 border-t border-emerald-800/80 text-xs text-emerald-200/90 flex flex-col gap-1 font-sans">
-                <p className="text-xs sm:text-sm">
-                  <strong className="text-emerald-300">{lang === 'bn' ? 'বিকল্প যোগাযোগ:' : 'Alt Phone:'}</strong>{' '}
-                  <a href="tel:01785970008" className="hover:text-[#D4AF37] transition-colors underline">01785970008-9</a>,{' '}
-                  <a href="tel:01920825145" className="hover:text-[#D4AF37] transition-colors underline">01920825145</a>
+              <div className="pt-3 border-t border-emerald-800/80 text-sm text-emerald-200/90 flex flex-col gap-1.5 font-sans">
+                <p className="text-sm sm:text-base font-medium">
+                  <strong className="text-emerald-300 font-bold">{lang === 'bn' ? 'বিকল্প যোগাযোগ:' : 'Alt Phone:'}</strong>{' '}
+                  <a href="tel:01785970008" className="hover:text-[#D4AF37] transition-colors font-bold underline">
+                    {lang === 'bn' ? toBengaliDigits('01785970008') + '-৯' : '01785970008-9'}
+                  </a>
+                  ,{' '}
+                  <a href="tel:01920825145" className="hover:text-[#D4AF37] transition-colors font-bold underline">
+                    {lang === 'bn' ? toBengaliDigits('01920825145') : '01920825145'}
+                  </a>
                 </p>
-                <p className="text-[11px] text-emerald-400/80 mt-1">
+                <p className="text-xs sm:text-sm text-emerald-300/90 mt-0.5 leading-relaxed">
                   {lang === 'bn' ? agencyInfo.addressBn : agencyInfo.addressEn}
                 </p>
               </div>

@@ -5,6 +5,7 @@ import {
 } from 'lucide-react';
 import { Language } from '../types';
 import { StandardPackageItem } from '../utils/packageAdapter';
+import { toBengaliDigits } from '../utils/formatters';
 
 interface PackageDetailViewProps {
   lang: Language;
@@ -448,10 +449,10 @@ export const PackageDetailView: React.FC<PackageDetailViewProps> = ({
 
               <a
                 href="tel:01627737741"
-                className="w-full bg-slate-100 hover:bg-slate-200 text-slate-800 py-2.5 px-4 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 font-sans font-bold"
+                className="w-full bg-slate-100 hover:bg-slate-200 text-slate-800 py-3 px-4 rounded-xl text-sm font-extrabold transition-all flex items-center justify-center gap-2 font-sans"
               >
                 <Phone className="w-4 h-4 text-[#0D472B]" />
-                <span>01627737741</span>
+                <span>{isBn ? toBengaliDigits('01627737741') : '01627737741'}</span>
               </a>
             </div>
 
