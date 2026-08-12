@@ -18,7 +18,7 @@ export const translations = {
     navBlog: 'ব্লগ',
     navContact: 'যোগাযোগ',
     navAdmin: 'এডমিন প্যানেল',
-    bookNowCTA: 'বুকিং করুন',
+    bookNowCTA: 'যোগাযোগ করুন',
     contactCTA: 'যোগাযোগ করুন',
 
     // Hero Section
@@ -69,7 +69,7 @@ export const translations = {
     hajjAnnouncement: '২০২৭ সালের পবিত্র হজ্ব প্যাকেজের বুকিং চলছে।',
     regFeeLabel: 'রেজিস্ট্রেশন ফি:',
     regFeeAmount: 'মাত্র ৩০,০০০ টাকা',
-    registerNowCTA: 'এখনই রেজিস্ট্রেশন করুন',
+    registerNowCTA: 'এখনই রেজিস্ট্রেশন করতে যোগাযোগ করুন',
 
     // Air Tickets Page
     airTicketHeading: 'দেশ-বিদেশের টিকিট এখন ঘরে বসেই',
@@ -135,15 +135,15 @@ export const translations = {
     copyrightText: 'সর্বস্বত্ব সংরক্ষিত © ২০২৬ ওয়ার্ল্ড হেরিটেজ ট্যুর্স অ্যান্ড ট্রাভেলস।',
 
     // Common Modal / Form Labels
-    bookModalTitle: 'প্যাকেজ বুকিং ও ইনকোয়ারি ফর্ম',
+    bookModalTitle: 'প্যাকেজ বুকিং ও যোগাযোগের তথ্য',
     close: 'বন্ধ করুন',
-    successMsg: 'ধন্যবাদ! আপনার তথ্য সফলভাবে জমা নেওয়া হয়েছে। আমাদের প্রতিনিধি শীঘ্রই আপনার সাথে যোগাযোগ করবেন।',
+    successMsg: 'ধন্যবাদ! আমাদের প্রতিনিধি শীঘ্রই আপনার সাথে যোগাযোগ করবেন।',
     priceBDTLabel: 'টাকা',
     perPerson: 'প্রতি জন',
     days: 'দিন',
     nights: 'রাত',
     viewDetails: 'বিস্তারিত দেখুন',
-    bookPackage: 'প্যাকেজ বুক করুন',
+    bookPackage: 'এখনই বুক করতে যোগাযোগ করুন (Select Offer)',
     makkahHotel: 'মক্কা হোটেল',
     madinahHotel: 'মদিনা হোটেল',
     distance: 'দূরত্ব',

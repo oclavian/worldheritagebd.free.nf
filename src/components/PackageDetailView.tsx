@@ -426,7 +426,7 @@ export const PackageDetailView: React.FC<PackageDetailViewProps> = ({
                 onClick={handleBooking}
                 className="w-full bg-[#8B0000] hover:bg-[#6A0000] text-white py-4 px-6 rounded-2xl font-black text-sm sm:text-base transition-all shadow-xl hover:shadow-2xl active:scale-95 border border-red-900 flex items-center justify-center gap-2"
               >
-                <span>{isBn ? 'এখনই বুক করুন (Select Offer)' : 'Select Offer / Book Now'}</span>
+                <span>{isBn ? 'এখনই বুক করতে যোগাযোগ করুন (Select Offer)' : 'Contact to Book Now (Select Offer)'}</span>
               </button>
             )}
 

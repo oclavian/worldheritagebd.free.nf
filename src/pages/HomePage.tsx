@@ -191,7 +191,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                 onClick={() => onOpenBookingModal('Hajj 2027', lang === 'bn' ? '২০২৭ সালের পবিত্র হজ্ব প্যাকেজ' : '2027 Holy Hajj Package Registration')}
                 className="w-full sm:w-auto bg-[#D4AF37] hover:bg-[#C59B27] text-emerald-950 font-black px-7 py-3.5 rounded-2xl text-sm sm:text-base shadow-xl flex items-center justify-center gap-2 transform active:scale-95 transition-all group"
               >
-                <span>🕋 {lang === 'bn' ? 'এখনই রেজিস্ট্রেশন করুন' : 'Register Now'}</span>
+                <span>🕋 {lang === 'bn' ? 'এখনই রেজিস্ট্রেশন করতে যোগাযোগ করুন' : 'Contact to Register Now'}</span>
                 <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>
 
