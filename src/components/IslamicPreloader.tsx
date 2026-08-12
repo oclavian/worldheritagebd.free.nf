@@ -113,7 +113,7 @@ export const IslamicPreloader: React.FC<IslamicPreloaderProps> = ({ lang, onFini
               className="space-y-1 mb-7"
             >
               <h1 className="text-xl sm:text-2xl font-black text-white tracking-wide font-bengali drop-shadow-md">
-                {lang === 'bn' ? 'ওয়ার্ল্ড হেরিটেজ ট্যুরস অ্যান্ড ট্রাভেলস' : 'WORLD HERITAGE TOURS & TRAVELS'}
+                {lang === 'bn' ? 'ওয়ার্ল্ড হেরিটেজ ট্যুর্স অ্যান্ড ট্রাভেলস' : 'WORLD HERITAGE TOURS & TRAVELS'}
               </h1>
               <p className="text-xs sm:text-sm font-medium text-[#D4AF37] font-bengali tracking-wide opacity-90">
                 {lang === 'bn' 

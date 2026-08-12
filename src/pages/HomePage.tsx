@@ -181,7 +181,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               {/* Description */}
               <p className="text-xs sm:text-sm text-emerald-100/90 leading-relaxed font-sans">
                 {lang === 'bn' 
-                  ? 'ওয়ার্ল্ড হেরিটেজ ট্যুরস অ্যান্ড ট্রাভেলস এর তত্ত্বাবধানে সরকারি নিয়ম মেনে ২০২৭ সালের হজ্ব রেজিস্ট্রেশন শুরু হয়েছে। অভিজ্ঞতা, নির্ভরযোগ্যতা ও সুনামের সাথে পবিত্র হজ্ব পালন করতে আজই আপনার আসন নিশ্চিত করুন।'
+                  ? 'ওয়ার্ল্ড হেরিটেজ ট্যুর্স অ্যান্ড ট্রাভেলস এর তত্ত্বাবধানে সরকারি নিয়ম মেনে ২০২৭ সালের হজ্ব রেজিস্ট্রেশন শুরু হয়েছে। অভিজ্ঞতা, নির্ভরযোগ্যতা ও সুনামের সাথে পবিত্র হজ্ব পালন করতে আজই আপনার আসন নিশ্চিত করুন।'
                   : 'Hajj registration for 2027 has started under World Heritage Tours & Travels following government regulations. Confirm your seat today to perform holy Hajj with experience, reliability, and trust.'
                 }
               </p>
@@ -470,7 +470,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               {
                 titleBn: 'ইতিহাস ও এজেন্সী পরিচিতি (Agency Background & History)',
                 titleEn: 'Agency History & Background',
-                contentBn: 'ওয়ার্ল্ড হেরিটেজ ট্যুরস অ্যান্ড ট্রাভেলস বিগত দীর্ঘ সময় ধরে সততা ও বিশ্বস্ততার সাথে বাংলাদেশ থেকে উমরাহ্, হজ্ব ও আন্তর্জাতিক ফ্লাইট সেবা প্রদান করে আসছে। আমাদের প্রধান লক্ষ্য হাজীদের সর্বোচ্চ খেদমত প্রদান করা।',
+                contentBn: 'ওয়ার্ল্ড হেরিটেজ ট্যুর্স অ্যান্ড ট্রাভেলস বিগত দীর্ঘ সময় ধরে সততা ও বিশ্বস্ততার সাথে বাংলাদেশ থেকে উমরাহ্, হজ্ব ও আন্তর্জাতিক ফ্লাইট সেবা প্রদান করে আসছে। আমাদের প্রধান লক্ষ্য হাজীদের সর্বোচ্চ খেদমত প্রদান করা।',
                 contentEn: 'World Heritage Tours & Travels has been faithfully serving pilgrims and travelers from Bangladesh with top-rated flight and pilgrimage packages.'
               },
               {

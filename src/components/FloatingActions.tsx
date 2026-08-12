@@ -10,7 +10,7 @@ interface FloatingActionsProps {
 export const FloatingActions: React.FC<FloatingActionsProps> = ({ lang, agencyInfo }) => {
   const whatsappUrl = `https://wa.me/${agencyInfo.whatsappNumber}?text=${encodeURIComponent(
     lang === 'bn' 
-      ? 'আসসালামু আলাইকুম, ওয়ার্ল্ড হেরিটেজ ট্যুরস অ্যান্ড ট্রাভেলস এর সেবা সম্পর্কে জানতে চাই।'
+      ? 'আসসালামু আলাইকুম, ওয়ার্ল্ড হেরিটেজ ট্যুর্স অ্যান্ড ট্রাভেলস এর সেবা সম্পর্কে জানতে চাই।'
       : 'Assalamu Alaikum, I would like to inquire about World Heritage Tours & Travels packages.'
   )}`;
 

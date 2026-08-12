@@ -10,7 +10,7 @@ const seoData: Record<PageId, Record<Language, SeoInfo>> = {
   home: {
     bn: {
       title: 'World Heritage Tours & Travels | বিশ্বস্ত হজ্ব, উমরাহ্ ও এয়ার টিকিট এজেন্সি',
-      description: 'ওয়ার্ল্ড হেরিটেজ ট্যুরস অ্যান্ড ট্রাভেলস - সাশ্রয়ী মূল্যে পবিত্র হজ্ব, উমরাহ্ প্যাকেজ, আন্তর্জাতিক এয়ার টিকিট ও নির্ভরযোগ্য ভিসা প্রসেসিং সেবা।',
+      description: 'ওয়ার্ল্ড হেরিটেজ ট্যুর্স অ্যান্ড ট্রাভেলস - সাশ্রয়ী মূল্যে পবিত্র হজ্ব, উমরাহ্ প্যাকেজ, আন্তর্জাতিক এয়ার টিকিট ও নির্ভরযোগ্য ভিসা প্রসেসিং সেবা।',
     },
     en: {
       title: 'World Heritage Tours & Travels | Trusted Hajj, Umrah & Travel Agency',

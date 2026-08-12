@@ -61,7 +61,7 @@ export const HajjPage: React.FC<HajjPageProps> = ({
 
           <p className="text-sm sm:text-base text-emerald-100/90 leading-relaxed max-w-2xl">
             {lang === 'bn'
-              ? 'ওয়ার্ল্ড হেরিটেজ ট্যুরস অ্যান্ড ট্রাভেলস এর তত্ত্বাবধানে সরকারি নিয়ম মেনে ২০২৭ সালের হজ্ব রেজিস্ট্রেশন শুরু হয়েছে। অভিজ্ঞতা, নির্ভরযোগ্যতা ও সুনামের সাথে পবিত্র হজ্ব পালন করতে আজই আপনার আসন নিশ্চিত করুন।'
+              ? 'ওয়ার্ল্ড হেরিটেজ ট্যুর্স অ্যান্ড ট্রাভেলস এর তত্ত্বাবধানে সরকারি নিয়ম মেনে ২০২৭ সালের হজ্ব রেজিস্ট্রেশন শুরু হয়েছে। অভিজ্ঞতা, নির্ভরযোগ্যতা ও সুনামের সাথে পবিত্র হজ্ব পালন করতে আজই আপনার আসন নিশ্চিত করুন।'
               : 'Official Hajj 2027 registration is open under Ministry of Religious Affairs guidelines. Secure your pre-registration serial today with total trust and peace of mind.'
             }
           </p>

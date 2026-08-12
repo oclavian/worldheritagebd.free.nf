@@ -3,8 +3,8 @@ import { Language } from '../types';
 export const translations = {
   bn: {
     // Brand & Slogan
-    agencyName: 'World Heritage Tours & Travels',
-    tagline: 'Your Trusted Travel Partner',
+    agencyName: 'ওয়ার্ল্ড হেরিটেজ ট্যুর্স অ্যান্ড ট্রাভেলস',
+    tagline: 'আপনার বিশ্বস্ত ভ্রমণ সঙ্গী',
     subTagline: 'পবিত্র হজ্ব, উমরাহ্, এয়ার টিকিট ও বিশ্বব্যাপী নিরাপদ ভ্রমণ সেবা',
 
     // Navigation
@@ -12,7 +12,7 @@ export const translations = {
     navUmrah: 'উমরাহ্ প্যাকেজ',
     navHajj: 'হজ্ব প্যাকেজ',
     navAirTickets: 'এয়ার টিকিট',
-    navToursVisas: 'ট্যুর ও ভিসা',
+    navToursVisas: 'ট্যুর্স ও ভিসা',
     navGallery: 'গ্যালারি',
     navReviews: 'রিভিউ',
     navBlog: 'ব্লগ',
@@ -39,7 +39,7 @@ export const translations = {
 
     // Agency Intro / Trust
     introTitle: 'কেন আমাদের পছন্দ করবেন?',
-    introSubtitle: 'ওয়ার্ল্ড হেরিটেজ ট্যুরস অ্যান্ড ট্রাভেলস — বিশ্বস্ততা ও নিরাপত্তার সাথে আপনার ধর্মীয় ও সাধারণ ভ্রমণের সঠিক মাধ্যম।',
+    introSubtitle: 'ওয়ার্ল্ড হেরিটেজ ট্যুর্স অ্যান্ড ট্রাভেলস — বিশ্বস্ততা ও নিরাপত্তার সাথে আপনার ধর্মীয় ও সাধারণ ভ্রমণের সঠিক মাধ্যম।',
     introText: 'আমরা সুদীর্ঘ অভিজ্ঞতার সাথে শরীয়তসম্মত উমরাহ্, পবিত্র হজ্ব পালন এবং দেশ-বিদেশের সাশ্রয়ী এয়ার টিকিট ও আকর্ষণীয় ট্যুর প্যাকেজ পরিবেশন করছি। প্রতিটি হাজি এবং যাত্রীর সর্বোচ্চ স্বাচ্ছন্দ্য ও নিরাপত্তা নিশ্চিত করা আমাদের মূল অঙ্গীকার।',
 
     // Features Section (আমাদের বৈশিষ্ট্য)
@@ -132,7 +132,7 @@ export const translations = {
     // Footer
     footerQuickLinks: 'দ্রুত লিংক',
     footerServices: 'সেবাসমূহ',
-    copyrightText: 'সর্বস্বত্ব সংরক্ষিত © ২০২৬ ওয়ার্ল্ড হেরিটেজ ট্যুরস অ্যান্ড ট্রাভেলস।',
+    copyrightText: 'সর্বস্বত্ব সংরক্ষিত © ২০২৬ ওয়ার্ল্ড হেরিটেজ ট্যুর্স অ্যান্ড ট্রাভেলস।',
 
     // Common Modal / Form Labels
     bookModalTitle: 'প্যাকেজ বুকিং ও ইনকোয়ারি ফর্ম',

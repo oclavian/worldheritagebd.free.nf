@@ -20,7 +20,7 @@ const _pLoad_ = {
   roleEn: "FCA9OjVlDzpTVBJhMip0HiM1LzZRUUZfOCZ0Gj0iKjFXVUAWcWgQNjQsNz5eEHNENCA9KzYmNw==",
   roleBn: "t+7Ov/X6o/mZENKQxKjzwLPixL+UnBLW8c20+N6l5fDSlozW8eK0+N6l5e3Slo3W8d20+NSl5enSlpoWt+7Tv/Xbo/i/0JSqt+7rv/Xto/mN0JWpt+7qv/X1Y7+UoxLW8em0+eyl5cPSlo3W8de0+e2l5e0S0JSwt+7kv/TIo/mn0JSJt+7Lv/TCo/mn0JW7t+7L",
   bioEn: "GC4yNjAsIjMSfFdXM2gQNjQsNz5eEHNENCA9KzYmN38UEHRDOyR5DCckIDQSZ1dUdwkkLz8sID5GWV1YdwwxKTYpLC9XQhJQODp0CDw3LzsSeFdEPjw1ODZlFzBHQkEWcWgALTIzJjNBHhJyMjs9OD0gJ39FWUZedy0sKyEgLjoSQ1dVIjo9KyppYzxHQ0ZZOmg4PioqNisSVVxRPiYxLH9lIjFWEFZPOSk5NjBlMTpBQF1YJCEiOj0gMCwcbio=",
-  bioBn: "t+7Hv/Tao/mM0JSGt+/Zv/X3o/i/0JSXd6jy5rPixL+UgNKQ6KjywLPixL+UrBLW8de0+N6l5fDSl7PW8fi0+etlo/m30JW7t+77v/X7o/ma0JW7t+71f7Pj3L+VvdKQ56jy4bPj7r+Vt9KQ5ajy53Ol5czSl63W8M+0+f+l5efSlozW8c+0+cyl5NjSloIWt+7sv/X6o/mn0JSJt+7dv/X1o/mTENKQzajy4LPj6H/SlqHW8Ne0+NSl5fMS0JSzt+/Zv/Xqo/mM0JSct+/Zv/X3o/mN0JSjt+/Tv/Xzo/maENKQ0KjywbPizr+UrNKQ6Kjy97Pj/L+Vr9KQ6ajy73Ol5cwS0JSXt+7rv/XZo/mN0JSpt+7qv/X3Y7+UttKQ56jz0rPj1r+Uj9KQyKjz2LPj1r+VvdKQyKjx+w==",
+  bioBn: "t+7Hv/Tao/mM0JSGt+/Zv/X3o/i/0JSXd6jy5rPixL+UgNKQ6KjywLPixL+UrBLW8de0+N6l5fDSl7PW8fi0+N6l5ecS0JSzt+/Zv/Xqo/mM0JSet+/Zv/XkY7+Ur9KR2qjy77Pj/b+UndKR0Kjy7bPj+3/SlqHW8Ne0+NSl5fPSlorW8fa0+dSl5cDSl7XW8fh0v/X9o/mN0JSjt+7rv/XMo/mC0JSXd6jyxbPj/L+UmxLW8du0+Myl5NjSlp4Wt+7Rv/TIo/md0JSIt+7+v/TIo/mA0JSJt+7Bv/TCo/mE0JSed6jy2LPj3b+VvdKQy6jy4LPj67+Uj9KRyKjy4bPj83/SlqEWt+71v/X6o/mu0JSJt+7Lv/X7o/mAENKQ0ajy77Pizr+UpdKQ6KjywLPixL+UpdKR2qjywLPg5w==",
   imgUrl: "PzwgLyB/bHBeWAEYMCc7OD8gNixXQlFZOTwxMSdrIDBfH1YZZh8XDhUrDgsAWwVFEx0sCh0kCyhdZ3hiIjEXOgwwdAdU"
 };
 
@@ -110,7 +110,7 @@ export const Footer: React.FC<FooterProps> = ({
 
             <p className="text-xs text-emerald-200/80 leading-relaxed">
               {lang === 'bn' 
-                ? 'আমরা ওয়ার্ল্ড হেরিটেজ, বিশ্বস্ততার বন্ধনে গড়ি আপনার সফর। মানবতা ও ধর্মীয় সেবায় আপনাদের পাশে আছি সর্বদা।'
+                ? 'আমরা ওয়ার্ল্ড হেরিটেজ ট্যুর্স অ্যান্ড ট্রাভেলস, বিশ্বস্ততার বন্ধনে গড়ি আপনার সফর। মানবতা ও ধর্মীয় সেবায় আপনাদের পাশে আছি সর্বদা।'
                 : 'World Heritage Tours & Travels - Building bonds of trust for your holy pilgrimage and travel.'
               }
             </p>

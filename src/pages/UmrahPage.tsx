@@ -56,7 +56,7 @@ export const UmrahPage: React.FC<UmrahPageProps> = ({
 
           <p className="text-sm sm:text-base text-emerald-100/90 leading-relaxed">
             {lang === 'bn' 
-              ? 'ওয়ার্ল্ড হেরিটেজ ট্যুরস অ্যান্ড ট্রাভেলস এর তত্ত্বাবধানে সাশ্রয়ী মূল্যে এবং সর্বোত্তম সেবায় উমরাহ্ পালন করুন। আমাদের প্রতিটি প্যাকেজে অভিজ্ঞ মোয়াল্লেম, হারামের কাছে মানসম্মত হোটেল ও রুচিসম্মত বাংলা খাবারের সুব্যবস্থা রাখা হয়েছে।'
+              ? 'ওয়ার্ল্ড হেরিটেজ ট্যুর্স অ্যান্ড ট্রাভেলস এর তত্ত্বাবধানে সাশ্রয়ী মূল্যে এবং সর্বোত্তম সেবায় উমরাহ্ পালন করুন। আমাদের প্রতিটি প্যাকেজে অভিজ্ঞ মোয়াল্লেম, হারামের কাছে মানসম্মত হোটেল ও রুচিসম্মত বাংলা খাবারের সুব্যবস্থা রাখা হয়েছে।'
               : 'Perform your holy Umrah under expert guidance at affordable pricing. Every package includes experienced Moallem support, close-to-Haram hotels, and quality Bengali catering.'
             }
           </p>
