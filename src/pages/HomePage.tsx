@@ -598,6 +598,9 @@ export const HomePage: React.FC<HomePageProps> = ({
             >
               <Phone className="w-4 h-4" />
               <span>{agencyInfo.hotline}</span>
+              <span className="text-xs font-semibold text-emerald-900/90 font-bengali">
+                ({lang === 'bn' ? 'হোয়াটসঅ্যাপ & ইমো' : 'WhatsApp & Imo'})
+              </span>
             </a>
 
             <button

@@ -100,7 +100,7 @@ export const Footer: React.FC<FooterProps> = ({
               <Logo className="w-13 h-13 drop-shadow-md" />
               <div>
                 <h3 className="text-lg font-extrabold text-white font-sans">
-                  {lang === 'bn' ? agencyInfo.nameBn : agencyInfo.nameEn}
+                  {lang === 'bn' ? agencyInfo.nameBn.replace('ট্যুরস', 'ট্যুর্স') : agencyInfo.nameEn}
                 </h3>
                 <p className="text-xs font-semibold text-[#D4AF37] font-sans">
                   {lang === 'bn' ? agencyInfo.taglineBn : agencyInfo.taglineEn}
@@ -197,19 +197,24 @@ export const Footer: React.FC<FooterProps> = ({
                   <span className="text-[11px] font-bold text-emerald-300 uppercase tracking-wider block">
                     {lang === 'bn' ? 'হটলাইন সার্বক্ষণিক' : '24/7 Hotline'}
                   </span>
-                  <a
-                    href={`tel:${agencyInfo.hotline}`}
-                    className="text-2xl sm:text-3xl font-extrabold text-white tracking-wider hover:text-[#D4AF37] transition-colors font-sans"
-                  >
-                    {agencyInfo.hotline}
-                  </a>
+                  <div className="flex items-baseline gap-2 flex-wrap">
+                    <a
+                      href={`tel:${agencyInfo.hotline}`}
+                      className="text-2xl sm:text-3xl font-extrabold text-white tracking-wider hover:text-[#D4AF37] transition-colors font-sans"
+                    >
+                      {agencyInfo.hotline}
+                    </a>
+                    <span className="text-xs sm:text-sm font-semibold text-[#D4AF37] font-bengali">
+                      ({lang === 'bn' ? 'হোয়াটসঅ্যাপ & ইমো' : 'WhatsApp & Imo'})
+                    </span>
+                  </div>
                 </div>
               </div>
 
               <div className="pt-3 border-t border-emerald-800/80 text-xs text-emerald-200/90 flex flex-col gap-1 font-sans">
                 <p className="text-xs sm:text-sm">
                   <strong className="text-emerald-300">{lang === 'bn' ? 'বিকল্প যোগাযোগ:' : 'Alt Phone:'}</strong>{' '}
-                  <a href="tel:01785970008" className="hover:text-[#D4AF37] transition-colors underline">01785970008</a>,{' '}
+                  <a href="tel:01785970008" className="hover:text-[#D4AF37] transition-colors underline">01785970008-9</a>,{' '}
                   <a href="tel:01920825145" className="hover:text-[#D4AF37] transition-colors underline">01920825145</a>
                 </p>
                 <p className="text-[11px] text-emerald-400/80 mt-1">

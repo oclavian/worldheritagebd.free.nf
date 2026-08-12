@@ -67,7 +67,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                 World Heritage Headquarters
               </span>
               <h2 className="text-xl font-bold text-[#0D472B]">
-                {lang === 'bn' ? agencyInfo.nameBn : agencyInfo.nameEn}
+                {lang === 'bn' ? agencyInfo.nameBn.replace('ট্যুরস', 'ট্যুর্স') : agencyInfo.nameEn}
               </h2>
             </div>
 
@@ -91,12 +91,17 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                 </div>
                 <div>
                   <strong className="block text-[#0D472B] font-bold text-xs uppercase">{getTranslation(lang, 'hotlineLabel')}</strong>
-                  <a href={`tel:${agencyInfo.hotline}`} className="text-base font-extrabold text-[#0D472B] hover:underline">
-                    {agencyInfo.hotline}
-                  </a>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <a href={`tel:${agencyInfo.hotline}`} className="text-base font-extrabold text-[#0D472B] hover:underline">
+                      {agencyInfo.hotline}
+                    </a>
+                    <span className="text-xs font-semibold text-amber-600 font-bengali">
+                      ({lang === 'bn' ? 'হোয়াটসঅ্যাপ & ইমো' : 'WhatsApp & Imo'})
+                    </span>
+                  </div>
                   <p className="text-xs text-slate-600 mt-0.5">
                     <strong className="text-[#0D472B]">{lang === 'bn' ? 'বিকল্প যোগাযোগ: ' : 'Alt Phone: '}</strong>
-                    <a href="tel:01785970008" className="hover:underline font-semibold">01785970008</a>,{' '}
+                    <a href="tel:01785970008" className="hover:underline font-semibold">01785970008-9</a>,{' '}
                     <a href="tel:01920825145" className="hover:underline font-semibold">01920825145</a>
                   </p>
                 </div>

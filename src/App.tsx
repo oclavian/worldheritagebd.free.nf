@@ -50,11 +50,29 @@ export default function App() {
   const [agencyInfo, setAgencyInfo] = useState<AgencyInfo>(() => {
     try {
       const saved = localStorage.getItem('wh_agency_info');
-      return saved ? JSON.parse(saved) : initialAgencyInfo;
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        parsed.nameBn = initialAgencyInfo.nameBn;
+        return parsed;
+      }
+      return initialAgencyInfo;
     } catch {
       return initialAgencyInfo;
     }
   });
+
+  // Ensure nameBn is always updated from initialAgencyInfo
+  useEffect(() => {
+    if (agencyInfo.nameBn !== initialAgencyInfo.nameBn) {
+      const updated = { ...agencyInfo, nameBn: initialAgencyInfo.nameBn };
+      setAgencyInfo(updated);
+      try {
+        localStorage.setItem('wh_agency_info', JSON.stringify(updated));
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  }, [agencyInfo]);
 
   const [umrahPackages, setUmrahPackages] = useState<UmrahPackage[]>(() => {
     try {

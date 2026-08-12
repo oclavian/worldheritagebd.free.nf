@@ -67,7 +67,7 @@ export const Header: React.FC<HeaderProps> = ({
 
           <div className="min-w-0">
             <h1 className="text-sm sm:text-lg xl:text-xl font-extrabold text-white tracking-tight leading-tight font-sans truncate">
-              {lang === 'bn' ? agencyInfo.nameBn : agencyInfo.nameEn}
+              {lang === 'bn' ? agencyInfo.nameBn.replace('ট্যুরস', 'ট্যুর্স') : agencyInfo.nameEn}
             </h1>
             <p className="text-[10px] sm:text-xs font-semibold text-[#D4AF37] mt-0.5 sm:mt-1 tracking-wide flex items-center gap-1 font-sans truncate">
               <Sparkles className="w-3 h-3 text-[#D4AF37] inline shrink-0" />
