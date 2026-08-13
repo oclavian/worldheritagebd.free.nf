@@ -68,7 +68,7 @@ export const getDynamicHajjInfo = (customDate?: Date): HajjInfoCycle => {
       bookingStatusBn: `${pYearBn} সালের হজের প্রাথমিক নিবন্ধন শুরু হয়েছে ২৭ জুলাই ২০২৬ এবং নিবন্ধনের শেষ তারিখ ২৪ সেপ্টেম্বর ২০২৬ (ধর্ম মন্ত্রণালয়ের ঘোষণা অনুযায়ী কিছু বিজ্ঞপ্তিতে ২৬ সেপ্টেম্বর ২০২৬ পর্যন্ত সময়সীমা উল্লেখ রয়েছে)।`,
       bookingStatusEn: `Primary registration for Hajj ${primaryYear} started on 27 July 2026 and ends on 24 September 2026 (extended up to 26 September 2026).`,
       startDateBn: '২৭ জুলাই ২০২৬',
-      endDateBn: '২৪ সেপ্টেম্বর ২০২৬ (অথবা ২৬ সেপ্টেম্বর ২০২৬ পর্যন্ত)',
+      endDateBn: '২৪ সেপ্টেম্বর ২০২৬',
       hajjDateBn: `১৫ মে ${pYearBn}`,
       minAgeBn: 'কমপক্ষে ১৫ বছর হতে হবে',
       passportValidityBn: `অন্তত ৩১ ডিসেম্বর ${pYearBn} পর্যন্ত মেয়াদ থাকতে হবে`,

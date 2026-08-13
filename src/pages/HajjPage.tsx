@@ -37,7 +37,7 @@ export const HajjPage: React.FC<HajjPageProps> = ({
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 space-y-12 font-bengali">
       
       {/* Hero Banner with Announcement */}
-      <div>
+      <div className="max-w-3xl mx-auto">
         <HajjAnnouncementCard
           lang={lang}
           onOpenBookingModal={onOpenBookingModal}
