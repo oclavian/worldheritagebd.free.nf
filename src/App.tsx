@@ -17,6 +17,7 @@ import { FloatingActions } from './components/FloatingActions';
 import { BookingModal } from './components/BookingModal';
 import { LightboxModal } from './components/LightboxModal';
 import { IslamicPreloader } from './components/IslamicPreloader';
+import { SecurityGuard } from './components/SecurityGuard';
 
 // Pages
 import { HomePage } from './pages/HomePage';
@@ -311,6 +312,9 @@ export default function App() {
   return (
     <div className={`bg-[#FAF8F5] text-[#1A2E26] flex flex-col min-h-screen w-full max-w-full overflow-x-hidden ${lang === 'bn' ? 'font-bengali' : 'font-english'}`}>
       
+      {/* Security & Content Protection Guard */}
+      <SecurityGuard lang={lang} />
+
       {/* Custom Islamic Preloader */}
       <IslamicPreloader lang={lang} />
 

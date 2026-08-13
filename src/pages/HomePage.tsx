@@ -108,13 +108,13 @@ export const HomePage: React.FC<HomePageProps> = ({
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 text-left">
                 <div className="bg-white/10 backdrop-blur-md p-3 rounded-2xl border border-white/15">
                   <span className="text-xl sm:text-2xl font-black text-[#D4AF37] block font-sans">
-                    {lang === 'bn' ? '১৫,০০০+' : '15,000+'}
+                    {lang === 'bn' ? '৫০০০+' : '5,000+'}
                   </span>
                   <span className="text-[11px] text-emerald-200">{lang === 'bn' ? 'সফল হাজী সেবা' : 'Pilgrims Served'}</span>
                 </div>
                 <div className="bg-white/10 backdrop-blur-md p-3 rounded-2xl border border-white/15">
                   <span className="text-xl sm:text-2xl font-black text-[#D4AF37] block font-sans">
-                    {lang === 'bn' ? '১০+ বছর' : '10+ Years'}
+                    {lang === 'bn' ? '০৭+ বছর' : '07+ Years'}
                   </span>
                   <span className="text-[11px] text-emerald-200">{lang === 'bn' ? 'অভিজ্ঞতা' : 'Experience'}</span>
                 </div>

@@ -101,17 +101,17 @@ export const HajjAnnouncementCard: React.FC<HajjAnnouncementCardProps> = ({
           <div className="grid grid-cols-3 gap-1.5 text-[10px]">
             <div className="bg-emerald-950/80 p-2 rounded-lg border border-emerald-800/80 text-center">
               <span className="text-emerald-300 block font-semibold">{isBn ? 'শুরু' : 'Start'}</span>
-              <span className="text-white font-bold">{hajj2027.startDateBn}</span>
+              <span className="text-white font-bold">{isBn ? hajj2027.startDateBn : hajj2027.startDateEn}</span>
             </div>
 
             <div className="bg-emerald-950/80 p-2 rounded-lg border border-emerald-800/80 text-center">
               <span className="text-amber-400 block font-semibold">{isBn ? 'শেষ তারিখ' : 'Deadline'}</span>
-              <span className="text-amber-200 font-bold">{hajj2027.endDateBn}</span>
+              <span className="text-amber-200 font-bold">{isBn ? hajj2027.endDateBn : hajj2027.endDateEn}</span>
             </div>
 
             <div className="bg-emerald-950/80 p-2 rounded-lg border border-emerald-800/80 text-center">
               <span className="text-emerald-300 block font-semibold">{isBn ? 'সম্ভাব্য হজ' : 'Hajj Date'}</span>
-              <span className="text-[#F3E0A0] font-bold">{hajj2027.hajjDateBn}</span>
+              <span className="text-[#F3E0A0] font-bold">{isBn ? hajj2027.hajjDateBn : hajj2027.hajjDateEn}</span>
             </div>
           </div>
 
@@ -165,7 +165,7 @@ export const HajjAnnouncementCard: React.FC<HajjAnnouncementCardProps> = ({
           <div className="grid grid-cols-2 gap-1.5 text-[10px]">
             <div className="bg-emerald-950/80 p-2 rounded-lg border border-emerald-800/80">
               <span className="text-emerald-300 font-bold block">{isBn ? 'প্রাক-নিবন্ধন ফি:' : 'Fee:'}</span>
-              <span className="text-[#F3E0A0] font-bold">{hajj2028.regFeeBn}</span>
+              <span className="text-[#F3E0A0] font-bold">{isBn ? hajj2028.regFeeBn : hajj2028.regFeeEn}</span>
             </div>
             <div className="bg-emerald-950/80 p-2 rounded-lg border border-emerald-800/80">
               <span className="text-emerald-300 font-bold block">{isBn ? 'মেয়াদ:' : 'Validity:'}</span>
