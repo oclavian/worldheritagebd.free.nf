@@ -2,6 +2,7 @@ import React from 'react';
 import { X, Phone, MessageCircle, MapPin, Sparkles } from 'lucide-react';
 import { Language, BookingInquiry } from '../types';
 import { toBengaliDigits } from '../utils/formatters';
+import { Logo } from './Logo';
 
 interface BookingModalProps {
   isOpen: boolean;
@@ -29,9 +30,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
         {/* Header Bar */}
         <div className="bg-gradient-to-r from-[#0D472B] via-[#053B21] to-[#02180D] text-white p-4 sm:p-5 flex items-center justify-between border-b border-[#D4AF37]/40">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#D4AF37] text-emerald-950 flex items-center justify-center text-xl font-bold shadow-md shrink-0">
-              🕌
-            </div>
+            <Logo className="w-11 h-11 border-2 border-[#D4AF37] bg-white rounded-full p-0.5 shadow-md shrink-0" />
             <div>
               <h3 className="text-base sm:text-lg font-extrabold text-white font-sans tracking-tight">
                 {isBn ? 'সরাসরি যোগাযোগ ও বুকিং তথ্য' : 'Direct Booking & Contact Info'}
