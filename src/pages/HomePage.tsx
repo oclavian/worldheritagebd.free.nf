@@ -163,18 +163,114 @@ export const HomePage: React.FC<HomePageProps> = ({
           </div>
         </div>
 
-        {/* Organic Bottom Wave Divider */}
-        <div className="absolute bottom-0 left-0 right-0 overflow-hidden leading-none z-10 pointer-events-none">
-          <svg 
-            className="relative block w-full h-12 sm:h-20 lg:h-24 text-[#FAF8F5]"
-            viewBox="0 0 1200 120" 
-            preserveAspectRatio="none"
-          >
-            <path 
-              d="M0,0 C150,90 350,-40 500,60 C650,140 900,10 1200,80 L1200,120 L0,120 Z" 
-              fill="currentColor"
-            ></path>
-          </svg>
+        {/* Ultra-High-Quality Animated Liquid Ocean Wave Bottom Divider */}
+        <div className="absolute bottom-0 left-0 right-0 overflow-hidden leading-none z-10 pointer-events-none h-20 sm:h-28 lg:h-36">
+          
+          {/* Floating Gold & Water Particle Droplets */}
+          <div className="absolute inset-0 z-20 pointer-events-none overflow-hidden">
+            <style>{`
+              @keyframes bubbleRise1 {
+                0% { transform: translate(10vw, 100%) scale(0.6); opacity: 0; }
+                50% { opacity: 0.8; }
+                100% { transform: translate(12vw, -20px) scale(1.2); opacity: 0; }
+              }
+              @keyframes bubbleRise2 {
+                0% { transform: translate(35vw, 100%) scale(0.8); opacity: 0; }
+                50% { opacity: 0.9; }
+                100% { transform: translate(32vw, -25px) scale(1.4); opacity: 0; }
+              }
+              @keyframes bubbleRise3 {
+                0% { transform: translate(65vw, 100%) scale(0.5); opacity: 0; }
+                50% { opacity: 0.7; }
+                100% { transform: translate(68vw, -15px) scale(1.1); opacity: 0; }
+              }
+              @keyframes bubbleRise4 {
+                0% { transform: translate(88vw, 100%) scale(0.7); opacity: 0; }
+                50% { opacity: 0.85; }
+                100% { transform: translate(85vw, -30px) scale(1.3); opacity: 0; }
+              }
+              .bubble-1 { animation: bubbleRise1 5s ease-in-out infinite; }
+              .bubble-2 { animation: bubbleRise2 7s ease-in-out infinite 1.5s; }
+              .bubble-3 { animation: bubbleRise3 6s ease-in-out infinite 0.8s; }
+              .bubble-4 { animation: bubbleRise4 8s ease-in-out infinite 2.2s; }
+
+              @keyframes seamlessWaveSlow {
+                0% { transform: translate3d(0, 0, 0); }
+                100% { transform: translate3d(-50%, 0, 0); }
+              }
+              @keyframes seamlessWaveFast {
+                0% { transform: translate3d(-50%, 0, 0); }
+                100% { transform: translate3d(0, 0, 0); }
+              }
+              @keyframes seamlessWaveMid {
+                0% { transform: translate3d(0, 0, 0) scaleY(1); }
+                50% { transform: translate3d(-25%, -3px, 0) scaleY(1.08); }
+                100% { transform: translate3d(-50%, 0, 0) scaleY(1); }
+              }
+
+              .ocean-wave-back {
+                animation: seamlessWaveSlow 22s linear infinite;
+              }
+              .ocean-wave-mid {
+                animation: seamlessWaveFast 15s linear infinite;
+              }
+              .ocean-wave-front {
+                animation: seamlessWaveMid 11s ease-in-out infinite;
+              }
+              .ocean-wave-gold-crest {
+                animation: seamlessWaveMid 11s ease-in-out infinite;
+              }
+            `}</style>
+            
+            <div className="bubble-1 absolute bottom-0 w-2.5 h-2.5 rounded-full bg-[#D4AF37]/80 blur-[0.5px] shadow-[0_0_8px_#D4AF37]" />
+            <div className="bubble-2 absolute bottom-0 w-3 h-3 rounded-full bg-emerald-300/60 blur-[0.5px]" />
+            <div className="bubble-3 absolute bottom-0 w-2 h-2 rounded-full bg-[#F3E0A0]/90 blur-[0.5px] shadow-[0_0_6px_#F3E0A0]" />
+            <div className="bubble-4 absolute bottom-0 w-3.5 h-3.5 rounded-full bg-emerald-200/50 blur-[1px]" />
+          </div>
+
+          {/* SVG Wave Canvas */}
+          <div className="relative w-full h-full">
+            <svg 
+              className="absolute bottom-0 left-0 w-[200%] h-full block text-[#FAF8F5]"
+              viewBox="0 0 2880 120" 
+              preserveAspectRatio="none"
+            >
+              {/* Layer 1: Deep Background Ambient Emerald Wave */}
+              <path 
+                className="ocean-wave-back"
+                fill="#04331d"
+                fillOpacity="0.4"
+                d="M0,45 C360,85 720,15 1080,60 C1260,80 1350,30 1440,45 C1800,85 2160,15 2520,60 C2700,80 2790,30 2880,45 L2880,120 L0,120 Z"
+              />
+
+              {/* Layer 2: Translucent Light Wave */}
+              <path 
+                className="ocean-wave-mid"
+                fill="currentColor"
+                fillOpacity="0.45"
+                d="M0,25 C240,70 480,-10 720,35 C960,80 1200,10 1440,25 C1680,70 1920,-10 2160,35 C2400,80 2640,10 2880,25 L2880,120 L0,120 Z"
+              />
+
+              {/* Layer 3: Main Foreground Ocean Wave (Matches page background) */}
+              <path 
+                className="ocean-wave-front"
+                fill="currentColor"
+                fillOpacity="1"
+                d="M0,35 C300,5 600,75 900,30 C1100,0 1300,60 1440,35 C1740,5 2040,75 2340,30 C2540,0 2740,60 2880,35 L2880,120 L0,120 Z"
+              />
+
+              {/* Layer 4: Golden Shimmer Crest Stroke */}
+              <path 
+                className="ocean-wave-gold-crest"
+                fill="none"
+                stroke="#D4AF37"
+                strokeWidth="2.5"
+                strokeOpacity="0.75"
+                d="M0,35 C300,5 600,75 900,30 C1100,0 1300,60 1440,35 C1740,5 2040,75 2340,30 C2540,0 2740,60 2880,35"
+              />
+            </svg>
+          </div>
+
         </div>
       </section>
 
