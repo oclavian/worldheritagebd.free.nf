@@ -20,6 +20,7 @@ import { PackageCard } from '../components/PackageCard';
 import { PackageDetailView } from '../components/PackageDetailView';
 import { adaptUmrahPackage, adaptHajjPackage, StandardPackageItem } from '../utils/packageAdapter';
 import { toBengaliDigits } from '../utils/formatters';
+import { HajjAnnouncementCard } from '../components/HajjAnnouncementCard';
 
 interface HomePageProps {
   lang: Language;
@@ -151,51 +152,12 @@ export const HomePage: React.FC<HomePageProps> = ({
 
             </div>
 
-            {/* Right Column - 2027 Holy Hajj Package Announcement Card (5 cols) */}
-            <div className="lg:col-span-5 bg-[#022212]/90 backdrop-blur-xl p-6 sm:p-8 rounded-3xl border-2 border-[#D4AF37]/60 shadow-2xl relative space-y-5">
-              
-              {/* Special Announcement Badge */}
-              <div>
-                <span className="inline-block bg-[#D4AF37] text-emerald-950 font-black text-xs px-4 py-1.5 rounded-full shadow-md tracking-wide">
-                  {lang === 'bn' ? 'বিশেষ ঘোষণা' : 'Special Announcement'}
-                </span>
-              </div>
-
-              {/* Title */}
-              <h2 className="text-2xl sm:text-3xl font-black text-white leading-snug font-sans tracking-tight">
-                {lang === 'bn' ? '২০২৭ সালের পবিত্র হজ্ব প্যাকেজ' : '2027 Holy Hajj Package'}
-              </h2>
-
-              {/* Inner Highlight Box */}
-              <div className="border border-emerald-500/40 bg-emerald-900/40 p-4 sm:p-5 rounded-2xl space-y-2">
-                <p className="text-sm sm:text-base font-bold text-[#F3E0A0] leading-snug">
-                  {lang === 'bn' ? '২০২৭ সালের পবিত্র হজ্ব প্যাকেজের বুকিং চলছে।' : 'Booking is ongoing for the 2027 Holy Hajj Package.'}
-                </p>
-                <p className="text-sm sm:text-base font-bold text-white">
-                  {lang === 'bn' ? 'রেজিস্ট্রেশন ফি: ' : 'Registration Fee: '}
-                  <span className="text-[#D4AF37] text-lg sm:text-xl font-black block sm:inline mt-1 sm:mt-0">
-                    {lang === 'bn' ? 'মাত্র ৩০,০০০ টাকা' : 'Only 30,000 BDT'}
-                  </span>
-                </p>
-              </div>
-
-              {/* Description */}
-              <p className="text-xs sm:text-sm text-emerald-100/90 leading-relaxed font-sans">
-                {lang === 'bn' 
-                  ? 'ওয়ার্ল্ড হেরিটেজ ট্যুর্স অ্যান্ড ট্রাভেলস এর তত্ত্বাবধানে সরকারি নিয়ম মেনে ২০২৭ সালের হজ্ব রেজিস্ট্রেশন শুরু হয়েছে। অভিজ্ঞতা, নির্ভরযোগ্যতা ও সুনামের সাথে পবিত্র হজ্ব পালন করতে আজই আপনার আসন নিশ্চিত করুন।'
-                  : 'Hajj registration for 2027 has started under World Heritage Tours & Travels following government regulations. Confirm your seat today to perform holy Hajj with experience, reliability, and trust.'
-                }
-              </p>
-
-              {/* CTA Registration Button */}
-              <button
-                onClick={() => onOpenBookingModal('Hajj 2027', lang === 'bn' ? '২০২৭ সালের পবিত্র হজ্ব প্যাকেজ' : '2027 Holy Hajj Package Registration')}
-                className="w-full sm:w-auto bg-[#D4AF37] hover:bg-[#C59B27] text-emerald-950 font-black px-7 py-3.5 rounded-2xl text-sm sm:text-base shadow-xl flex items-center justify-center gap-2 transform active:scale-95 transition-all group"
-              >
-                <span>🕋 {lang === 'bn' ? 'এখনই রেজিস্ট্রেশন করতে যোগাযোগ করুন' : 'Contact to Register Now'}</span>
-                <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </button>
-
+            {/* Right Column - Dynamic Hajj Announcement Card (5 cols) */}
+            <div className="lg:col-span-5">
+              <HajjAnnouncementCard
+                lang={lang}
+                onOpenBookingModal={onOpenBookingModal}
+              />
             </div>
 
           </div>

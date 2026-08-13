@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Phone, Mail, MapPin, Send, CheckCircle2, Clock, Building2, ShieldCheck, MessageCircle } from 'lucide-react';
+import { Phone, Mail, MapPin, Clock, ShieldCheck, MessageCircle } from 'lucide-react';
 import { Language, AgencyInfo, BookingInquiry } from '../types';
 import { getTranslation } from '../data/translations';
 import { toBengaliDigits } from '../utils/formatters';
+import { TeamAlbum } from '../components/TeamAlbum';
 
 interface ContactPageProps {
   lang: Language;
@@ -13,31 +14,7 @@ interface ContactPageProps {
 export const ContactPage: React.FC<ContactPageProps> = ({
   lang,
   agencyInfo,
-  onSaveInquiry,
 }) => {
-  const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
-  const [service, setService] = useState('Umrah');
-  const [message, setMessage] = useState('');
-  const [submitted, setSubmitted] = useState(false);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!name || !phone) return;
-
-    onSaveInquiry({
-      customerName: name,
-      phone,
-      email,
-      serviceType: service as any,
-      message,
-      travelersCount: 1,
-    });
-
-    setSubmitted(true);
-  };
-
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 space-y-12 font-bengali">
       
@@ -157,120 +134,14 @@ export const ContactPage: React.FC<ContactPageProps> = ({
 
           <div className="bg-emerald-50 p-4 rounded-2xl border border-emerald-200 text-xs text-emerald-950 flex items-center gap-2">
             <ShieldCheck className="w-5 h-5 text-[#0D472B] shrink-0" />
-            <span>{lang === 'bn' ? 'আপনার ব্যক্তিগত বার্তাটি সর্বোচ্চ নিরাপত্তার সাথে সংরক্ষিত থাকবে।' : 'Your inquiries are handled with strict privacy.'}</span>
+            <span>{lang === 'bn' ? 'আপনার প্রয়োজনীয় যেকোনো তথ্যের জন্য সরাসরি আমাদের অফিসে আমন্ত্রিত।' : 'Visit our office anytime for personal travel assistance.'}</span>
           </div>
 
         </div>
 
-        {/* Right Column: Contact Form */}
+        {/* Right Column: Team & Moallems Album */}
         <div className="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-8 border-2 border-[#E6DEC8] shadow-sm space-y-6">
-          <div className="border-b border-slate-100 pb-3">
-            <h2 className="text-xl font-bold text-[#0D472B]">
-              {lang === 'bn' ? 'আমাদের বার্তা পাঠান' : 'Send Us a Message'}
-            </h2>
-            <p className="text-xs text-slate-600 mt-1">
-              {lang === 'bn' ? 'নিচের ফর্মটি পূরণ করে পাঠান, আমাদের প্রতিনিধি অতিসত্বর যোগাযোগ করবেন।' : 'Fill out the form below and our travel advisor will respond promptly.'}
-            </p>
-          </div>
-
-          {submitted ? (
-            <div className="bg-emerald-50 border-2 border-[#D4AF37] p-8 rounded-2xl text-center space-y-3">
-              <CheckCircle2 className="w-12 h-12 text-[#0D472B] mx-auto" />
-              <h3 className="text-xl font-bold text-[#0D472B]">
-                {lang === 'bn' ? 'বার্তা সফলভাবে পাঠানো হয়েছে!' : 'Message Sent Successfully!'}
-              </h3>
-              <p className="text-xs text-slate-700 max-w-md mx-auto leading-relaxed">
-                {getTranslation(lang, 'successMsg')}
-              </p>
-              <button
-                onClick={() => setSubmitted(false)}
-                className="mt-2 bg-[#0D472B] text-white px-5 py-2 rounded-xl font-bold text-xs"
-              >
-                {lang === 'bn' ? 'আরেকটি বার্তা পাঠান' : 'Send Another Message'}
-              </button>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="space-y-4 text-xs sm:text-sm">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block font-bold text-slate-700 mb-1">
-                    {getTranslation(lang, 'formName')} <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-[#0D472B]"
-                  />
-                </div>
-
-                <div>
-                  <label className="block font-bold text-slate-700 mb-1">
-                    {getTranslation(lang, 'formPhone')} <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="tel"
-                    required
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    className="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-[#0D472B]"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block font-bold text-slate-700 mb-1">
-                    {getTranslation(lang, 'formEmail')}
-                  </label>
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-[#0D472B]"
-                  />
-                </div>
-
-                <div>
-                  <label className="block font-bold text-slate-700 mb-1">
-                    {getTranslation(lang, 'formService')}
-                  </label>
-                  <select
-                    value={service}
-                    onChange={(e) => setService(e.target.value)}
-                    className="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-[#0D472B]"
-                  >
-                    <option value="Umrah">{lang === 'bn' ? 'উমরাহ্ প্যাকেজ' : 'Umrah Package'}</option>
-                    <option value="Hajj">{lang === 'bn' ? 'হজ্ব প্যাকেজ ২০২৭' : 'Hajj 2027'}</option>
-                    <option value="Air Ticket">{lang === 'bn' ? 'এয়ার টিকিট' : 'Air Ticket'}</option>
-                    <option value="Tour & Visa">{lang === 'bn' ? 'ট্যুর ও ভিসা' : 'Tour & Visa'}</option>
-                  </select>
-                </div>
-              </div>
-
-              <div>
-                <label className="block font-bold text-slate-700 mb-1">
-                  {getTranslation(lang, 'formMessage')}
-                </label>
-                <textarea
-                  rows={4}
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  className="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-[#0D472B]"
-                ></textarea>
-              </div>
-
-              <button
-                type="submit"
-                className="w-full bg-[#0D472B] hover:bg-[#053B21] text-white py-3 rounded-xl font-bold text-sm shadow-md transition-all border border-[#D4AF37] flex items-center justify-center gap-2"
-              >
-                <Send className="w-4 h-4 text-[#D4AF37]" />
-                <span>{getTranslation(lang, 'sendMessageBtn')}</span>
-              </button>
-            </form>
-          )}
-
+          <TeamAlbum lang={lang} />
         </div>
 
       </div>

@@ -5,6 +5,7 @@ import { getTranslation } from '../data/translations';
 import { PackageCard } from '../components/PackageCard';
 import { PackageDetailView } from '../components/PackageDetailView';
 import { adaptHajjPackage, StandardPackageItem } from '../utils/packageAdapter';
+import { HajjAnnouncementCard } from '../components/HajjAnnouncementCard';
 
 interface HajjPageProps {
   lang: Language;
@@ -36,47 +37,11 @@ export const HajjPage: React.FC<HajjPageProps> = ({
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 space-y-12 font-bengali">
       
       {/* Hero Banner with Announcement */}
-      <div className="bg-gradient-to-br from-[#052917] via-[#0D472B] to-[#053B21] text-white rounded-3xl p-6 sm:p-12 border-2 border-[#D4AF37] relative shadow-2xl overflow-hidden">
-        
-        <div className="relative z-10 max-w-4xl space-y-6">
-          <div className="inline-block bg-[#D4AF37] text-emerald-950 font-extrabold text-xs px-4 py-1.5 rounded-full uppercase tracking-wider shadow-md">
-            {lang === 'bn' ? 'বিশেষ ঘোষণা' : 'Special Announcement'}
-          </div>
-
-          <h1 className="text-3xl sm:text-5xl font-extrabold text-white leading-tight font-sans">
-            {getTranslation(lang, 'hajjSpecialTitle')}
-          </h1>
-
-          <div className="bg-white/10 backdrop-blur-md p-5 rounded-2xl border border-[#D4AF37]/50 space-y-3">
-            <p className="text-lg sm:text-xl font-bold text-[#F3E0A0] leading-relaxed">
-              {getTranslation(lang, 'hajjAnnouncement')}
-            </p>
-            <div className="flex flex-wrap items-baseline gap-3">
-              <span className="text-sm text-emerald-100 font-semibold">{getTranslation(lang, 'regFeeLabel')}</span>
-              <span className="text-2xl sm:text-3xl font-extrabold text-[#D4AF37] font-sans">
-                {getTranslation(lang, 'regFeeAmount')}
-              </span>
-            </div>
-          </div>
-
-          <p className="text-sm sm:text-base text-emerald-100/90 leading-relaxed max-w-2xl">
-            {lang === 'bn'
-              ? 'ওয়ার্ল্ড হেরিটেজ ট্যুর্স অ্যান্ড ট্রাভেলস এর তত্ত্বাবধানে সরকারি নিয়ম মেনে ২০২৭ সালের হজ্ব রেজিস্ট্রেশন শুরু হয়েছে। অভিজ্ঞতা, নির্ভরযোগ্যতা ও সুনামের সাথে পবিত্র হজ্ব পালন করতে আজই আপনার আসন নিশ্চিত করুন।'
-              : 'Official Hajj 2027 registration is open under Ministry of Religious Affairs guidelines. Secure your pre-registration serial today with total trust and peace of mind.'
-            }
-          </p>
-
-          <div>
-            <button
-              onClick={() => onOpenBookingModal('Hajj', lang === 'bn' ? '২০২৭ সালের পবিত্র হজ্ব রেজিস্ট্রেশন' : 'Holy Hajj 2027 Registration')}
-              className="bg-[#D4AF37] hover:bg-[#C59B27] text-emerald-950 px-8 py-4 rounded-2xl font-extrabold text-base shadow-xl hover:shadow-2xl transition-all transform active:scale-95 border border-white/20 flex items-center gap-3"
-            >
-              <span>🕋 {getTranslation(lang, 'registerNowCTA')}</span>
-              <ChevronRight className="w-5 h-5 text-emerald-950" />
-            </button>
-          </div>
-        </div>
-
+      <div>
+        <HajjAnnouncementCard
+          lang={lang}
+          onOpenBookingModal={onOpenBookingModal}
+        />
       </div>
 
       {/* Featured Hajj Post / Package Card (Akij Air Style) */}
