@@ -54,6 +54,7 @@ export default function App() {
       if (saved) {
         const parsed = JSON.parse(saved);
         parsed.nameBn = initialAgencyInfo.nameBn;
+        parsed.facebookUrl = initialAgencyInfo.facebookUrl;
         return parsed;
       }
       return initialAgencyInfo;
@@ -62,10 +63,10 @@ export default function App() {
     }
   });
 
-  // Ensure nameBn is always updated from initialAgencyInfo
+  // Ensure nameBn and facebookUrl are always updated from initialAgencyInfo
   useEffect(() => {
-    if (agencyInfo.nameBn !== initialAgencyInfo.nameBn) {
-      const updated = { ...agencyInfo, nameBn: initialAgencyInfo.nameBn };
+    if (agencyInfo.nameBn !== initialAgencyInfo.nameBn || agencyInfo.facebookUrl !== initialAgencyInfo.facebookUrl) {
+      const updated = { ...agencyInfo, nameBn: initialAgencyInfo.nameBn, facebookUrl: initialAgencyInfo.facebookUrl };
       setAgencyInfo(updated);
       try {
         localStorage.setItem('wh_agency_info', JSON.stringify(updated));

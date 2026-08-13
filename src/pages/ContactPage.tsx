@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Phone, Mail, MapPin, Clock, ShieldCheck, MessageCircle } from 'lucide-react';
+import { Phone, Mail, MapPin, Clock, ShieldCheck, MessageCircle, Facebook, ExternalLink } from 'lucide-react';
 import { Language, AgencyInfo, BookingInquiry } from '../types';
 import { getTranslation } from '../data/translations';
 import { toBengaliDigits } from '../utils/formatters';
@@ -135,6 +135,40 @@ export const ContactPage: React.FC<ContactPageProps> = ({
           <div className="bg-emerald-50 p-4 rounded-2xl border border-emerald-200 text-xs text-emerald-950 flex items-center gap-2">
             <ShieldCheck className="w-5 h-5 text-[#0D472B] shrink-0" />
             <span>{lang === 'bn' ? 'আপনার প্রয়োজনীয় যেকোনো তথ্যের জন্য সরাসরি আমাদের অফিসে আমন্ত্রিত।' : 'Visit our office anytime for personal travel assistance.'}</span>
+          </div>
+
+          {/* Facebook Official Page Embed Card */}
+          <div className="bg-white rounded-3xl p-5 border-2 border-[#E6DEC8] shadow-sm space-y-3">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-2.5">
+              <div className="flex items-center gap-2 font-bold text-[#0D472B] text-sm">
+                <Facebook className="w-5 h-5 text-[#1877F2] fill-current" />
+                <span>{lang === 'bn' ? 'ফেসবুক অফিসিয়াল পেজ' : 'Official Facebook Page'}</span>
+              </div>
+              <a
+                href={agencyInfo.facebookUrl || "https://www.facebook.com/worldharitage/"}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs font-bold text-[#1877F2] hover:underline flex items-center gap-1 bg-blue-50 px-2.5 py-1 rounded-lg border border-blue-100"
+              >
+                <span>{lang === 'bn' ? 'পেজে যান' : 'Visit Page'}</span>
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+            </div>
+
+            <div className="w-full overflow-hidden rounded-2xl bg-slate-50 border border-slate-200 flex justify-center p-1 min-h-[380px]">
+              <iframe
+                src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fworldharitage%2F&tabs=timeline&width=380&height=380&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true"
+                width="100%"
+                height="380"
+                style={{ border: 'none', overflow: 'hidden', minHeight: '380px' }}
+                scrolling="no"
+                frameBorder="0"
+                allowFullScreen={true}
+                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                title="World Heritage Facebook Page"
+                className="w-full max-w-[400px] rounded-xl"
+              ></iframe>
+            </div>
           </div>
 
         </div>
