@@ -98,48 +98,48 @@ export const HajjAnnouncementCard: React.FC<HajjAnnouncementCardProps> = ({
           </div>
 
           {/* Time Schedule Compact 3 Pill Grid */}
-          <div className="grid grid-cols-3 gap-1.5 text-[10px]">
-            <div className="bg-emerald-950/80 p-2 rounded-lg border border-emerald-800/80 text-center">
-              <span className="text-emerald-300 block font-semibold">{isBn ? 'শুরু' : 'Start'}</span>
-              <span className="text-white font-bold">{isBn ? hajj2027.startDateBn : hajj2027.startDateEn}</span>
+          <div className="grid grid-cols-3 gap-1.5 text-xs sm:text-sm">
+            <div className="bg-emerald-950/80 p-2 sm:p-2.5 rounded-lg border border-emerald-800/80 text-center">
+              <span className="text-emerald-300 block font-semibold text-xs sm:text-[13px]">{isBn ? 'শুরু' : 'Start'}</span>
+              <span className="text-white font-bold text-xs sm:text-sm block mt-0.5">{isBn ? hajj2027.startDateBn : hajj2027.startDateEn}</span>
             </div>
 
-            <div className="bg-emerald-950/80 p-2 rounded-lg border border-emerald-800/80 text-center">
-              <span className="text-amber-400 block font-semibold">{isBn ? 'শেষ তারিখ' : 'Deadline'}</span>
-              <span className="text-amber-200 font-bold">{isBn ? hajj2027.endDateBn : hajj2027.endDateEn}</span>
+            <div className="bg-emerald-950/80 p-2 sm:p-2.5 rounded-lg border border-emerald-800/80 text-center">
+              <span className="text-amber-400 block font-semibold text-xs sm:text-[13px]">{isBn ? 'শেষ তারিখ' : 'Deadline'}</span>
+              <span className="text-amber-200 font-bold text-xs sm:text-sm block mt-0.5">{isBn ? hajj2027.endDateBn : hajj2027.endDateEn}</span>
             </div>
 
-            <div className="bg-emerald-950/80 p-2 rounded-lg border border-emerald-800/80 text-center">
-              <span className="text-emerald-300 block font-semibold">{isBn ? 'সম্ভাব্য হজ' : 'Hajj Date'}</span>
-              <span className="text-[#F3E0A0] font-bold">{isBn ? hajj2027.hajjDateBn : hajj2027.hajjDateEn}</span>
+            <div className="bg-emerald-950/80 p-2 sm:p-2.5 rounded-lg border border-emerald-800/80 text-center">
+              <span className="text-emerald-300 block font-semibold text-xs sm:text-[13px]">{isBn ? 'সম্ভাব্য হজ' : 'Hajj Date'}</span>
+              <span className="text-[#F3E0A0] font-bold text-xs sm:text-sm block mt-0.5">{isBn ? hajj2027.hajjDateBn : hajj2027.hajjDateEn}</span>
             </div>
           </div>
 
           {/* Essential Conditions & Requirements - Full Text Line by Line */}
-          <div className="bg-emerald-950/60 p-2.5 rounded-xl border border-emerald-800/60 text-[11px] space-y-1.5">
-            <div className="flex items-center gap-1 text-[#D4AF37] font-bold text-xs">
+          <div className="bg-emerald-950/60 p-2.5 sm:p-3 rounded-xl border border-emerald-800/60 text-xs sm:text-sm space-y-2">
+            <div className="flex items-center gap-1.5 text-[#D4AF37] font-extrabold text-xs sm:text-sm">
               <ShieldCheck className="w-4 h-4 shrink-0" />
               <span>{isBn ? 'জরুরি কিছু শর্ত ও প্রয়োজনীয় তথ্য:' : 'Essential Requirements & Information:'}</span>
             </div>
-            <ul className="space-y-1 text-emerald-100 text-[11px] leading-relaxed pl-1">
+            <ul className="space-y-1.5 text-emerald-100 text-xs sm:text-[13px] leading-relaxed pl-1">
               <li className="flex items-start gap-1.5">
                 <span className="text-[#D4AF37] font-bold shrink-0 mt-0.5">•</span>
                 <span>
-                  <strong className="text-white">{isBn ? 'সর্বনিম্ন বয়স: ' : 'Min Age: '}</strong>
+                  <strong className="text-white font-bold">{isBn ? 'সর্বনিম্ন বয়স: ' : 'Min Age: '}</strong>
                   {isBn ? 'হজে গমনেচ্ছু ব্যক্তির বয়স কমপক্ষে ১৫ বছর হতে হবে।' : 'Age must be at least 15 years.'}
                 </span>
               </li>
               <li className="flex items-start gap-1.5">
                 <span className="text-[#D4AF37] font-bold shrink-0 mt-0.5">•</span>
                 <span>
-                  <strong className="text-white">{isBn ? 'পাসপোর্ট মেয়াদ: ' : 'Passport Validity: '}</strong>
+                  <strong className="text-white font-bold">{isBn ? 'পাসপোর্ট মেয়াদ: ' : 'Passport Validity: '}</strong>
                   {isBn ? `অন্তত ৩১ ডিসেম্বর ${primaryYearBn} পর্যন্ত মেয়াদসহ বৈধ পাসপোর্ট থাকতে হবে।` : `Valid passport required until at least 31 Dec ${hajjInfo.primaryYear}.`}
                 </span>
               </li>
               <li className="flex items-start gap-1.5">
                 <span className="text-[#D4AF37] font-bold shrink-0 mt-0.5">•</span>
                 <span>
-                  <strong className="text-white">{isBn ? 'প্রাক-নিবন্ধন ফি: ' : 'Pre-reg Fee: '}</strong>
+                  <strong className="text-white font-bold">{isBn ? 'প্রাক-নিবন্ধন ফি: ' : 'Pre-reg Fee: '}</strong>
                   {isBn ? 'সরকারিভাবে নির্ধারিত প্রাক-নিবন্ধন ফি ৩০,০০০ টাকা।' : 'Government prescribed pre-registration fee 30,000 BDT.'}
                 </span>
               </li>
@@ -151,29 +151,29 @@ export const HajjAnnouncementCard: React.FC<HajjAnnouncementCardProps> = ({
 
       {/* TAB 2: 2028 HAJJ CONTENT */}
       {activeTab === 'hajj2028' && (
-        <div className="space-y-2.5 relative z-10 animate-fade-in text-xs">
+        <div className="space-y-2.5 relative z-10 animate-fade-in text-xs sm:text-sm">
           
-          <div className="bg-emerald-900/60 p-2.5 rounded-xl border border-emerald-800 space-y-1">
-            <h3 className="text-sm font-black text-white">
+          <div className="bg-emerald-900/60 p-2.5 sm:p-3 rounded-xl border border-emerald-800 space-y-1">
+            <h3 className="text-sm sm:text-base font-black text-white">
               {isBn ? `${secondaryYearBn} সালের হজ প্রাক-নিবন্ধন নির্দেশিকা` : `Hajj ${hajjInfo.secondaryYear} Notice`}
             </h3>
-            <p className="text-[10px] text-emerald-200/90 leading-snug">
+            <p className="text-xs sm:text-[13px] text-emerald-200/90 leading-snug">
               {isBn ? `বর্তমানে যৌথভাবে ${primaryYearBn}-${secondaryYearBn} সালের হজের প্রাক-নিবন্ধন চলছে। প্রাক-নিবন্ধন সাধারণত ২ বছর কার্যকর থাকে।` : `Joint pre-registration for ${hajjInfo.primaryYear}-${hajjInfo.secondaryYear} is ongoing.`}
             </p>
           </div>
 
-          <div className="grid grid-cols-2 gap-1.5 text-[10px]">
-            <div className="bg-emerald-950/80 p-2 rounded-lg border border-emerald-800/80">
-              <span className="text-emerald-300 font-bold block">{isBn ? 'প্রাক-নিবন্ধন ফি:' : 'Fee:'}</span>
-              <span className="text-[#F3E0A0] font-bold">{isBn ? hajj2028.regFeeBn : hajj2028.regFeeEn}</span>
+          <div className="grid grid-cols-2 gap-1.5 text-xs sm:text-sm">
+            <div className="bg-emerald-950/80 p-2 sm:p-2.5 rounded-lg border border-emerald-800/80">
+              <span className="text-emerald-300 font-bold block text-xs sm:text-[13px]">{isBn ? 'প্রাক-নিবন্ধন ফি:' : 'Fee:'}</span>
+              <span className="text-[#F3E0A0] font-bold text-xs sm:text-sm block mt-0.5">{isBn ? hajj2028.regFeeBn : hajj2028.regFeeEn}</span>
             </div>
-            <div className="bg-emerald-950/80 p-2 rounded-lg border border-emerald-800/80">
-              <span className="text-emerald-300 font-bold block">{isBn ? 'মেয়াদ:' : 'Validity:'}</span>
-              <span className="text-white font-bold">{isBn ? '২ বছর কার্যকর' : 'Valid 2 yrs'}</span>
+            <div className="bg-emerald-950/80 p-2 sm:p-2.5 rounded-lg border border-emerald-800/80">
+              <span className="text-emerald-300 font-bold block text-xs sm:text-[13px]">{isBn ? 'মেয়াদ:' : 'Validity:'}</span>
+              <span className="text-white font-bold text-xs sm:text-sm block mt-0.5">{isBn ? '২ বছর কার্যকর' : 'Valid 2 yrs'}</span>
             </div>
           </div>
 
-          <p className="text-[10px] text-emerald-200/80 italic leading-tight">
+          <p className="text-xs text-emerald-200/90 italic leading-snug">
             📌 {isBn ? `${primaryYearBn} সালের হজ সম্পন্ন হওয়ার পর ${secondaryYearBn} সালের মূল হজ প্যাকেজ ঘোষণা করা হবে।` : `Main package will be announced after Hajj ${hajjInfo.primaryYear}.`}
           </p>
 
