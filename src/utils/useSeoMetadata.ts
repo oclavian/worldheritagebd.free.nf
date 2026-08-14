@@ -109,8 +109,12 @@ export function useSeoMetadata(activePage: PageId, lang: Language) {
     // 1. Update Document Title
     document.title = pageSeo.title;
 
-    // 2. Update HTML lang attribute
+    // 2. Update HTML lang attribute & disable auto-translation
     document.documentElement.lang = lang;
+    document.documentElement.setAttribute('translate', 'no');
+    document.documentElement.classList.add('notranslate');
+    document.body.setAttribute('translate', 'no');
+    document.body.classList.add('notranslate');
 
     // 3. Update Meta Description
     let metaDescription = document.querySelector('meta[name="description"]');
