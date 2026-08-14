@@ -46,26 +46,47 @@ export interface HajjPackage {
   id: string;
   titleBn: string;
   titleEn: string;
+  packageCategoryBn?: string;
+  packageCategoryEn?: string;
+  badgeBn?: string;
+  badgeEn?: string;
   year: number;
   durationBn: string;
   durationEn: string;
   regFeeBDT: number;
   totalPriceBDT: number;
+  flightTypeBn?: string;
+  flightTypeEn?: string;
+  qurbaniBn?: string;
+  qurbaniEn?: string;
   makkahHotelBn: string;
   makkahHotelEn: string;
+  makkahDistanceBn?: string;
+  makkahDistanceEn?: string;
   madinahHotelBn: string;
   madinahHotelEn: string;
+  madinahDistanceBn?: string;
+  madinahDistanceEn?: string;
+  minaArafatBn?: string;
+  minaArafatEn?: string;
   foodBn: string;
   foodEn: string;
   transportBn: string;
   transportEn: string;
+  bulletTrainBn?: string;
+  bulletTrainEn?: string;
+  ziyarahBn?: string;
+  ziyarahEn?: string;
   moallemBn: string;
   moallemEn: string;
+  giftItemsBn?: string;
+  giftItemsEn?: string;
   registrationStatusBn: string;
   registrationStatusEn: string;
   facilitiesBn: string[];
   facilitiesEn: string[];
   image: string;
+  galleryImages?: string[];
 }
 
 export interface TourPackage {

@@ -3,7 +3,8 @@ import { Language, PageId, UmrahPackage, HajjPackage, TourPackage, Review, BlogP
 import { 
   initialAgencyInfo, 
   initialUmrahPackages, 
-  initialHajjPackage, 
+  initialHajjPackage,
+  initialHajjPackages, 
   initialTourPackages, 
   initialReviews, 
   initialBlogPosts, 
@@ -85,14 +86,23 @@ export default function App() {
     }
   });
 
-  const [hajjPackage, setHajjPackage] = useState<HajjPackage>(() => {
+  const [hajjPackages, setHajjPackages] = useState<HajjPackage[]>(() => {
     try {
-      const saved = localStorage.getItem('wh_hajj_package');
-      return saved ? JSON.parse(saved) : initialHajjPackage;
+      const saved = localStorage.getItem('wh_hajj_packages_2027_v5');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length >= 2) {
+          const isFresh = JSON.stringify(parsed).includes('12r4H9iF0KgHrHPi0hciMhvKPxU-4eWHt');
+          if (isFresh) return parsed;
+        }
+      }
+      return initialHajjPackages;
     } catch {
-      return initialHajjPackage;
+      return initialHajjPackages;
     }
   });
+
+  const hajjPackage = hajjPackages[0] || initialHajjPackage;
 
   const [tourPackages, setTourPackages] = useState<TourPackage[]>(() => {
     try {
@@ -123,8 +133,15 @@ export default function App() {
 
   const [galleryItems, setGalleryItems] = useState<GalleryItem[]>(() => {
     try {
-      const saved = localStorage.getItem('wh_gallery');
-      return saved ? JSON.parse(saved) : initialGalleryItems;
+      const saved = localStorage.getItem('wh_gallery_v4');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          const hasBroken = JSON.stringify(parsed).includes('wikimedia.org');
+          if (!hasBroken) return parsed;
+        }
+      }
+      return initialGalleryItems;
     } catch {
       return initialGalleryItems;
     }
@@ -161,6 +178,14 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem('wh_umrah_packages', JSON.stringify(umrahPackages));
   }, [umrahPackages]);
+
+  useEffect(() => {
+    localStorage.setItem('wh_hajj_packages_2027_v5', JSON.stringify(hajjPackages));
+  }, [hajjPackages]);
+
+  useEffect(() => {
+    localStorage.setItem('wh_gallery_v4', JSON.stringify(galleryItems));
+  }, [galleryItems]);
 
   useEffect(() => {
     localStorage.setItem('wh_reviews', JSON.stringify(reviews));
@@ -227,7 +252,7 @@ export default function App() {
             onNavigate={handleNavigate}
             umrahPackages={umrahPackages}
             hajjPackage={hajjPackage}
-            reviews={reviews}
+            hajjPackages={hajjPackages}
             blogPosts={blogPosts}
             agencyInfo={agencyInfo}
             onOpenBookingModal={handleOpenBookingModal}
@@ -245,6 +270,7 @@ export default function App() {
         return (
           <HajjPage
             lang={lang}
+            hajjPackages={hajjPackages}
             hajjPackage={hajjPackage}
             onOpenBookingModal={handleOpenBookingModal}
           />
@@ -302,6 +328,7 @@ export default function App() {
             onNavigate={handleNavigate}
             umrahPackages={umrahPackages}
             hajjPackage={hajjPackage}
+            hajjPackages={hajjPackages}
             blogPosts={blogPosts}
             agencyInfo={agencyInfo}
             onOpenBookingModal={handleOpenBookingModal}

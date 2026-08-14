@@ -26,7 +26,8 @@ interface HomePageProps {
   lang: Language;
   onNavigate: (page: PageId) => void;
   umrahPackages: UmrahPackage[];
-  hajjPackage: HajjPackage;
+  hajjPackage?: HajjPackage;
+  hajjPackages?: HajjPackage[];
   blogPosts: BlogPost[];
   agencyInfo: AgencyInfo;
   onOpenBookingModal: (service?: string, packageTitle?: string) => void;
@@ -37,6 +38,7 @@ export const HomePage: React.FC<HomePageProps> = ({
   onNavigate,
   umrahPackages,
   hajjPackage,
+  hajjPackages,
   blogPosts,
   agencyInfo,
   onOpenBookingModal,
@@ -490,17 +492,56 @@ export const HomePage: React.FC<HomePageProps> = ({
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {umrahPackages.slice(0, 3).map((pkg) => {
-              const adapted = adaptUmrahPackage(pkg);
-              return (
-                <PackageCard
-                  key={pkg.id}
-                  lang={lang}
-                  pkg={adapted}
-                  onViewDetails={(item) => setSelectedDetailPackage(item)}
-                />
-              );
-            })}
+            {packageCategory === 'hajj' ? (
+              (hajjPackages && hajjPackages.length > 0 ? hajjPackages : hajjPackage ? [hajjPackage] : []).map((pkg) => {
+                const adapted = adaptHajjPackage(pkg);
+                return (
+                  <PackageCard
+                    key={pkg.id}
+                    lang={lang}
+                    pkg={adapted}
+                    onViewDetails={(item) => setSelectedDetailPackage(item)}
+                  />
+                );
+              })
+            ) : packageCategory === 'umrah' ? (
+              umrahPackages.slice(0, 3).map((pkg) => {
+                const adapted = adaptUmrahPackage(pkg);
+                return (
+                  <PackageCard
+                    key={pkg.id}
+                    lang={lang}
+                    pkg={adapted}
+                    onViewDetails={(item) => setSelectedDetailPackage(item)}
+                  />
+                );
+              })
+            ) : (
+              <>
+                {umrahPackages.slice(0, 2).map((pkg) => {
+                  const adapted = adaptUmrahPackage(pkg);
+                  return (
+                    <PackageCard
+                      key={pkg.id}
+                      lang={lang}
+                      pkg={adapted}
+                      onViewDetails={(item) => setSelectedDetailPackage(item)}
+                    />
+                  );
+                })}
+                {(hajjPackages && hajjPackages.length > 0 ? hajjPackages.slice(0, 1) : hajjPackage ? [hajjPackage] : []).map((pkg) => {
+                  const adapted = adaptHajjPackage(pkg);
+                  return (
+                    <PackageCard
+                      key={pkg.id}
+                      lang={lang}
+                      pkg={adapted}
+                      onViewDetails={(item) => setSelectedDetailPackage(item)}
+                    />
+                  );
+                })}
+              </>
+            )}
           </div>
 
           <div className="text-center pt-8">

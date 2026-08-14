@@ -1,5 +1,6 @@
-export const toBengaliDigits = (numStr: string): string => {
-  if (!numStr) return '';
+export const toBengaliDigits = (num: string | number): string => {
+  if (num === undefined || num === null) return '';
+  const numStr = String(num);
   const banglaDigits: { [key: string]: string } = {
     '0': '০',
     '1': '১',

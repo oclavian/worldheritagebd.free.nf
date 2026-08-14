@@ -1,17 +1,77 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { 
   ArrowLeft, MapPin, Calendar, CheckCircle2, AlertCircle, ChevronDown, ChevronUp, 
-  Sparkles, Clock, Users, Building, Utensils, Bus, ShieldCheck, Tag, Phone, MessageCircle
+  Sparkles, Clock, Users, Building, Utensils, Bus, ShieldCheck, Tag, Phone, MessageCircle,
+  ChevronLeft, ChevronRight, Image as ImageIcon, Filter, Play, Pause
 } from 'lucide-react';
 import { Language } from '../types';
 import { StandardPackageItem } from '../utils/packageAdapter';
 import { toBengaliDigits } from '../utils/formatters';
+import { 
+  ALL_HAJJ_DRIVE_PHOTOS, 
+  MAKKAH_DRIVE_IMAGES, 
+  MADINAH_DRIVE_IMAGES, 
+  MINA_DRIVE_IMAGES, 
+  ARAFAT_DRIVE_IMAGES, 
+  MUZDALIFAH_DRIVE_IMAGES,
+  DrivePhotoItem 
+} from '../data/hajjDriveImages';
 
 interface PackageDetailViewProps {
   lang: Language;
   pkg: StandardPackageItem;
   onBack: () => void;
   onBookNow: (serviceType: string, packageTitle: string) => void;
+}
+
+function getHolySiteCaption(imgUrl: string, index: number, isBn: boolean, serviceType: string): string {
+  // Check if it matches any known Drive photo
+  const matchedDriveItem = ALL_HAJJ_DRIVE_PHOTOS.find(item => imgUrl.includes(item.driveId));
+  if (matchedDriveItem) {
+    return isBn ? matchedDriveItem.titleBn : matchedDriveItem.titleEn;
+  }
+
+  const lower = imgUrl.toLowerCase();
+  if (lower.includes('kaaba') || lower.includes('haram') || lower.includes('makkah')) {
+    return isBn ? 'পবিত্র মক্কা মুকাররমা (কাবা শরীফ)' : 'Holy Makkah (The Holy Kaaba)';
+  }
+  if (lower.includes('nabawi') || lower.includes('medina') || lower.includes('madinah')) {
+    return isBn ? 'পবিত্র মদিনা মুনাওয়ারা (মসজিদে নববী)' : 'Holy Madinah (Al-Masjid an-Nabawi)';
+  }
+  if (lower.includes('mina')) {
+    return isBn ? 'পবিত্র মিনা প্রান্তর (তাঁবুর শহর)' : 'Holy Mina (Tent City)';
+  }
+  if (lower.includes('arafat')) {
+    return isBn ? 'পবিত্র আরাফাত ময়দান (জাবালে রহমত)' : 'Holy Mount Arafat (Jabal al-Rahmah)';
+  }
+  if (lower.includes('muzdalifah')) {
+    return isBn ? 'পবিত্র মুজদালিফা প্রান্তর' : 'Holy Muzdalifah Plain';
+  }
+  if (lower.includes('taif') || lower.includes('hada')) {
+    return isBn ? 'ঐতিহাসিক তায়েফ উপত্যকা' : 'Historic Taif Mountain Valley';
+  }
+  if (lower.includes('jeddah') || lower.includes('floating') || lower.includes('rahmah')) {
+    return isBn ? 'জেদ্দার বিখ্যাত আল-রহমাহ ফ্লোটিং মসজিদ' : 'Jeddah Al-Rahmah Floating Mosque';
+  }
+  
+  if (serviceType === 'Hajj') {
+    const hajjSitesBn = [
+      'পবিত্র মক্কা মুকাররমা (কাবা শরীফ)',
+      'পবিত্র মদিনা মুনাওয়ারা (মসজিদে নববী)',
+      'পবিত্র মিনা প্রান্তর (তাঁবুর শহর)',
+      'পবিত্র আরাফাত ময়দান (জাবালে রহমত)',
+      'পবিত্র মুজদালিফা প্রান্তর'
+    ];
+    const hajjSitesEn = [
+      'Holy Makkah (The Kaaba)',
+      'Holy Madinah (Prophet\'s Mosque)',
+      'Holy Mina (Tent City)',
+      'Holy Mount Arafat (Jabal al-Rahmah)',
+      'Holy Muzdalifah Plain'
+    ];
+    return isBn ? hajjSitesBn[index % hajjSitesBn.length] : hajjSitesEn[index % hajjSitesEn.length];
+  }
+  return isBn ? `গ্যালারি ছবি ${toBengaliDigits(index + 1)}` : `Gallery Image ${index + 1}`;
 }
 
 export const PackageDetailView: React.FC<PackageDetailViewProps> = ({
@@ -26,6 +86,7 @@ export const PackageDetailView: React.FC<PackageDetailViewProps> = ({
   }, [pkg]);
 
   const isBn = lang === 'bn';
+  const isHajj = pkg.serviceType === 'Hajj';
   const title = isBn ? pkg.titleBn : pkg.titleEn;
   const duration = isBn ? pkg.durationBn : pkg.durationEn;
   const location = isBn ? pkg.locationBn : pkg.locationEn;
@@ -33,9 +94,78 @@ export const PackageDetailView: React.FC<PackageDetailViewProps> = ({
   const suitableFor = isBn ? pkg.suitableForBn : pkg.suitableForEn;
   const groupSize = isBn ? pkg.groupSizeBn : pkg.groupSizeEn;
 
+  // Selected Category filter for Hajj gallery
+  const [selectedCategory, setSelectedCategory] = useState<'all' | 'makkah' | 'madinah' | 'mina' | 'arafat' | 'muzdalifah'>('all');
+
+  // Filtered gallery images
+  const currentGalleryImages = useMemo(() => {
+    if (!isHajj) {
+      return pkg.galleryImages && pkg.galleryImages.length > 0 ? pkg.galleryImages : [pkg.image];
+    }
+
+    if (selectedCategory === 'all') {
+      return ALL_HAJJ_DRIVE_PHOTOS.map(p => p.url);
+    } else if (selectedCategory === 'makkah') {
+      return MAKKAH_DRIVE_IMAGES.map(p => p.url);
+    } else if (selectedCategory === 'madinah') {
+      return MADINAH_DRIVE_IMAGES.map(p => p.url);
+    } else if (selectedCategory === 'mina') {
+      return MINA_DRIVE_IMAGES.map(p => p.url);
+    } else if (selectedCategory === 'arafat') {
+      return ARAFAT_DRIVE_IMAGES.map(p => p.url);
+    } else if (selectedCategory === 'muzdalifah') {
+      return MUZDALIFAH_DRIVE_IMAGES.map(p => p.url);
+    }
+    return pkg.galleryImages && pkg.galleryImages.length > 0 ? pkg.galleryImages : [pkg.image];
+  }, [isHajj, selectedCategory, pkg.galleryImages, pkg.image]);
+
   // Active Image State for Gallery
   const [activeImageIndex, setActiveImageIndex] = useState<number>(0);
-  const currentImage = pkg.galleryImages[activeImageIndex] || pkg.image;
+  const [isAutoPlaying, setIsAutoPlaying] = useState<boolean>(true);
+  const [isHovered, setIsHovered] = useState<boolean>(false);
+  const thumbnailsRef = useRef<HTMLDivElement>(null);
+
+  // Reset active image index when category changes
+  useEffect(() => {
+    setActiveImageIndex(0);
+  }, [selectedCategory]);
+
+  // Auto sliding interval (every 3.5 seconds)
+  useEffect(() => {
+    if (!isAutoPlaying || isHovered || currentGalleryImages.length <= 1) return;
+
+    const timer = setInterval(() => {
+      setActiveImageIndex((prev) => (prev + 1) % currentGalleryImages.length);
+    }, 3500);
+
+    return () => clearInterval(timer);
+  }, [isAutoPlaying, isHovered, currentGalleryImages.length]);
+
+  // Auto scroll active thumbnail into view
+  useEffect(() => {
+    if (thumbnailsRef.current && currentGalleryImages.length > 1) {
+      const container = thumbnailsRef.current;
+      const activeThumb = container.children[activeImageIndex] as HTMLElement;
+      if (activeThumb) {
+        activeThumb.scrollIntoView({
+          behavior: 'smooth',
+          block: 'nearest',
+          inline: 'center',
+        });
+      }
+    }
+  }, [activeImageIndex, currentGalleryImages.length]);
+
+  const currentImage = currentGalleryImages[activeImageIndex] || currentGalleryImages[0] || pkg.image;
+  const currentCaption = getHolySiteCaption(currentImage, activeImageIndex, isBn, pkg.serviceType);
+
+  const handlePrevImage = () => {
+    setActiveImageIndex((prev) => (prev > 0 ? prev - 1 : currentGalleryImages.length - 1));
+  };
+
+  const handleNextImage = () => {
+    setActiveImageIndex((prev) => (prev < currentGalleryImages.length - 1 ? prev + 1 : 0));
+  };
 
   // Accordion Expand/Collapse States
   const [openAccordions, setOpenAccordions] = useState<{ [key: string]: boolean }>({
@@ -107,40 +237,240 @@ export const PackageDetailView: React.FC<PackageDetailViewProps> = ({
         <div className="lg:col-span-8 space-y-8">
           
           {/* Main Gallery Container */}
-          <div className="bg-white p-4 rounded-3xl border border-slate-200/80 shadow-sm space-y-4">
-            <div className="relative aspect-16/9 rounded-2xl overflow-hidden bg-slate-900 shadow-md">
-              <img
-                src={currentImage}
-                alt={title}
-                className="w-full h-full object-cover transition-all duration-300"
-                referrerPolicy="no-referrer"
-              />
-              <span className="absolute bottom-3 right-3 bg-black/75 backdrop-blur-md text-white text-xs px-3 py-1 rounded-full font-bold border border-white/20">
-                📷 {activeImageIndex + 1} / {pkg.galleryImages.length}
-              </span>
-            </div>
+          <div className="bg-white p-4 sm:p-5 rounded-3xl border border-slate-200/80 shadow-sm space-y-4">
+            
+            {/* Category Filter Pills (Specifically for Hajj) */}
+            {isHajj && (
+              <div className="space-y-2 border-b border-slate-100 pb-3">
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-1.5 text-xs font-black text-[#0D472B]">
+                    <MapPin className="w-3.5 h-3.5 text-[#D4AF37]" />
+                    <span>{isBn ? 'পবিত্র স্থানসমূহ অনুযায়ী ছবি নির্বাচন করুন:' : 'Filter Photos by Holy Site:'}</span>
+                  </div>
+                  <span className="text-[11px] font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded-full">
+                    {isBn ? `মোট ${toBengaliDigits(currentGalleryImages.length)}টি ছবি` : `${currentGalleryImages.length} Photos`}
+                  </span>
+                </div>
 
-            {/* Thumbnail Strip */}
-            {pkg.galleryImages.length > 1 && (
-              <div className="flex items-center gap-3 overflow-x-auto pb-1 pt-1">
-                {pkg.galleryImages.map((imgUrl, idx) => (
+                <div className="flex flex-wrap items-center gap-1.5">
                   <button
-                    key={idx}
-                    onClick={() => setActiveImageIndex(idx)}
-                    className={`relative w-24 h-16 rounded-xl overflow-hidden border-2 transition-all shrink-0 ${
-                      activeImageIndex === idx
-                        ? 'border-[#8B0000] ring-2 ring-red-200 scale-105 shadow-md'
-                        : 'border-slate-200 opacity-70 hover:opacity-100'
+                    onClick={() => setSelectedCategory('all')}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1 ${
+                      selectedCategory === 'all'
+                        ? 'bg-[#0D472B] text-white shadow-sm ring-1 ring-[#D4AF37]'
+                        : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                     }`}
                   >
-                    <img
-                      src={imgUrl}
-                      alt={`Thumbnail ${idx + 1}`}
-                      className="w-full h-full object-cover"
-                      referrerPolicy="no-referrer"
-                    />
+                    <span>{isBn ? `সবগুলো (${toBengaliDigits(38)})` : 'All (38)'}</span>
                   </button>
-                ))}
+
+                  <button
+                    onClick={() => setSelectedCategory('makkah')}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1 ${
+                      selectedCategory === 'makkah'
+                        ? 'bg-[#0D472B] text-white shadow-sm ring-1 ring-[#D4AF37]'
+                        : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                    }`}
+                  >
+                    <span>🕋</span>
+                    <span>{isBn ? `মক্কা (${toBengaliDigits(10)})` : 'Makkah (10)'}</span>
+                  </button>
+
+                  <button
+                    onClick={() => setSelectedCategory('madinah')}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1 ${
+                      selectedCategory === 'madinah'
+                        ? 'bg-[#0D472B] text-white shadow-sm ring-1 ring-[#D4AF37]'
+                        : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                    }`}
+                  >
+                    <span>🕌</span>
+                    <span>{isBn ? `মদিনা (${toBengaliDigits(6)})` : 'Madinah (6)'}</span>
+                  </button>
+
+                  <button
+                    onClick={() => setSelectedCategory('mina')}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1 ${
+                      selectedCategory === 'mina'
+                        ? 'bg-[#0D472B] text-white shadow-sm ring-1 ring-[#D4AF37]'
+                        : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                    }`}
+                  >
+                    <span>⛺</span>
+                    <span>{isBn ? `মিনা (${toBengaliDigits(9)})` : 'Mina (9)'}</span>
+                  </button>
+
+                  <button
+                    onClick={() => setSelectedCategory('arafat')}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1 ${
+                      selectedCategory === 'arafat'
+                        ? 'bg-[#0D472B] text-white shadow-sm ring-1 ring-[#D4AF37]'
+                        : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                    }`}
+                  >
+                    <span>🌄</span>
+                    <span>{isBn ? `আরাফাত (${toBengaliDigits(10)})` : 'Arafat (10)'}</span>
+                  </button>
+
+                  <button
+                    onClick={() => setSelectedCategory('muzdalifah')}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1 ${
+                      selectedCategory === 'muzdalifah'
+                        ? 'bg-[#0D472B] text-white shadow-sm ring-1 ring-[#D4AF37]'
+                        : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                    }`}
+                  >
+                    <span>🌌</span>
+                    <span>{isBn ? `মুজদালিফা (${toBengaliDigits(3)})` : 'Muzdalifah (3)'}</span>
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* Active Display Stage with Auto Slide */}
+            <div 
+              className="relative aspect-16/9 rounded-2xl overflow-hidden bg-slate-950 shadow-md group select-none"
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+            >
+              <img
+                key={currentImage}
+                src={currentImage}
+                alt={currentCaption}
+                className="w-full h-full object-cover transition-all duration-500 animate-fadeIn scale-[1.01]"
+                referrerPolicy="no-referrer"
+                onError={(e) => {
+                  const target = e.currentTarget;
+                  // If it was a lh3 googleusercontent URL, retry with thumbnail URL
+                  if (target.src.includes('lh3.googleusercontent.com/d/')) {
+                    const fileId = target.src.split('lh3.googleusercontent.com/d/')[1]?.split('?')[0];
+                    if (fileId) {
+                      target.src = `https://drive.google.com/thumbnail?id=${fileId}&sz=w1200`;
+                      return;
+                    }
+                  }
+                  if (!target.src.includes('1591604466107')) {
+                    target.src = 'https://images.unsplash.com/photo-1591604466107-ec97de577aff?auto=format&fit=crop&w=1200&q=80';
+                  }
+                }}
+              />
+
+              {/* Holy Site Caption Badge */}
+              <div className="absolute top-3 left-3 bg-[#052917]/90 backdrop-blur-md text-white text-xs sm:text-sm px-3.5 py-1.5 rounded-xl font-bold border border-[#D4AF37]/50 shadow-lg flex items-center gap-2 z-10">
+                <MapPin className="w-4 h-4 text-[#F3E0A0] shrink-0" />
+                <span className="font-extrabold tracking-wide text-[#FAF8F5]">{currentCaption}</span>
+              </div>
+
+              {/* Auto Sliding Play/Pause Toggle & Badge */}
+              {currentGalleryImages.length > 1 && (
+                <div className="absolute top-3 right-3 flex items-center gap-2 z-10">
+                  <button
+                    onClick={() => setIsAutoPlaying(prev => !prev)}
+                    className="bg-black/75 hover:bg-[#0D472B] backdrop-blur-md text-white text-xs px-2.5 py-1.5 rounded-xl font-bold border border-white/20 shadow-md flex items-center gap-1.5 transition-all"
+                    title={isAutoPlaying ? (isBn ? 'অটো-স্লাইড বন্ধ করুন' : 'Pause Auto-slide') : (isBn ? 'অটো-স্লাইড চালু করুন' : 'Start Auto-slide')}
+                  >
+                    {isAutoPlaying ? (
+                      <>
+                        <Pause className="w-3.5 h-3.5 text-[#F3E0A0]" />
+                        <span className="text-[11px] font-semibold hidden sm:inline">{isBn ? 'অটো পরিবর্তন চালু' : 'Auto Sliding'}</span>
+                      </>
+                    ) : (
+                      <>
+                        <Play className="w-3.5 h-3.5 text-emerald-400 fill-emerald-400" />
+                        <span className="text-[11px] font-semibold hidden sm:inline">{isBn ? 'প্লে করুন' : 'Play'}</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              )}
+
+              {/* Prev / Next Buttons */}
+              {currentGalleryImages.length > 1 && (
+                <>
+                  <button
+                    onClick={handlePrevImage}
+                    aria-label="Previous Image"
+                    className="absolute left-3 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-[#0D472B] text-white p-2 rounded-full backdrop-blur-sm border border-white/20 transition-all opacity-80 hover:opacity-100 hover:scale-110 z-10"
+                  >
+                    <ChevronLeft className="w-5 h-5" />
+                  </button>
+                  <button
+                    onClick={handleNextImage}
+                    aria-label="Next Image"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-[#0D472B] text-white p-2 rounded-full backdrop-blur-sm border border-white/20 transition-all opacity-80 hover:opacity-100 hover:scale-110 z-10"
+                  >
+                    <ChevronRight className="w-5 h-5" />
+                  </button>
+                </>
+              )}
+
+              {/* Image Counter Badge */}
+              <span className="absolute bottom-3 right-3 bg-black/80 backdrop-blur-md text-white text-xs px-3 py-1.5 rounded-full font-bold border border-white/20 flex items-center gap-1.5 z-10">
+                <ImageIcon className="w-3.5 h-3.5 text-[#F3E0A0]" />
+                <span>{isBn ? `${toBengaliDigits(activeImageIndex + 1)} / ${toBengaliDigits(currentGalleryImages.length)}` : `${activeImageIndex + 1} / ${currentGalleryImages.length}`}</span>
+              </span>
+
+              {/* Animated Auto-slide Progress Bar at bottom */}
+              {isAutoPlaying && !isHovered && currentGalleryImages.length > 1 && (
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-black/30 z-10">
+                  <div 
+                    key={activeImageIndex}
+                    className="h-full bg-gradient-to-r from-[#D4AF37] to-emerald-400 origin-left"
+                    style={{
+                      animation: 'progressFill 3.5s linear forwards'
+                    }}
+                  />
+                </div>
+              )}
+            </div>
+
+            {/* Thumbnail Strip with Holy Location Names */}
+            {currentGalleryImages.length > 1 && (
+              <div className="space-y-1.5">
+                <div 
+                  ref={thumbnailsRef}
+                  className="flex items-center gap-3 overflow-x-auto pb-2 pt-1 scrollbar-thin scroll-smooth"
+                >
+                  {currentGalleryImages.map((imgUrl, idx) => {
+                    const caption = getHolySiteCaption(imgUrl, idx, isBn, pkg.serviceType);
+                    const isActive = activeImageIndex === idx;
+                    return (
+                      <button
+                        key={idx}
+                        onClick={() => setActiveImageIndex(idx)}
+                        className={`relative w-28 h-20 rounded-xl overflow-hidden border-2 transition-all shrink-0 text-left flex flex-col justify-end p-1 group/thumb ${
+                          isActive
+                            ? 'border-[#0D472B] ring-2 ring-emerald-300 scale-105 shadow-md'
+                            : 'border-slate-200 opacity-70 hover:opacity-100'
+                        }`}
+                      >
+                        <img
+                          src={imgUrl}
+                          alt={caption}
+                          className="absolute inset-0 w-full h-full object-cover"
+                          referrerPolicy="no-referrer"
+                          onError={(e) => {
+                            const target = e.currentTarget;
+                            if (target.src.includes('lh3.googleusercontent.com/d/')) {
+                              const fileId = target.src.split('lh3.googleusercontent.com/d/')[1]?.split('?')[0];
+                              if (fileId) {
+                                target.src = `https://drive.google.com/thumbnail?id=${fileId}&sz=w1200`;
+                                return;
+                              }
+                            }
+                            if (!target.src.includes('1591604466107')) {
+                              target.src = 'https://images.unsplash.com/photo-1591604466107-ec97de577aff?auto=format&fit=crop&w=1200&q=80';
+                            }
+                          }}
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
+                        <span className="relative text-[9px] font-bold text-white line-clamp-1 leading-tight drop-shadow-sm">
+                          {caption}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
             )}
           </div>
