@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Plane,
   Globe,
@@ -18,10 +18,17 @@ import {
   ArrowRight,
   Headphones,
   Check,
-  Award
+  Award,
+  Search,
+  Filter,
+  Luggage,
+  Calendar,
+  Layers,
+  FileText
 } from 'lucide-react';
 import { Language } from '../types';
 import { partnerAirlines } from '../content/air-tickets';
+import { flightDestinations, FlightDestination } from '../data/flightDestinations';
 
 interface AirTicketsPageProps {
   lang: Language;
@@ -34,7 +41,10 @@ export const AirTicketsPage: React.FC<AirTicketsPageProps> = ({
 }) => {
   const isBn = lang === 'bn';
 
-  // Extended airlines list for futuristic partner grid
+  const [selectedRegion, setSelectedRegion] = useState<string>('all');
+  const [searchQuery, setSearchQuery] = useState<string>('');
+
+  // Extended airlines list for partner grid
   const allAirlines = [
     ...partnerAirlines,
     { name: 'Singapore Airlines', code: 'SQ', logo: '🇸🇬' },
@@ -43,202 +53,301 @@ export const AirTicketsPage: React.FC<AirTicketsPageProps> = ({
     { name: 'Oman Air', code: 'WY', logo: '🇴🇲' },
     { name: 'Thai Airways', code: 'TG', logo: '🇹🇭' },
     { name: 'Turkish Airlines', code: 'TK', logo: '🇹🇷' },
+    { name: 'Malaysia Airlines', code: 'MH', logo: '🇲🇾' },
+    { name: 'Air Astra', code: '2A', logo: '🇧🇩' },
   ];
 
-  // Popular routes showcase
-  const popularRoutes = [
-    { from: isBn ? 'ঢাকা' : 'Dhaka', fromCode: 'DAC', to: isBn ? 'জেদ্দা' : 'Jeddah', toCode: 'JED', type: isBn ? 'আন্তর্জাতিক' : 'International', flag: '🇸🇦', popular: true },
-    { from: isBn ? 'ঢাকা' : 'Dhaka', fromCode: 'DAC', to: isBn ? 'মদিনা' : 'Madinah', toCode: 'MED', type: isBn ? 'আন্তর্জাতিক' : 'International', flag: '🇸🇦', popular: true },
-    { from: isBn ? 'ঢাকা' : 'Dhaka', fromCode: 'DAC', to: isBn ? 'দুবাই' : 'Dubai', toCode: 'DXB', type: isBn ? 'আন্তর্জাতিক' : 'International', flag: '🇦🇪', popular: true },
-    { from: isBn ? 'ঢাকা' : 'Dhaka', fromCode: 'DAC', to: isBn ? 'লন্ডন' : 'London', toCode: 'LHR', type: isBn ? 'আন্তর্জাতিক' : 'International', flag: '🇬🇧', popular: false },
-    { from: isBn ? 'ঢাকা' : 'Dhaka', fromCode: 'DAC', to: isBn ? 'কক্সবাজার' : "Cox's Bazar", toCode: 'CXB', type: isBn ? 'অভ্যন্তরীণ' : 'Domestic', flag: '🇧🇩', popular: true },
-    { from: isBn ? 'ঢাকা' : 'Dhaka', fromCode: 'DAC', to: isBn ? 'সিলেট' : 'Sylhet', toCode: 'ZYL', type: isBn ? 'অভ্যন্তরীণ' : 'Domestic', flag: '🇧🇩', popular: false },
-    { from: isBn ? 'ঢাকা' : 'Dhaka', fromCode: 'DAC', to: isBn ? 'চট্টগ্রাম' : 'Chittagong', toCode: 'CGP', type: isBn ? 'অভ্যন্তরীণ' : 'Domestic', flag: '🇧🇩', popular: false },
-    { from: isBn ? 'চট্টগ্রাম' : 'Chittagong', fromCode: 'CGP', to: isBn ? 'জেদ্দা' : 'Jeddah', toCode: 'JED', type: isBn ? 'আন্তর্জাতিক' : 'International', flag: '🇸🇦', popular: false },
+  // Filter destinations by region and search term
+  const filteredDestinations = flightDestinations.filter((dest) => {
+    const matchesRegion = selectedRegion === 'all' || dest.region === selectedRegion;
+    const matchesSearch =
+      searchQuery === '' ||
+      dest.cityBn.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      dest.cityEn.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      dest.countryBn.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      dest.countryEn.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      dest.iata.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      dest.airportBn.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      dest.airportEn.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesRegion && matchesSearch;
+  });
+
+  const regions = [
+    { id: 'all', labelBn: '🌍 সকল গন্তব্য (All)', labelEn: 'All Destinations', count: flightDestinations.length },
+    { id: 'middle-east', labelBn: '🇸🇦 মধ্যপ্রাচ্য (সৌদি, দুবাই, কাতার)', labelEn: 'Middle East', count: flightDestinations.filter(d => d.region === 'middle-east').length },
+    { id: 'europe', labelBn: '🇬🇧 ইউরোপ ও ইউকে (লন্ডন, রোম, প্যারিস)', labelEn: 'Europe & UK', count: flightDestinations.filter(d => d.region === 'europe').length },
+    { id: 'north-america', labelBn: '🇺🇸 আমেরিকা ও কানাডা', labelEn: 'North America & Aus', count: flightDestinations.filter(d => d.region === 'north-america').length },
+    { id: 'asia-pacific', labelBn: '🇲🇾 পূর্ব ও দক্ষিণ-পূর্ব এশিয়া', labelEn: 'Southeast & East Asia', count: flightDestinations.filter(d => d.region === 'asia-pacific').length },
+    { id: 'south-asia', labelBn: '🇮🇳 দক্ষিণ এশিয়া (ভারত)', labelEn: 'South Asia', count: flightDestinations.filter(d => d.region === 'south-asia').length },
+    { id: 'domestic', labelBn: '🇧🇩 অভ্যন্তরীণ বাংলাদেশ', labelEn: 'Domestic BD', count: flightDestinations.filter(d => d.region === 'domestic').length },
   ];
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-10 space-y-10 sm:space-y-14 font-bengali">
       
-      {/* FUTURISTIC HERO BANNER */}
-      <div className="relative bg-gradient-to-br from-[#021f11] via-[#04331d] to-[#01140b] text-white rounded-3xl p-6 sm:p-12 border-2 border-[#D4AF37]/80 shadow-2xl overflow-hidden">
+      {/* 1. HERO BANNER */}
+      <div className="bg-gradient-to-br from-[#021f11] via-[#0D472B] to-[#04331d] text-white rounded-3xl p-6 sm:p-10 border-2 border-[#D4AF37]/80 shadow-2xl relative overflow-hidden">
         
-        {/* Futuristic Ambient Glows & Grid overlay */}
+        {/* Ambient background glow */}
         <div className="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 bg-[#D4AF37]/15 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-emerald-500/15 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute inset-0 bg-[radial-gradient(#D4AF37_1px,transparent_1px)] [background-size:24px_24px] opacity-10 pointer-events-none" />
+        <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-emerald-400/10 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="relative z-10 max-w-4xl space-y-6">
-          
-          {/* Futuristic Floating Badges */}
-          <div className="flex flex-wrap items-center gap-2.5">
-            <span className="inline-flex items-center gap-1.5 bg-[#D4AF37] text-emerald-950 font-black text-xs px-4 py-1.5 rounded-full shadow-lg tracking-wide uppercase">
-              <Sparkles className="w-3.5 h-3.5 text-emerald-950" />
-              <span>{isBn ? 'গ্লোবাল ও ডমেস্টিক ফ্লাইট সার্ভিস' : 'Global & Domestic Flight Service'}</span>
-            </span>
+        <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+          <div className="max-w-3xl space-y-4">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="inline-flex items-center gap-1.5 bg-[#D4AF37] text-emerald-950 font-black text-xs px-3.5 py-1 rounded-full shadow-md">
+                <Plane className="w-3.5 h-3.5 text-emerald-950" />
+                <span>{isBn ? 'আন্তর্জাতিক ও অভ্যন্তরীণ এয়ার টিকিট' : 'Domestic & International Air Tickets'}</span>
+              </span>
+              <span className="bg-emerald-950/80 text-emerald-200 text-xs font-bold px-3 py-1 rounded-full border border-emerald-700">
+                {isBn ? '১৯০+ দেশ • সর্বনিম্ন ফেয়ার গ্যারান্টি' : '190+ Countries • Best Fare Guarantee'}
+              </span>
+            </div>
 
-            <span className="inline-flex items-center gap-1.5 bg-emerald-900/90 text-emerald-200 text-xs font-bold px-3.5 py-1.5 rounded-full border border-emerald-700/80 backdrop-blur-md">
-              <Globe className="w-3.5 h-3.5 text-[#D4AF37]" />
-              <span>{isBn ? 'আন্তর্জাতিক ও অভ্যন্তরীণ সকল রুট' : 'All World & Domestic Routes'}</span>
-            </span>
-          </div>
+            <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black text-white leading-tight font-sans tracking-tight">
+              {isBn ? (
+                <>
+                  বিশ্বের <span className="text-[#D4AF37]">যেকোনো দেশের এয়ার টিকিট</span> বুক করুন সর্বনিম্ন মূল্যে ও দ্রুত কনফার্মেশনে!
+                </>
+              ) : (
+                <>
+                  Book Flight Tickets for <span className="text-[#D4AF37]">Any Destination Worldwide</span> at Best Fares!
+                </>
+              )}
+            </h1>
 
-          {/* Main Title */}
-          <h1 className="text-3xl sm:text-5xl font-black text-white leading-tight font-sans tracking-tight">
-            {isBn ? (
-              <>
-                দেশ-বিদেশের <span className="text-[#D4AF37] underline decoration-[#D4AF37]/50 underline-offset-8">সকল রুটের</span> যেকোনো এয়ার টিকিট এখন ঘরে বসেই!
-              </>
-            ) : (
-              <>
-                Book Flight Tickets for <span className="text-[#D4AF37]">All World & Domestic</span> Routes Instantly!
-              </>
-            )}
-          </h1>
-
-          {/* Core Service Announcement Box */}
-          <div className="bg-emerald-950/80 backdrop-blur-md p-4 sm:p-6 rounded-2xl border border-[#D4AF37]/60 space-y-2 shadow-inner">
-            <p className="text-base sm:text-xl font-extrabold text-[#F3E0A0] leading-snug">
+            <p className="text-xs sm:text-sm text-emerald-100/90 leading-relaxed font-sans max-w-2xl">
               {isBn
-                ? '🌍 আমরা পুরো World (বিশ্বের সকল আন্তর্জাতিক গন্তব্য) ও বাংলাদেশের অভ্যন্তরীণ (Domestic) সকল এয়ারলাইন্সের টিকিট বিশ্বস্ততার সাথে কেটে থাকি।'
-                : '🌍 We issue confirmed flight tickets for all International destinations worldwide and all Domestic airlines in Bangladesh with complete reliability.'
+                ? 'ঢাকা (DAC), চট্টগ্রাম (CGP) ও সিলেট (ZYL) থেকে সৌদি আরব (জেদ্দা, মদিনা, রিয়াদ), দুবাই, কাতার, লন্ডন, নিউ ইয়র্ক, টরন্টো, কুয়ালালামপুর, সিঙ্গাপুরসহ বিশ্বের সকল দেশ ও বাংলাদেশের অভ্যন্তরীণ সকল রুটের অফিসিয়াল সর্বনিম্ন ফেয়ারে এয়ার টিকিট সংগ্রহ করুন।'
+                : 'Get official confirmed air tickets from Dhaka, Chittagong, and Sylhet to Saudi Arabia (Jeddah, Madinah, Riyadh), UAE, Qatar, UK, USA, Canada, Malaysia, Singapore, and worldwide destinations plus all domestic Bangladesh routes.'
               }
             </p>
-            <p className="text-xs sm:text-sm text-emerald-100/90 leading-relaxed">
-              {isBn
-                ? 'ওয়ার্ল্ড হেরিটেজ ট্যুর্স অ্যান্ড ট্রাভেলস-এর মাধ্যমে কোনো অতিরিক্ত বাড়তি চার্জ ছাড়া আপনার পছন্দের তারিখে যেকোনো এয়ারলাইন্সের টিকিট সর্বনিম্ন মূল্যে বুকিং কনফার্ম করুন।'
-                : 'Confirm flight tickets at guaranteed best prices for any airline on your preferred date without hidden fees through World Heritage Tours & Travels.'
-              }
-            </p>
-          </div>
 
-          {/* Quick Stats Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1">
-            <div className="bg-emerald-950/90 p-3 rounded-xl border border-emerald-800/80 flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-lg bg-[#D4AF37]/20 border border-[#D4AF37]/60 flex items-center justify-center shrink-0">
-                <Globe className="w-5 h-5 text-[#D4AF37]" />
+            {/* Feature Badges */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2">
+              <div className="flex items-center gap-2 text-xs text-emerald-100">
+                <CheckCircle2 className="w-4 h-4 text-[#D4AF37] shrink-0" />
+                <span>{isBn ? 'জিরো হিডেন চার্জ' : 'Zero Hidden Charges'}</span>
               </div>
-              <div>
-                <p className="text-xs font-bold text-white">{isBn ? '১৯০+ দেশ' : '190+ Countries'}</p>
-                <p className="text-[10px] text-emerald-300">{isBn ? 'ইন্টারন্যাশনাল' : 'International'}</p>
+              <div className="flex items-center gap-2 text-xs text-emerald-100">
+                <CheckCircle2 className="w-4 h-4 text-[#D4AF37] shrink-0" />
+                <span>{isBn ? 'তাত্ক্ষণিক ই-টিকিট ডেলিভারি' : 'Instant E-Ticket Delivery'}</span>
               </div>
-            </div>
-
-            <div className="bg-emerald-950/90 p-3 rounded-xl border border-emerald-800/80 flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-lg bg-[#D4AF37]/20 border border-[#D4AF37]/60 flex items-center justify-center shrink-0">
-                <Compass className="w-5 h-5 text-[#D4AF37]" />
-              </div>
-              <div>
-                <p className="text-xs font-bold text-white">{isBn ? 'সকল বিমানবন্দর' : 'All Airports'}</p>
-                <p className="text-[10px] text-emerald-300">{isBn ? 'BD অভ্যন্তরীণ' : 'Domestic BD'}</p>
-              </div>
-            </div>
-
-            <div className="bg-emerald-950/90 p-3 rounded-xl border border-emerald-800/80 flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-lg bg-[#D4AF37]/20 border border-[#D4AF37]/60 flex items-center justify-center shrink-0">
-                <Zap className="w-5 h-5 text-[#D4AF37]" />
-              </div>
-              <div>
-                <p className="text-xs font-bold text-white">{isBn ? 'তাত্ক্ষণিক ইস্যু' : 'Instant Issue'}</p>
-                <p className="text-[10px] text-emerald-300">{isBn ? 'ডিজিটাল ই-টিকিট' : 'E-Ticket Copy'}</p>
-              </div>
-            </div>
-
-            <div className="bg-emerald-950/90 p-3 rounded-xl border border-emerald-800/80 flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-lg bg-[#D4AF37]/20 border border-[#D4AF37]/60 flex items-center justify-center shrink-0">
-                <Award className="w-5 h-5 text-[#D4AF37]" />
-              </div>
-              <div>
-                <p className="text-xs font-bold text-white">{isBn ? 'সর্বনিম্ন মূল্য' : 'Best Price'}</p>
-                <p className="text-[10px] text-emerald-300">{isBn ? 'গ্যারান্টিড সেবা' : 'Guaranteed'}</p>
+              <div className="flex items-center gap-2 text-xs text-emerald-100 col-span-2 sm:col-span-1">
+                <CheckCircle2 className="w-4 h-4 text-[#D4AF37] shrink-0" />
+                <span>{isBn ? '২৪/৭ সাপোর্ট ও রি-ইস্যু' : '24/7 Support & Re-issue'}</span>
               </div>
             </div>
           </div>
 
-          {/* Action CTA Button */}
-          <div className="pt-2 flex flex-wrap items-center gap-4">
+          {/* Action CTAs */}
+          <div className="flex flex-col sm:flex-row lg:flex-col gap-3 shrink-0">
             <button
-              onClick={() => onOpenBookingModal('Air Ticket', isBn ? 'এয়ার টিকিট ইনকোয়ারি ও বুকিং' : 'Air Ticket Inquiry & Booking')}
-              className="bg-[#D4AF37] hover:bg-[#C59B27] text-emerald-950 font-black px-8 py-4 rounded-2xl text-sm sm:text-base shadow-xl flex items-center gap-2.5 transform active:scale-95 transition-all group"
+              onClick={() => onOpenBookingModal('Air Ticket', isBn ? 'এয়ার টিকিট সরাসরি বুকিং ও ইনকোয়ারি' : 'Air Ticket Inquiry')}
+              className="bg-[#D4AF37] hover:bg-[#C59B27] text-emerald-950 font-black px-6 py-3.5 rounded-2xl text-xs sm:text-sm shadow-xl flex items-center justify-center gap-2 transform active:scale-95 transition-all group"
             >
-              <Plane className="w-5 h-5 text-emerald-950" />
-              <span>{isBn ? 'টিকিট বুক করতে সরাসরি যোগাযোগ করুন' : 'Contact for Instant Booking'}</span>
-              <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              <Plane className="w-4 h-4 text-emerald-950" />
+              <span>{isBn ? 'টিকিট ইনকোয়ারি পাঠান' : 'Instant Ticket Inquiry'}</span>
+              <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </button>
 
             <a
-              href="https://wa.me/8801627737741"
+              href="https://wa.me/8801627737741?text=Hello%20World%20Heritage%20Travels%2C%20I%20need%20air%20ticket%20booking%20support."
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-emerald-950 hover:bg-emerald-900 text-white font-bold px-6 py-4 rounded-2xl text-sm border border-[#D4AF37]/50 flex items-center gap-2 transition-all"
+              className="bg-emerald-950/90 hover:bg-emerald-900 text-white font-bold px-6 py-3.5 rounded-2xl text-xs sm:text-sm border border-[#D4AF37]/50 flex items-center justify-center gap-2 transition-all shadow-md"
             >
               <MessageSquare className="w-4 h-4 text-[#D4AF37]" />
-              <span>{isBn ? 'হোয়াটসঅ্যাপ হেল্পডেস্ক' : 'WhatsApp Desk'}</span>
+              <span>{isBn ? 'হোয়াটসঅ্যাপ হেল্পডেস্ক' : 'WhatsApp 24/7 Desk'}</span>
             </a>
           </div>
-
         </div>
       </div>
 
-      {/* FUTURISTIC POPULAR ROUTE SHOWCASE */}
+      {/* 2. EXPANDED COUNTRY & REGION DESTINATION SHOWCASE */}
       <div className="space-y-6">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-b border-slate-200 pb-3">
+        
+        {/* Section Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-200 pb-4">
           <div>
-            <span className="text-xs font-bold text-[#D4AF37] tracking-wider uppercase block">
-              {isBn ? 'পপুলার ফ্লাইট রুটসমূহ' : 'Popular Flight Routes'}
-            </span>
-            <h2 className="text-2xl font-black text-[#0D472B] font-sans">
-              {isBn ? 'জনপ্রিয় অভ্যন্তরীণ ও আন্তর্জাতিক গন্তব্য' : 'Top Domestic & International Destinations'}
+            <div className="flex items-center gap-2 text-xs font-bold text-[#D4AF37] uppercase tracking-wider mb-1">
+              <Globe className="w-4 h-4 text-[#D4AF37]" />
+              <span>{isBn ? 'গ্লোবাল রুট ডিরেক্টরি' : 'Global Routes & Destinations'}</span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-black text-[#0D472B] font-sans">
+              {isBn ? 'দেশ-বিদেশের প্রধান গন্তব্য ও ফ্লাইট বিস্তারিত' : 'Explore Global Flight Destinations & Fares'}
             </h2>
+            <p className="text-xs text-slate-600 mt-1 max-w-2xl">
+              {isBn
+                ? 'পছন্দের দেশ বা শহর ফিল্টার করুন। যেকোনো রুটে ডিরেক্ট ফ্লাইট, ট্রাভেল সময়, ফ্রি লাগেজ এবং আনুমানিক সর্বনিম্ন ভাড়া এক নজরে দেখে নিন।'
+                : 'Filter by region or search any country/city to view direct flight options, flight durations, free baggage allowances, and best available fares.'
+              }
+            </p>
           </div>
-          <p className="text-xs text-slate-500 max-w-md">
-            {isBn ? 'উপরে উল্লিখিত রুট ছাড়াও পৃথিবীর যেকোনো দেশের ফ্লাইটের টিকিট আমরা তাত্ক্ষণিক কাটতে পারি।' : 'Besides these popular routes, we issue flight tickets to any global destination.'}
-          </p>
+
+          {/* Destination Search Box */}
+          <div className="relative w-full md:w-72 shrink-0">
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder={isBn ? 'শহর, দেশ বা কোড খুঁজুন (যেমন: London, JED, Cox)...' : 'Search city, country or code...'}
+              className="w-full bg-white text-slate-800 text-xs pl-9 pr-4 py-2.5 rounded-xl border-2 border-emerald-200 focus:border-[#D4AF37] focus:outline-hidden shadow-xs font-sans placeholder:text-slate-400"
+            />
+            <Search className="w-4 h-4 text-emerald-700 absolute left-3 top-1/2 -translate-y-1/2" />
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {popularRoutes.map((route, idx) => (
-            <div
-              key={idx}
-              onClick={() => onOpenBookingModal('Air Ticket', `${route.from} → ${route.to} (${route.type})`)}
-              className="group bg-gradient-to-br from-white to-emerald-50/50 hover:from-emerald-900 hover:to-emerald-950 hover:text-white p-4 rounded-2xl border-2 border-emerald-100 hover:border-[#D4AF37] shadow-sm hover:shadow-xl transition-all cursor-pointer relative overflow-hidden space-y-3"
+        {/* Region Filter Buttons */}
+        <div className="flex flex-wrap items-center gap-2">
+          {regions.map((reg) => (
+            <button
+              key={reg.id}
+              onClick={() => setSelectedRegion(reg.id)}
+              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+                selectedRegion === reg.id
+                  ? 'bg-[#0D472B] text-white shadow-md font-black border-2 border-[#D4AF37]'
+                  : 'bg-emerald-50 hover:bg-emerald-100 text-slate-700 border border-emerald-200'
+              }`}
             >
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-extrabold text-emerald-800 group-hover:text-[#D4AF37] bg-emerald-100 group-hover:bg-emerald-800/60 px-2.5 py-0.5 rounded-full transition-colors">
-                  {route.type}
-                </span>
-                <span className="text-lg">{route.flag}</span>
-              </div>
+              <span>{isBn ? reg.labelBn : reg.labelEn}</span>
+              <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-mono ${
+                selectedRegion === reg.id ? 'bg-[#D4AF37] text-emerald-950 font-bold' : 'bg-emerald-200 text-emerald-900'
+              }`}>
+                {reg.count}
+              </span>
+            </button>
+          ))}
+        </div>
 
-              <div className="flex items-center justify-between pt-1">
-                <div>
-                  <p className="text-base font-black text-slate-800 group-hover:text-white">{route.from}</p>
-                  <p className="text-[10px] font-bold text-slate-400 group-hover:text-emerald-300">{route.fromCode}</p>
-                </div>
-
-                <div className="flex flex-col items-center px-2">
-                  <Plane className="w-5 h-5 text-[#D4AF37] transform group-hover:translate-x-1 transition-transform" />
-                  <div className="w-12 h-0.5 bg-emerald-200 group-hover:bg-[#D4AF37] mt-1 relative">
-                    <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
+        {/* Destinations Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {filteredDestinations.map((dest) => (
+            <div
+              key={dest.id}
+              className="bg-white rounded-2xl border-2 border-emerald-100 hover:border-[#D4AF37] p-5 shadow-xs hover:shadow-xl transition-all flex flex-col justify-between space-y-4 group relative overflow-hidden"
+            >
+              {/* Top Row: Region & Flag */}
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] font-bold bg-emerald-50 text-emerald-800 px-2.5 py-0.5 rounded-full border border-emerald-200">
+                    {isBn ? dest.regionLabelBn : dest.regionLabelEn}
+                  </span>
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-xl">{dest.flag}</span>
+                    <span className="text-xs font-mono font-black bg-slate-900 text-amber-300 px-2 py-0.5 rounded-md">
+                      {dest.iata}
+                    </span>
                   </div>
                 </div>
 
-                <div className="text-right">
-                  <p className="text-base font-black text-slate-800 group-hover:text-white">{route.to}</p>
-                  <p className="text-[10px] font-bold text-slate-400 group-hover:text-emerald-300">{route.toCode}</p>
+                {/* City & Country */}
+                <div>
+                  <h3 className="text-lg font-black text-[#0D472B] group-hover:text-[#B38712] transition-colors flex items-center gap-1.5">
+                    <span>{isBn ? dest.cityBn : dest.cityEn}</span>
+                    <span className="text-xs font-semibold text-slate-500">
+                      ({isBn ? dest.countryBn : dest.countryEn})
+                    </span>
+                  </h3>
+                  <p className="text-[11px] text-slate-500 line-clamp-1 mt-0.5">
+                    {isBn ? dest.airportBn : dest.airportEn}
+                  </p>
+                </div>
+
+                {/* Route Visualizer DAC -> DEST */}
+                <div className="bg-emerald-50/70 p-3 rounded-xl border border-emerald-100/80 flex items-center justify-between text-xs font-mono">
+                  <div className="text-left">
+                    <span className="text-[10px] text-slate-400 block font-sans">{isBn ? 'যাত্রা' : 'From'}</span>
+                    <strong className="text-[#0D472B] font-black">DAC (ঢাকা)</strong>
+                  </div>
+
+                  <div className="flex flex-col items-center px-2">
+                    <div className="flex items-center gap-1 text-[10px] text-emerald-800 font-bold font-sans">
+                      <Clock className="w-3 h-3 text-[#D4AF37]" />
+                      <span>{isBn ? dest.flightDurationBn : dest.flightDuration}</span>
+                    </div>
+                    <div className="w-16 h-0.5 bg-emerald-300 relative my-1">
+                      <Plane className="w-3.5 h-3.5 text-[#D4AF37] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+                    </div>
+                    <span className={`text-[9px] font-bold px-1.5 rounded-sm ${dest.directFlight ? 'bg-emerald-600 text-white' : 'bg-slate-200 text-slate-700'}`}>
+                      {dest.directFlight ? (isBn ? 'ডিরেক্ট ফ্লাইট' : 'Direct') : (isBn ? 'কানেক্টিং' : 'Connecting')}
+                    </span>
+                  </div>
+
+                  <div className="text-right">
+                    <span className="text-[10px] text-slate-400 block font-sans">{isBn ? 'গন্তব্য' : 'To'}</span>
+                    <strong className="text-[#0D472B] font-black">{dest.iata}</strong>
+                  </div>
+                </div>
+
+                {/* Key Specs: Baggage & Airlines */}
+                <div className="space-y-1.5 text-xs text-slate-700 pt-1">
+                  <div className="flex items-center justify-between text-[11px]">
+                    <span className="text-slate-500 flex items-center gap-1">
+                      <Luggage className="w-3.5 h-3.5 text-[#D4AF37]" />
+                      <span>{isBn ? 'ফ্রি লাগেজ এলাউন্স:' : 'Free Baggage:'}</span>
+                    </span>
+                    <span className="font-bold text-slate-800">{dest.baggageAllowance}</span>
+                  </div>
+
+                  <div className="flex items-center justify-between text-[11px]">
+                    <span className="text-slate-500 flex items-center gap-1">
+                      <Plane className="w-3.5 h-3.5 text-emerald-700" />
+                      <span>{isBn ? 'প্রধান এয়ারলাইন্স:' : 'Airlines:'}</span>
+                    </span>
+                    <span className="font-medium text-slate-700 line-clamp-1 text-right max-w-[150px]">
+                      {dest.popularAirlines.slice(0, 2).join(', ')}
+                    </span>
+                  </div>
                 </div>
               </div>
 
-              <div className="pt-1 flex items-center justify-between text-[11px] font-bold text-[#0D472B] group-hover:text-[#F3E0A0]">
-                <span>{isBn ? 'ইনকোয়ারি পাঠান' : 'Send Inquiry'}</span>
-                <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+              {/* Card Footer: Booking Action */}
+              <div className="pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
+                <div className="flex items-center gap-1.5 text-xs text-emerald-800 font-bold">
+                  <ShieldCheck className="w-4 h-4 text-[#D4AF37]" />
+                  <span>{isBn ? 'গ্যারান্টিযুক্ত সেরা ফেয়ার' : 'Best Fare Guaranteed'}</span>
+                </div>
+
+                <button
+                  onClick={() =>
+                    onOpenBookingModal(
+                      'Air Ticket',
+                      `Dhaka (DAC) ✈ ${dest.cityEn} (${dest.iata}) - ${dest.countryEn}`
+                    )
+                  }
+                  className="bg-[#0D472B] hover:bg-[#082e1c] text-[#F3E0A0] hover:text-white font-bold px-4 py-2.5 rounded-xl text-xs shadow-sm flex items-center gap-1.5 transition-all group/btn border border-[#D4AF37]/40"
+                >
+                  <span>{isBn ? 'বুকিং ইনকোয়ারি' : 'Book Ticket'}</span>
+                  <ChevronRight className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 transition-transform" />
+                </button>
               </div>
             </div>
           ))}
         </div>
+
+        {/* Empty state fallback */}
+        {filteredDestinations.length === 0 && (
+          <div className="bg-slate-50 p-8 rounded-2xl text-center space-y-2 border-2 border-dashed border-slate-200">
+            <Plane className="w-8 h-8 text-slate-400 mx-auto" />
+            <p className="text-sm font-bold text-slate-700">
+              {isBn ? 'আপনার অনুসন্ধানের সাথে কোনো নির্দিষ্ট গন্তব্য মেলেনি।' : 'No destinations match your search query.'}
+            </p>
+            <p className="text-xs text-slate-500">
+              {isBn ? 'তবে আমরা বিশ্বের যেকোনো দেশের যেকোনো রুটের টিকিট কাটতে পারি। সরাসরি যোগাযোগ করুন।' : 'We can issue tickets to any destination worldwide. Please contact us directly.'}
+            </p>
+            <button
+              onClick={() => { setSelectedRegion('all'); setSearchQuery(''); }}
+              className="mt-2 text-xs font-bold text-[#0D472B] underline"
+            >
+              {isBn ? 'সকল রুট দেখুন' : 'Show All Routes'}
+            </button>
+          </div>
+        )}
+
       </div>
 
-      {/* OUR PROMISES & FEATURES */}
+      {/* 5. OUR PROMISES & FEATURES */}
       <div className="bg-gradient-to-br from-[#021f11] via-[#0D472B] to-[#04331d] rounded-3xl p-6 sm:p-10 border-2 border-[#D4AF37]/60 text-white space-y-6 shadow-2xl relative overflow-hidden">
         
         <div className="relative z-10 border-b border-emerald-800 pb-4">
@@ -301,7 +410,7 @@ export const AirTicketsPage: React.FC<AirTicketsPageProps> = ({
         </div>
       </div>
 
-      {/* HOW TO GET TICKET SECTION */}
+      {/* 6. HOW TO GET TICKET SECTION */}
       <div className="space-y-6">
         <div className="text-center max-w-xl mx-auto space-y-1">
           <span className="text-xs font-bold text-[#D4AF37] uppercase tracking-wider block">
@@ -360,7 +469,7 @@ export const AirTicketsPage: React.FC<AirTicketsPageProps> = ({
         </div>
       </div>
 
-      {/* REQUIRED DOCUMENTS SECTION */}
+      {/* 7. REQUIRED DOCUMENTS SECTION */}
       <div className="bg-white rounded-3xl p-6 sm:p-8 border-2 border-emerald-100 shadow-lg space-y-6">
         <div className="border-b border-slate-100 pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
           <div>
@@ -437,7 +546,7 @@ export const AirTicketsPage: React.FC<AirTicketsPageProps> = ({
         </div>
       </div>
 
-      {/* PARTNER AIRLINES GRID */}
+      {/* 8. PARTNER AIRLINES GRID */}
       <div className="bg-[#021f11] rounded-3xl p-6 sm:p-8 border-2 border-[#D4AF37]/60 text-white space-y-5 shadow-xl">
         <div className="text-center space-y-1">
           <span className="text-xs font-bold text-[#D4AF37] uppercase tracking-wider block">
@@ -469,7 +578,7 @@ export const AirTicketsPage: React.FC<AirTicketsPageProps> = ({
         </div>
       </div>
 
-      {/* BOTTOM CONTACT FOOTER BANNER */}
+      {/* 9. BOTTOM CONTACT FOOTER BANNER */}
       <div className="bg-gradient-to-r from-emerald-900 via-emerald-800 to-emerald-900 rounded-2xl p-6 text-white text-center space-y-3 border border-[#D4AF37]/50 shadow-lg">
         <h3 className="text-xl font-black text-[#F3E0A0]">
           {isBn ? 'যেকোনো রুটের টিকিটের রেট ও অফার জানতে আজই কল করুন' : 'Call Today to Check Flight Rates & Special Deals'}
