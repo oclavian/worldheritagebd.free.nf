@@ -143,59 +143,59 @@ export function adaptUmrahPackage(pkg: UmrahPackage): StandardPackageItem {
       },
       {
         dayNumber: '09',
-        titleBn: 'মক্কা থেকে মদীনা মুনাওয়ারাহ্ গমনাগমন',
-        titleEn: 'Transfer from Makkah to Madinah Al-Munawwarah',
-        descBn: 'মক্কা হোটেল চেক-আউট। সুসজ্জিত এসি বাসে আল্লাহর রাসূল (সাঃ)-এর শহর মদীনা মুনাওয়ারার উদ্দেশ্যে যাত্রা। মদীনা হোটেল চেক-ইন।',
-        descEn: 'Check-out from Makkah hotel. Journey to Madinah via comfortable AC coach, hotel check-in at Madinah.',
+        titleBn: 'মক্কা থেকে মদীনা মুনাওয়ারাহ্ গমন ও চেক-ইন',
+        titleEn: 'Transfer from Makkah to Madinah Al-Munawwarah & Hotel Check-in',
+        descBn: 'হোটেল চেক-আউট শেষে শীতাতপ নিয়ন্ত্রিত লাক্সারি বাসে পবিত্র মদীনা মুনাওয়ারার উদ্দেশ্যে যাত্রা। মদীনার হোটেলে চেক-ইন এবং মসজিদে নববীতে প্রথম সালাত আদায় ও রওজা শরীফে সালাম পেশ।',
+        descEn: 'Check-out from Makkah hotel and transfer to Madinah via comfortable AC luxury coach. Check-in to Madinah hotel, offer prayers at Masjid an-Nabawi and convey Salam at Rawdah Mubarak.',
         mealsBn: 'সকাল, দুপুর ও রাতের খাবার',
         mealsEn: 'Breakfast, Lunch & Dinner',
       },
       {
         dayNumber: '10',
-        titleBn: 'মসজিদে নববী, রিয়াজুল জান্নাহ্ সালাম পেশ ও জিয়ারাহ্',
-        titleEn: 'Riad ul-Jannah Salam & Madinah Ziyarah',
-        descBn: 'মসজিদে নববীতে বিশ্বনবী (সাঃ)-এর রওজা মোবারকে সালাম নিবেদন। মদীনার ঐতিহাসিক স্থানসমূহ: মসজিদে কুবা, মসজিদে ক্বিবলাতাইন, উহুদ যুদ্ধক্ষেত্র ও সাত মসজিদ জিয়ারাহ্।',
-        descEn: 'Offer Salam at Rawdah Mubarak inside Masjid An-Nabawi. Guided Ziyarah to Masjid Quba, Masjid al-Qiblatayn, Mount Uhud, and Seven Mosques.',
+        titleBn: 'মদীনা মুনাওয়ারাহর ঐতিহাসিক স্থানসমূহ জিয়ারাহ্',
+        titleEn: 'Madinah Historical Ziyarah Tour',
+        descBn: 'অভিজ্ঞ গাইডের সাথে মসজিদে কুবা, মসজিদে কিবলাতাইন, ঐতিহাসিক ওহুদ প্রান্তর (শহীদদের কবরস্থান), ও খন্দক পরিদর্শনের মাধ্যমে বরকতময় জিয়ারাহ্ সম্পন্নকরণ।',
+        descEn: 'Guided ziyarah visiting Masjid Quba (2 Rakat prayer), Masjid al-Qiblatayn, Mount Uhud battleground and martyrs cemetery, and the Battle of the Trench site.',
         mealsBn: 'সকাল, দুপুর ও রাতের খাবার',
         mealsEn: 'Breakfast, Lunch & Dinner',
       },
       {
         dayNumber: '11-13',
-        titleBn: 'মদীনায় ইবাদত ও দরূদ শরীফ পাঠ',
-        titleEn: 'Ibadah & Reflection at Madinah An-Nabawi',
-        descBn: 'মসজিদে নববীতে নিয়মিত ৫ ওয়াক্ত সালাত আদায় এবং রওজা শরীফের সান্নিধ্যে ইবাদত-বন্দেগী।',
-        descEn: 'Perform daily prayers at Prophet\'s Mosque, offering Darood Sharif and personal prayers.',
+        titleBn: 'মসজিদে নববীতে নামাজ, রিয়াদুল জান্নাহ্ ও ইবাদত',
+        titleEn: 'Masjid an-Nabawi Prayers, Rawdah Visits & Personal Devotion',
+        descBn: 'মসজিদে নববীতে নিয়মিত ৫ ওয়াক্ত সালাত আদায়, রিয়াদুল জান্নাহ্ (নুসুক অ্যাপ অনুমোদনে) নফল নামাজ আদায় এবং ঐতিহাসিক খেজুরের বাজারে কেনাকাটা।',
+        descEn: 'Attend daily 5 prayers in Masjid an-Nabawi, pray in Rawdah Sharif (subject to Nusuk permit) and visit traditional dates market in Madinah.',
         mealsBn: 'সকাল, দুপুর ও রাতের খাবার',
         mealsEn: 'Breakfast, Lunch & Dinner',
       },
       {
         dayNumber: '14',
-        titleBn: 'মদীনা/জেদ্দা বিমানবন্দর থেকে ঢাকায় শুভ প্রত্যাবর্তন',
-        titleEn: 'Return Journey from Madinah/Jeddah Airport to Dhaka',
-        descBn: 'হোটেল চেক-আউট ও বিমানবন্দরের উদ্দেশ্যে রওয়ানা। উমরাহ্ সম্পন্ন করে ঢাকায় নিরাপদ আগমন।',
-        descEn: 'Hotel check-out and airport transfer for return flight to Dhaka with unforgettable spiritual memories.',
-        mealsBn: 'সকালে প্রাতরাশ',
-        mealsEn: 'Breakfast Included',
+        titleBn: 'বিদায় ও মদীনা/জেদ্দা থেকে ঢাকা বিমানযাত্রা',
+        titleEn: 'Farewell & Departure to Dhaka Airport',
+        descBn: 'পবিত্র হারামাইন শরিফাইনে বিদায়ী মোনাজাত ও সালাম নিবেদন। হোটেল চেক-আউট করে এয়ারপোর্টে গমন ও পবিত্র সফর শেষে নিরাপদে ঢাকায় প্রত্যাবর্তন।',
+        descEn: 'Convey farewell Salam at Prophet’s Mosque, hotel check-out, transfer to airport, and safe return flight to Hazrat Shahjalal International Airport, Dhaka.',
+        mealsBn: 'প্রাতরাশ ও ফ্লাইট খাবার',
+        mealsEn: 'Breakfast & In-Flight Meals',
       },
     ],
-    cancellationBn: 'যাত্রা শুরুর ১৫ দিন বা তার বেশি পূর্বে বাতিল করলে ২০% ফি প্রযোজ্য। ৭-১৪ দিন পূর্বে ৫০% এবং ৭ দিনের কম সময়ে সম্পূর্ণ টাকা অফেরতযোগ্য (ভিসা ও টিকিট নন-রিফান্ডেবল)।',
-    cancellationEn: '20% processing fee applies for cancellations 15+ days prior. 50% charge for 7-14 days prior, and 100% non-refundable if cancelled less than 7 days before departure.',
+    cancellationBn: 'ভ্রমণ শুরুর ২০ দিন পূর্বে বাতিল করলে ১০% সার্ভিস চার্জ। ১০-১৯ দিন পূর্বে ২৫% এবং ১০ দিনের কম সময়ে টিকিট ও ভিসা বাবদ প্রযোজ্য ফি অফেরতযোগ্য।',
+    cancellationEn: '10% cancellation fee 20+ days prior to departure. 25% for 10-19 days prior. Non-refundable visa/flight portions within 10 days.',
     policiesBn: [
       'পাসপোর্টের মেয়াদ নূন্যতম ৬ মাস থাকতে হবে।',
       'সৌদি ধর্ম মন্ত্রণালয় ও বাংলাদেশ হাব (HAAB) এর সকল নিয়মকানুন মেনে চলা বাধ্যবাধকতা।',
       'হোটেল চেক-ইন সময় দুপুর ২:০০ টা, চেক-আউট বেলা ১২:০০ টা।',
-      'ফ্লাইটের সময়সূচী এয়ারলাইন্সের সিদ্ধান্ত অনুযায়ী পরিবর্তন হতে পারে।',
+      'ফ্লাইটের সময়সূচী এয়ারলাইন্সের সিদ্ধান্ত অনুযায়ী পরিবর্তনশীল হতে পারে।',
     ],
     policiesEn: [
-      'Passport must have at least 6 months validity from the travel date.',
-      'Must strictly follow Saudi Ministry of Hajj & Umrah guidelines.',
-      'Hotel check-in time is 2:00 PM and check-out is 12:00 PM.',
-      'Flight schedules are subject to airline operations and timing.',
+      'Passport must have at least 6 months validity.',
+      'Must follow Saudi Ministry and HAAB regulations.',
+      'Hotel standard check-in 2:00 PM, check-out 12:00 PM.',
+      'Flight timings subject to airline schedules.',
     ],
-    suitableForBn: 'পরিবার, একক ও গ্রুপ যাত্রী',
-    suitableForEn: 'Family, Individuals & Groups',
-    groupSizeBn: '১৫ - ৫০ জন উমরাহ্ কাফেলা',
-    groupSizeEn: '15 - 50 Pilgrims Group',
+    suitableForBn: 'সকল প্রাপ্তবয়স্ক ও পরিবারবর্গ',
+    suitableForEn: 'Adults, Families & Groups',
+    groupSizeBn: 'ছোট ও মাঝারি কাফেলা',
+    groupSizeEn: 'Small to Medium Groups',
     hotelsBn: [pkg.makkahHotelBn, pkg.madinahHotelBn],
     hotelsEn: [pkg.makkahHotelEn, pkg.madinahHotelEn],
     rawItem: pkg,
@@ -203,152 +203,219 @@ export function adaptUmrahPackage(pkg: UmrahPackage): StandardPackageItem {
 }
 
 export function adaptHajjPackage(pkg: HajjPackage): StandardPackageItem {
-  const isStandardWithTrain = pkg.bulletTrainBn || pkg.id.includes('standard');
-  const defaultGallery = [
-    'https://lh3.googleusercontent.com/d/12r4H9iF0KgHrHPi0hciMhvKPxU-4eWHt', // মক্কা ১
-    'https://lh3.googleusercontent.com/d/10oFD9Le8oEeucvjzrJ4w8WaTdpD8UUfp', // মদিনা ১
-    'https://lh3.googleusercontent.com/d/13E6zxdAkmFG6_U3coxwl-9wDBBrT-r3X', // মিনা ১
-    'https://lh3.googleusercontent.com/d/1WXbn599ZILjt0T-lfCTQQ3AuGaqvKYHq', // আরাফাত ১
-    'https://lh3.googleusercontent.com/d/1FicUBcNXriSeuHcrmIw7WaSrbUzYlAQL', // মুজদালিফা ১
-    'https://lh3.googleusercontent.com/d/1c72GWSQMJ6U9U4ntWGfylOwvwM2RBG3f', // মক্কা ২
-    'https://lh3.googleusercontent.com/d/1A8-ulMjjQH6PnQjJZ7W-jh2paU6XKm8j', // মদিনা ২
-    'https://lh3.googleusercontent.com/d/1lgcQh28xDqdDVLTLHBJlEUmHz1m6Jz1V', // মিনা ২
-    'https://lh3.googleusercontent.com/d/1KZe5xi2XDQ-lipnXpwftQHQhzJX68aCm', // আরাফাত ২
-    'https://lh3.googleusercontent.com/d/1ymiaZfrE7qDYUDh34w-oiYCzrQO49Qma', // মুজদালিফা ২
-  ];
+  const isStandardWithTrain = 
+    (pkg.totalPriceBDT >= 750000) ||
+    (pkg.titleEn && pkg.titleEn.toLowerCase().includes('bullet')) || 
+    (pkg.titleBn && pkg.titleBn.includes('স্ট্যান্ডার্ড')) ||
+    (pkg.transportEn && pkg.transportEn.toLowerCase().includes('train')) ||
+    (pkg.bulletTrainBn !== undefined && pkg.bulletTrainBn !== '') ||
+    pkg.id.includes('hajj-2') || 
+    pkg.id.includes('hajj-3') ||
+    pkg.id.includes('standard');
 
   return {
     id: pkg.id,
     serviceType: 'Hajj',
     titleBn: pkg.titleBn,
     titleEn: pkg.titleEn,
-    durationBn: (!pkg.durationBn || pkg.durationBn.includes('৪৫')) ? '৩০ থেকে ৩৫ দিন' : pkg.durationBn,
-    durationEn: (!pkg.durationEn || pkg.durationEn.includes('45')) ? '30 to 35 Days' : pkg.durationEn,
-    locationBn: isStandardWithTrain 
-      ? 'মক্কা, মদীনা, তায়েফ, জেদ্দা, মিনা, আরাফাত ও মুজদালিফা' 
-      : 'মক্কা, মদীনা, মিনা, আরাফাত ও মুজদালিফা',
-    locationEn: isStandardWithTrain
-      ? 'Makkah, Madinah, Taif, Jeddah, Mina, Arafat & Muzdalifah'
-      : 'Makkah, Madinah, Mina, Arafat & Muzdalifah',
+    durationBn: pkg.durationBn,
+    durationEn: pkg.durationEn,
+    locationBn: `পবিত্র মক্কা ও মদীনা মুনাওয়ারাহ (${pkg.makkahHotelBn} ও ${pkg.madinahHotelBn})`,
+    locationEn: `Holy Makkah & Madinah (${pkg.makkahHotelEn} & ${pkg.madinahHotelEn})`,
     priceBDT: pkg.totalPriceBDT,
-    badgeBn: pkg.badgeBn || `হজ্ব ${pkg.year}`,
-    badgeEn: pkg.badgeEn || `Hajj ${pkg.year}`,
+    badgeBn: pkg.badgeBn || 'পবিত্র হজ্ব',
+    badgeEn: pkg.badgeEn || 'Holy Hajj',
     image: pkg.image,
-    galleryImages: pkg.galleryImages && pkg.galleryImages.length > 0 ? pkg.galleryImages : defaultGallery,
-    inclusionsBn: pkg.facilitiesBn || [
-      'বাংলাদেশ ও সৌদি সরকার অনুমোদিত ডিরেক্ট ফ্লাইট (Direct Flight)',
-      'কোরবানি সম্পূর্ণ প্যাকেজের অন্তর্ভুক্ত',
-      `মক্কা হোটেল: ${pkg.makkahHotelBn}`,
-      `মদীনা হোটেল: ${pkg.madinahHotelBn}`,
-      'মিনা ও আরাফাত তাঁবুতে শীতাতপ নিয়ন্ত্রিত অবস্থান ও ক্যাটারিং',
-      pkg.foodBn,
-      pkg.transportBn,
-      pkg.ziyarahBn || 'মক্কা ও মদিনার ঐতিহাসিক স্থানসমূহ বিশেষ জিয়ারাহ',
-      `হজ্ব প্রশিক্ষণ কর্মশালা ও মোয়াল্লেম গাইড: ${pkg.moallemBn}`,
-      pkg.giftItemsBn || 'ইহরাম প্যাকেজ ও গিফট আইটেম',
+    galleryImages: [
+      pkg.image,
+      'https://images.unsplash.com/photo-1542816417-0983c9c9ad53?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1564769625905-50e93615e769?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1580418827493-f2b22c0a76cb?auto=format&fit=crop&w=800&q=80',
     ],
-    inclusionsEn: pkg.facilitiesEn || [
-      'Approved Direct Flight (Dhaka - Jeddah/Madinah - Dhaka)',
-      'Qurbani / Animal Sacrifice Included in Package',
-      `Makkah Hotel: ${pkg.makkahHotelEn}`,
-      `Madinah Hotel: ${pkg.madinahHotelEn}`,
-      'AC Tent Accommodation & Full Catering in Mina & Arafat',
-      pkg.foodEn,
-      pkg.transportEn,
-      pkg.ziyarahEn || 'Historical Ziyarah in Sacred Places',
-      `Guided Hajj Orientation & Moallem: ${pkg.moallemEn}`,
-      pkg.giftItemsEn || 'Ihram Kit & Gift Bag',
+    inclusionsBn: [
+      'বাংলাদেশ-জেদ্দা-বাংলাদেশ সরাসরি ফ্লাইট টিকিট (নন-স্টপ / প্রিমিয়াম ট্রানজিট)',
+      'পবিত্র মক্কা ও মদিনা শরীফে নির্ধারিত তারকা মানের হোটেল অবস্থান',
+      'মিনা ও আরাফাতে শীতাতপ নিয়ন্ত্রিত (AC) তাঁবু ও বিশেষ ক্যাটারিং সেবা',
+      'হজের দিনগুলোতে মুয়াল্লিম সেবা ও সার্বক্ষণিক অভিজ্ঞ গাইড টিম',
+      'অভিজ্ঞ আলেম ও মুফতি দ্বারা হজের নিয়ম ও আমল বিষয়ক বিশেষ প্রশিক্ষণ',
+      'মক্কা ও মদিনার ঐতিহাসিক স্থানসমূহ মোয়াল্লেমের তত্ত্বাবধানে জিয়ারাহ',
+      isStandardWithTrain 
+        ? 'সৌদি আরবের আধুনিক বুলেট ট্রেনে (Haramain Bullet Train) মক্কা-মদিনা যাতায়াত'
+        : 'সৌদি হজ মন্ত্রণালয়ের অনুমোদিত শীতাতপ নিয়ন্ত্রিত (AC) বাসে যাতায়াত',
+      'হজ কিট (ট্রলি ব্যাগ, ইহরাম, গাইড বই ও সহায়ক সামগ্রী)',
+    ],
+    inclusionsEn: [
+      'Round-trip scheduled flight ticket (Dhaka - Jeddah - Dhaka)',
+      'Star category hotel accommodation in Makkah & Madinah',
+      'Air-conditioned VIP tents in Mina & Arafat with full catering service',
+      'Dedicated Moallem support and 24/7 experienced guide team',
+      'Pre-Hajj workshops & religious guidance by qualified Islamic scholars',
+      'Guided historical Ziyarah in Makkah and Madinah',
+      isStandardWithTrain
+        ? 'Haramain High-Speed Bullet Train Journey between Makkah and Madinah'
+        : 'AC transport logistics as approved by Saudi Ministry of Hajj',
+      'Complimentary Hajj Kit (Luggage, Ihram, guide booklet & essentials)',
     ],
     exclusionsBn: [
-      'ব্যক্তিগত কেনাকাটা ও ব্যক্তিগত ঔষধের খরচ',
-      'অতিরিক্ত লাগেজ চার্জ ও ব্যক্তিগত আলাদা ঘোরাঘুরি',
+      'ব্যক্তিগত কেনাকাটা, শপিং ও ব্যক্তিগত ওষুধ খরচ',
+      'হোটেলের রুম সার্ভিস, অতিরিক্ত লন্ড্রি ও টেলিফোন বিল',
+      'প্যাকেজে অন্তর্ভুক্ত নয় এমন অতিরিক্ত কোনো ব্যক্তিগত ট্রান্সপোর্টেশন বা আনলিস্টেড জিয়ারাহ',
     ],
     exclusionsEn: [
-      'Personal shopping, SIM card and private medicine expenses',
-      'Excess baggage charge and private transportation outside group itinerary',
+      'Personal shopping, souvenirs, and personal medical expenses',
+      'Hotel room service, personal laundry, and telephone charges',
+      'Any additional private transport or unlisted personal Ziyarah tours',
     ],
-    itinerary: [
-      {
-        dayNumber: '01',
-        titleBn: 'ঢাকা থেকে ডিরেক্ট ফ্লাইটে জেদ্দা/মদিনা আগমন',
-        titleEn: 'Direct Flight from Dhaka to Jeddah / Madinah',
-        descBn: 'হযরত শাহজালাল আন্তর্জাতিক বিমানবন্দর থেকে ডিরেক্ট ফ্লাইটে সৌদি আরব আগমন। এয়ারপোর্টে অভ্যর্থনা শেষে শীতাতপ নিয়ন্ত্রিত বাসে হোটেলে চেক-ইন ও প্রথম উমরাহ্ আদায়।',
-        descEn: 'Depart Dhaka on direct flight, arrive in Saudi Arabia, airport reception, transfer by AC bus to hotel, and perform welcome Umrah.',
-        mealsBn: 'ফ্লাইট ও হোটেল ক্যাটারিং',
-        mealsEn: 'In-Flight & Hotel Meals',
-      },
-      {
-        dayNumber: '02-07',
-        titleBn: 'পবিত্র হারামাইন শরিফাইনে ইবাদত ও হজ্ব প্রস্তুতি',
-        titleEn: 'Prayers in Holy Harams & Pre-Hajj Orientation',
-        descBn: 'পবিত্র কাবা শরিফ ও মসজিদে নববীতে ৫ ওয়াক্ত সালাত আদায়, নফল তাওয়াফ ও মোয়াল্লেমের পরিচালনায় ব্যবহারিক হজ্ব প্রশিক্ষণ কর্মশালা।',
-        descEn: 'Daily prayers at Holy Kaaba & Prophet\'s Mosque, Nafil Tawaf, and practical Hajj workshop by Islamic scholars.',
-        mealsBn: '৩ বেলা উন্নত মানসম্মত বাংলা খাবার',
-        mealsEn: '3 Bengali Quality Meals Daily',
-      },
-      {
-        dayNumber: '08',
-        titleBn: '৮ জিলহজ্জ - তালবিয়া পাঠসহ মিনা তাঁবু সিটিতে আগমন',
-        titleEn: '8th Dhul Hijjah - Move to Mina AC Tent City',
-        descBn: 'ইহরাম পরিধান করে "লাব্বায়েক আল্লাহুম্মা লাব্বায়েক" পাঠ করতে করতে মিনা তাঁবু সিটিতে অবস্থান। ৫ ওয়াক্ত নামাজ মিনায় আদায় ও রাতযাপন।',
-        descEn: 'Wear Ihram, recite Talbiyah, and settle into Mina AC Tent City for 5 mandatory prayers & overnight stay.',
-        mealsBn: 'মিনা ক্যাটারিং সেবা',
-        mealsEn: 'Mina Catering Service',
-      },
-      {
-        dayNumber: '09',
-        titleBn: '৯ জিলহজ্জ - আরাফাত ময়দানে অবস্থান (মূল হজ্ব) ও মুজদালিফায় রাতযাপন',
-        titleEn: '9th Dhul Hijjah - Day of Arafat (Core Hajj) & Muzdalifah Night',
-        descBn: 'সূর্যোদয়ের পর আরাফাতের ময়দানে উকুফ (অবস্থান), খুতবা শ্রবণ ও মোনাজাত। সূর্যাস্তের পর মুজদালিফায় গমন, খোলা আকাশের নিচে রাতযাপন ও কঙ্কর সংগ্রহ।',
-        descEn: 'Wuquf at Arafat Plains, listen to Hajj Khutbah and Duas. After sunset move to Muzdalifah for open-sky night stay & collecting 70 pebbles.',
-        mealsBn: 'আরাফাত ও মুজদালিফা বিশেষ খাবার প্যাকেট',
-        mealsEn: 'Arafat & Muzdalifah Meals',
-      },
-      {
-        dayNumber: '10',
-        titleBn: '১০ জিলহজ্জ - জামারাতে কঙ্কর নিক্ষেপ, কোরবানি ও তাওয়াফে জিয়ারাহ',
-        titleEn: '10th Dhul Hijjah - Jamarat Stoning, Qurbani & Tawaf al-Ziyarah',
-        descBn: 'মুজদালিফা থেকে মিনায় এসে বড় শয়তানকে ৭টি কঙ্কর নিক্ষেপ, প্যাকেজভুক্ত কোরবানি সম্পন্ন, মাথা মুণ্ডন (হালাক) করে ইহরাম খোলা এবং মক্কায় তাওয়াফে জিয়ারাহ ও সাঈ আদায়।',
-        descEn: 'Stone Jamarat al-Aqaba, complete included Qurbani, shave head (Halq) to exit Ihram, and perform Tawaf al-Ziyarah & Sai at Kaaba.',
-        mealsBn: '৩ বেলা উন্নত খাবার',
-        mealsEn: '3 Meals Daily',
-      },
-      {
-        dayNumber: '11-12',
-        titleBn: '১১-১২ জিলহজ্জ - মিনায় অবস্থান ও ৩ শয়তানকে কঙ্কর নিক্ষেপ',
-        titleEn: '11-12th Dhul Hijjah - Mina Days & Stoning 3 Jamarat',
-        descBn: 'মিনায় অবস্থান এবং প্রতিদিন ছোট, মধ্যম ও বড় শয়তানকে ৭টি করে কঙ্কর নিক্ষেপ সম্পন্ন করে মক্কার হোটেলে প্রত্যাবর্তন।',
-        descEn: 'Stay in Mina tents, pelt 7 pebbles at each of the 3 Jamarat daily, and return smoothly to Makkah hotel.',
-        mealsBn: '৩ বেলা উন্নত খাবার',
-        mealsEn: '3 Meals Daily',
-      },
-      {
-        dayNumber: '13-28',
-        titleBn: isStandardWithTrain 
-          ? 'মক্কা-মদিনা বুলেট ট্রেনে ভ্রমণ ও ঐতিহাসিক জিয়ারাহ (তায়েফ, জেদ্দা, বদর)' 
-          : 'মক্কা ও মদিনা মুনাওয়ারাহ অবস্থান ও পবিত্র জিয়ারাহ',
-        titleEn: isStandardWithTrain
-          ? 'Haramain Bullet Train Ride & Extended Ziyarah (Taif, Jeddah, Badr)'
-          : 'Makkah & Madinah Stay and Holy Sites Ziyarah',
-        descBn: isStandardWithTrain
-          ? 'সৌদি আরবের আধুনিক বুলেট ট্রেনে (Haramain Bullet Train) মক্কা-মদিনা যাতায়াত। মদীনায় মসজিদে নববীতে ৪০ ওয়াক্ত নামাজ ও রওজা শরিফে সালাম নিবেদন। মক্কা, মদিনা, তায়েফ, জেদ্দা ও বদর প্রান্তরে বিশেষ জিয়ারাহ।'
-          : 'মদীনায় মসজিদে নববীতে নামাজ আদায় ও রাসূল (সাঃ)-এর রওজা মোবারকে সালাম নিবেদন। মক্কা ও মদিনার ঐতিহাসিক স্থানসমূহ মোয়াল্লেমের সাথে জিয়ারাহ।',
-        descEn: isStandardWithTrain
-          ? 'Experience high-speed Haramain Bullet Train journey between Makkah and Madinah. 40 prayers at Prophet\'s Mosque, Rawdah Mubarak Salam, and extended Ziyarah covering Makkah, Madinah, Taif Mountains, Jeddah Coastal Mosque & Historic Badr Battleground.'
-          : 'Stay at Madinah Al-Munawwarah for prayers at Prophet\'s Mosque and Rawdah Mubarak Salam, with historic Ziyarah guided by scholars.',
-        mealsBn: '৩ বেলা মানসম্মত বাংলা খাবার',
-        mealsEn: '3 Bengali Meals Daily',
-      },
-      {
-        dayNumber: '29-35',
-        titleBn: 'বিদায়ী তাওয়াফ ও ডিরেক্ট ফ্লাইটে ঢাকায় প্রত্যাবর্তন',
-        titleEn: 'Farewell Tawaf & Direct Flight Back to Dhaka',
-        descBn: 'পবিত্র কাবা শরিফে বিদায়ী তাওয়াফ সম্পন্ন করে জেদ্দা/মদীনা আন্তর্জাতিক বিমানবন্দর থেকে ডিরেক্ট ফ্লাইটে হযরত শাহজালাল আন্তর্জাতিক বিমানবন্দর ঢাকায় প্রত্যাবর্তন।',
-        descEn: 'Complete Tawaf al-Wada (Farewell Tawaf) and return to Dhaka with holy Hajj Mabrur.',
-        mealsBn: 'ফ্লাইট খাবার',
-        mealsEn: 'In-Flight Catering',
-      },
-    ],
+    itinerary: isStandardWithTrain
+      ? [
+          {
+            dayNumber: '01',
+            titleBn: 'ঢাকা থেকে ডিরেক্ট ফ্লাইটে জেদ্দা/মদিনা আগমন',
+            titleEn: 'Direct Flight Arrival from Dhaka to Jeddah / Madinah',
+            descBn: 'হযরত শাহজালাল আন্তর্জাতিক বিমানবন্দর থেকে ডিরেক্ট ফ্লাইটে সৌদি আরব আগমন। এয়ারপোর্টে অভ্যর্থনা শেষে শীতাতপ নিয়ন্ত্রিত বাসে হোটেলে চেক-ইন ও প্রথম উমরাহ্ আদায়।',
+            descEn: 'Depart Dhaka on direct flight, arrive in Saudi Arabia, airport reception, transfer by AC bus to hotel, and perform welcome Umrah.',
+            mealsBn: 'ফ্লাইট ও হোটেল ক্যাটারিং',
+            mealsEn: 'In-Flight & Hotel Catering',
+          },
+          {
+            dayNumber: '02-07',
+            titleBn: 'পবিত্র হারামাইন শরিফাইনে ইবাদত ও হজ্ব প্রস্তুতি',
+            titleEn: 'Prayers in Holy Harams & Pre-Hajj Orientation',
+            descBn: 'পবিত্র কাবা শরিফ ও মসজিদে নববীতে ৫ ওয়াক্ত সালাত আদায়, নফল তাওয়াফ ও মোয়াল্লেমের পরিচালনায় ব্যবহারিক হজ্ব প্রশিক্ষণ কর্মশালা।',
+            descEn: 'Daily prayers at Holy Kaaba & Prophet\'s Mosque, Nafil Tawaf, and practical Hajj workshop by Islamic scholars.',
+            mealsBn: '৩ বেলা উন্নত মানসম্মত বাংলা খাবার',
+            mealsEn: '3 Quality Bengali Meals Daily',
+          },
+          {
+            dayNumber: '08',
+            titleBn: '৮ জিলহজ্জ - তালবিয়া পাঠসহ মিনা তাঁবু সিটিতে আগমন',
+            titleEn: '8th Dhul Hijjah - Move to Mina AC Tent City with Talbiyah',
+            descBn: 'ইহরাম পরিধান করে "লাব্বায়েক আল্লাহুম্মা লাব্বায়েক" পাঠ করতে করতে মিনা তাঁবু সিটিতে অবস্থান। ৫ ওয়াক্ত নামাজ মিনায় আদায় ও রাতযাপন।',
+            descEn: 'Wear Ihram, continuously recite Talbiyah, and settle into Mina AC Tent City for 5 mandatory prayers & overnight stay.',
+            mealsBn: 'মিনা ক্যাটারিং সেবা',
+            mealsEn: 'Mina VIP Catering Service',
+          },
+          {
+            dayNumber: '09',
+            titleBn: '৯ জিলহজ্জ - আরাফাত ময়দানে অবস্থান (মূল হজ্ব) ও মুজদালিফায় রাতযাপন',
+            titleEn: '9th Dhul Hijjah - Day of Arafat (Core Hajj) & Muzdalifah Night',
+            descBn: 'সূর্যোদয়ের পর আরাফাতের ময়দানে উকুফ (অবস্থান), খুতবা শ্রবণ ও মোনাজাত। সূর্যাস্তের পর মুজদালিফায় গমন, খোলা আকাশের নিচে রাতযাপন ও কঙ্কর সংগ্রহ।',
+            descEn: 'Wuquf at Arafat Plains, listen to Hajj Khutbah and Duas. After sunset move to Muzdalifah for open-sky night stay & collecting pebbles.',
+            mealsBn: 'আরাফাত ও মুজদালিফা বিশেষ খাবার প্যাকেট',
+            mealsEn: 'Arafat & Muzdalifah Meal Packs',
+          },
+          {
+            dayNumber: '10',
+            titleBn: '১০ জিলহজ্জ - জামারাতে কঙ্কর নিক্ষেপ, কোরবানি ও তাওয়াফে জিয়ারাহ',
+            titleEn: '10th Dhul Hijjah - Jamarat Stoning, Qurbani & Tawaf al-Ziyarah',
+            descBn: 'মুজদালিফা থেকে মিনায় এসে বড় শয়তানকে ৭টি কঙ্কর নিক্ষেপ, প্যাকেজভুক্ত কোরবানি সম্পন্ন, মাথা মুণ্ডন (হালাক) করে ইহরাম খোলা এবং মক্কায় তাওয়াফে জিয়ারাহ ও সাঈ আদায়।',
+            descEn: 'Stone Jamarat al-Aqaba, complete included Qurbani, shave head (Halq) to exit Ihram, and perform Tawaf al-Ziyarah & Sai at Kaaba.',
+            mealsBn: '৩ বেলা উন্নত খাবার',
+            mealsEn: '3 Quality Meals Daily',
+          },
+          {
+            dayNumber: '11-12',
+            titleBn: '১১-১২ জিলহজ্জ - মিনায় অবস্থান ও ৩ শয়তানকে কঙ্কর নিক্ষেপ',
+            titleEn: '11-12th Dhul Hijjah - Mina Days & Stoning 3 Jamarat',
+            descBn: 'মিনায় অবস্থান এবং প্রতিদিন ছোট, মধ্যম ও বড় শয়তানকে ৭টি করে কঙ্কর নিক্ষেপ সম্পন্ন করে মক্কার হোটেলে প্রত্যাবর্তন।',
+            descEn: 'Stay in Mina tents, pelt 7 pebbles at each of the 3 Jamarat daily, and return smoothly to Makkah hotel.',
+            mealsBn: '৩ বেলা উন্নত খাবার',
+            mealsEn: '3 Quality Meals Daily',
+          },
+          {
+            dayNumber: '13-28',
+            titleBn: 'মক্কা-মদিনা বুলেট ট্রেনে ভ্রমণ ও ঐতিহাসিক জিয়ারাহ (তায়েফ, জেদ্দা, বদর)',
+            titleEn: 'Haramain Bullet Train Ride & Extended Ziyarah (Taif, Jeddah, Badr)',
+            descBn: 'সৌদি আরবের আধুনিক বুলেট ট্রেনে (Haramain Bullet Train) মক্কা-মদিনা যাতায়াত। মদীনায় মসজিদে নববীতে ৪০ ওয়াক্ত নামাজ ও রওজা শরিফে সালাম নিবেদন। মক্কা, মদিনা, তায়েফ, জেদ্দা ও বদর প্রান্তরে বিশেষ জিয়ারাহ।',
+            descEn: 'Experience high-speed Haramain Bullet Train journey between Makkah and Madinah. 40 prayers at Prophet\'s Mosque, Rawdah Mubarak Salam, and extended Ziyarah covering Makkah, Madinah, Taif Mountains, Jeddah Coastal Mosque & Historic Badr Battleground.',
+            mealsBn: '৩ বেলা উন্নত মানসম্মত বাংলা খাবার',
+            mealsEn: '3 Quality Bengali Meals Daily',
+          },
+          {
+            dayNumber: '29-35',
+            titleBn: 'বিদায়ী তাওয়াফ ও ডিরেক্ট ফ্লাইটে ঢাকায় প্রত্যাবর্তন',
+            titleEn: 'Farewell Tawaf & Direct Flight Back to Dhaka',
+            descBn: 'পবিত্র কাবা শরিফে বিদায়ী তাওয়াফ সম্পন্ন করে জেদ্দা/মদীনা আন্তর্জাতিক বিমানবন্দর থেকে ডিরেক্ট ফ্লাইটে হযরত শাহজালাল আন্তর্জাতিক বিমানবন্দর ঢাকায় প্রত্যাবর্তন।',
+            descEn: 'Complete Tawaf al-Wada (Farewell Tawaf) and return to Dhaka on scheduled direct flight.',
+            mealsBn: 'ফ্লাইট খাবার',
+            mealsEn: 'In-Flight Catering',
+          },
+        ]
+      : [
+          {
+            dayNumber: '01',
+            titleBn: 'ঢাকা থেকে ডিরেক্ট ফ্লাইটে জেদ্দা/মদিনা আগমন',
+            titleEn: 'Direct Flight Arrival from Dhaka to Jeddah / Madinah',
+            descBn: 'হযরত শাহজালাল আন্তর্জাতিক বিমানবন্দর থেকে ডিরেক্ট ফ্লাইটে সৌদি আরব আগমন। এয়ারপোর্টে অভ্যর্থনা শেষে শীতাতপ নিয়ন্ত্রিত বাসে হোটেলে চেক-ইন ও প্রথম উমরাহ্ আদায়।',
+            descEn: 'Depart from Hazrat Shahjalal International Airport on direct flight to Saudi Arabia. After airport reception, transfer by AC bus to hotel, check-in, and perform first Umrah.',
+            mealsBn: 'ফ্লাইট ও হোটেল ক্যাটারিং',
+            mealsEn: 'In-Flight & Hotel Catering',
+          },
+          {
+            dayNumber: '02-07',
+            titleBn: 'পবিত্র হারামাইন শরিফাইনে ইবাদত ও হজ্ব প্রস্তুতি',
+            titleEn: 'Prayers in Holy Harams & Pre-Hajj Preparation',
+            descBn: 'পবিত্র কাবা শরিফ ও মসজিদে নববীতে ৫ ওয়াক্ত সালাত আদায়, নফল তাওয়াফ ও মোয়াল্লেমের পরিচালনায় ব্যবহারিক হজ্ব প্রশিক্ষণ কর্মশালা।',
+            descEn: 'Perform 5 daily prayers at Holy Kaaba & Prophet’s Mosque, voluntary Tawaf, and attend practical Hajj workshop conducted by Moallem.',
+            mealsBn: '৩ বেলা উন্নত মানসম্মত বাংলা খাবার',
+            mealsEn: '3 Quality Bengali Meals Daily',
+          },
+          {
+            dayNumber: '08',
+            titleBn: '৮ জিলহজ্জ - তালবিয়া পাঠসহ মিনা তাঁবু সিটিতে আগমন',
+            titleEn: '8th Dhul Hijjah - Move to Mina Tent City with Talbiyah',
+            descBn: 'ইহরাম পরিধান করে "লাব্বায়েক আল্লাহুম্মা লাব্বায়েক" পাঠ করতে করতে মিনা তাঁবু সিটিতে অবস্থান। ৫ ওয়াক্ত নামাজ মিনায় আদায় ও রাতযাপন।',
+            descEn: 'Wear Ihram and continuously recite "Labbayk Allahumma Labbayk" on arrival at Mina Tent City. Perform 5 daily prayers in Mina and stay overnight.',
+            mealsBn: 'মিনা ক্যাটারিং সেবা',
+            mealsEn: 'Mina Catering Service',
+          },
+          {
+            dayNumber: '09',
+            titleBn: '৯ জিলহজ্জ - আরাফাত ময়দানে অবস্থান (মূল হজ্ব) ও মুজদালিফায় রাতযাপন',
+            titleEn: '9th Dhul Hijjah - Day of Arafat (Core Hajj) & Muzdalifah Stay',
+            descBn: 'সূর্যোদয়ের পর আরাফাতের ময়দানে উকুফ (অবস্থান), খুতবা শ্রবণ ও মোনাজাত। সূর্যাস্তের পর মুজদালিফায় গমন, খোলা আকাশের নিচে রাতযাপন ও কঙ্কর সংগ্রহ।',
+            descEn: 'After sunrise, perform Wuquf at Plains of Arafat, listen to Khutbah and engage in Dua. After sunset, proceed to Muzdalifah for open-sky overnight stay and pebble collection.',
+            mealsBn: 'আরাফাত ও মুজদালিফা বিশেষ খাবার প্যাকেট',
+            mealsEn: 'Arafat & Muzdalifah Special Meal Packs',
+          },
+          {
+            dayNumber: '10',
+            titleBn: '১০ জিলহজ্জ - জামারাতে কঙ্কর নিক্ষেপ, কোরবানি ও তাওয়াফে জিয়ারাহ',
+            titleEn: '10th Dhul Hijjah - Jamarat Stoning, Qurbani & Tawaf al-Ziyarah',
+            descBn: 'মুজদালিফা থেকে মিনায় এসে বড় শয়তানকে ৭টি কঙ্কর নিক্ষেপ, প্যাকেজভুক্ত কোরবানি সম্পন্ন, মাথা মুণ্ডন (হালাক) করে ইহরাম খোলা এবং মক্কায় তাওয়াফে জিয়ারাহ ও সাঈ আদায়।',
+            descEn: 'Arrive in Mina from Muzdalifah to throw 7 pebbles at large Jamarah, complete included Qurbani, shave head (Halq) to exit Ihram, and perform Tawaf al-Ziyarah and Sa’i at Makkah.',
+            mealsBn: '৩ বেলা উন্নত খাবার',
+            mealsEn: '3 Quality Meals Daily',
+          },
+          {
+            dayNumber: '11-12',
+            titleBn: '১১-১২ জিলহজ্জ - মিনায় অবস্থান ও ৩ শয়তানকে কঙ্কর নিক্ষেপ',
+            titleEn: '11-12th Dhul Hijjah - Stay in Mina & Stoning 3 Jamarat',
+            descBn: 'মিনায় অবস্থান এবং প্রতিদিন ছোট, মধ্যম ও বড় শয়তানকে ৭টি করে কঙ্কর নিক্ষেপ সম্পন্ন করে মক্কার হোটেলে প্রত্যাবর্তন।',
+            descEn: 'Stay in Mina and pelt 7 pebbles at small, medium, and large Jamarat daily, then return to Makkah hotel.',
+            mealsBn: '৩ বেলা উন্নত খাবার',
+            mealsEn: '3 Quality Meals Daily',
+          },
+          {
+            dayNumber: '13-28',
+            titleBn: 'মক্কা ও মদিনা মুনাওয়ারাহ অবস্থান ও পবিত্র জিয়ারাহ',
+            titleEn: 'Stay at Holy Makkah & Madinah and Sacred Ziyarah',
+            descBn: 'মদীনায় মসজিদে নববীতে নামাজ আদায় ও রাসূল (সাঃ)-এর রওজা মোবারকে সালাম নিবেদন। মক্কা ও মদিনার ঐতিহাসিক স্থানসমূহ মোয়াল্লেমের সাথে জিয়ারাহ।',
+            descEn: 'Offer prayers at Prophet\'s Mosque in Madinah and convey Salam at Rawdah Mubarak. Visit historic sacred sites in Makkah and Madinah guided by Moallem.',
+            mealsBn: '৩ বেলা মানসম্মত বাংলা খাবার',
+            mealsEn: '3 Bengali Meals Daily',
+          },
+          {
+            dayNumber: '29-35',
+            titleBn: 'বিদায়ী তাওয়াফ ও ডিরেক্ট ফ্লাইটে ঢাকায় প্রত্যাবর্তন',
+            titleEn: 'Farewell Tawaf & Direct Flight Back to Dhaka',
+            descBn: 'পবিত্র কাবা শরিফে বিদায়ী তাওয়াফ সম্পন্ন করে জেদ্দা/মদীনা আন্তর্জাতিক বিমানবন্দর থেকে ডিরেক্ট ফ্লাইটে হযরত শাহজালাল আন্তর্জাতিক বিমানবন্দর ঢাকায় প্রত্যাবর্তন।',
+            descEn: 'Complete Tawaf al-Wada at Holy Kaaba and return to Hazrat Shahjalal International Airport, Dhaka via direct flight from Jeddah/Madinah.',
+            mealsBn: 'ফ্লাইট খাবার',
+            mealsEn: 'In-Flight Catering',
+          },
+        ],
     cancellationBn: 'বাংলাদেশ ধর্ম মন্ত্রণালয় ও সৌদি হজ্ব কর্তৃপক্ষের পলিসি অনুযায়ী হজ্ব প্রাক-নিবন্ধন ফি অফেরতযোগ্য হতে পারে।',
     cancellationEn: 'Hajj registration and Moallem draft fees are subject to Ministry of Religious Affairs regulations.',
     policiesBn: [
