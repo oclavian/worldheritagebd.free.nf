@@ -74,12 +74,9 @@ export const AirTicketsPage: React.FC<AirTicketsPageProps> = ({
 
   const regions = [
     { id: 'all', labelBn: '🌍 সকল গন্তব্য (All)', labelEn: 'All Destinations', count: flightDestinations.length },
-    { id: 'middle-east', labelBn: '🇸🇦 মধ্যপ্রাচ্য (সৌদি, দুবাই, কাতার)', labelEn: 'Middle East', count: flightDestinations.filter(d => d.region === 'middle-east').length },
-    { id: 'europe', labelBn: '🇬🇧 ইউরোপ ও ইউকে (লন্ডন, রোম, প্যারিস)', labelEn: 'Europe & UK', count: flightDestinations.filter(d => d.region === 'europe').length },
-    { id: 'north-america', labelBn: '🇺🇸 আমেরিকা ও কানাডা', labelEn: 'North America & Aus', count: flightDestinations.filter(d => d.region === 'north-america').length },
-    { id: 'asia-pacific', labelBn: '🇲🇾 পূর্ব ও দক্ষিণ-পূর্ব এশিয়া', labelEn: 'Southeast & East Asia', count: flightDestinations.filter(d => d.region === 'asia-pacific').length },
-    { id: 'south-asia', labelBn: '🇮🇳 দক্ষিণ এশিয়া (ভারত)', labelEn: 'South Asia', count: flightDestinations.filter(d => d.region === 'south-asia').length },
     { id: 'domestic', labelBn: '🇧🇩 অভ্যন্তরীণ বাংলাদেশ', labelEn: 'Domestic BD', count: flightDestinations.filter(d => d.region === 'domestic').length },
+    { id: 'south-asia', labelBn: '🇮🇳 দক্ষিণ এশিয়া (ভারত)', labelEn: 'South Asia', count: flightDestinations.filter(d => d.region === 'south-asia').length },
+    { id: 'middle-east', labelBn: '🇸🇦 মধ্যপ্রাচ্য (সৌদি, দুবাই, কাতার)', labelEn: 'Middle East', count: flightDestinations.filter(d => d.region === 'middle-east').length },
   ];
 
   return (
@@ -100,26 +97,26 @@ export const AirTicketsPage: React.FC<AirTicketsPageProps> = ({
                 <span>{isBn ? 'আন্তর্জাতিক ও অভ্যন্তরীণ এয়ার টিকিট' : 'Domestic & International Air Tickets'}</span>
               </span>
               <span className="bg-emerald-950/80 text-emerald-200 text-xs font-bold px-3 py-1 rounded-full border border-emerald-700">
-                {isBn ? '১৯০+ দেশ • সর্বনিম্ন ফেয়ার গ্যারান্টি' : '190+ Countries • Best Fare Guarantee'}
+                {isBn ? 'সর্বনিম্ন ফেয়ার গ্যারান্টি • দ্রুত কনফার্মেশন' : 'Best Fare Guarantee • Instant Confirmation'}
               </span>
             </div>
 
             <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black text-white leading-tight font-sans tracking-tight">
               {isBn ? (
                 <>
-                  বিশ্বের <span className="text-[#D4AF37]">যেকোনো দেশের এয়ার টিকিট</span> বুক করুন সর্বনিম্ন মূল্যে ও দ্রুত কনফার্মেশনে!
+                  মধ্যপ্রাচ্য, ভারত ও দেশের অভ্যন্তরে <span className="text-[#D4AF37]">সকল এয়ার টিকিট</span> কাটুন সর্বনিম্ন মূল্যে!
                 </>
               ) : (
                 <>
-                  Book Flight Tickets for <span className="text-[#D4AF37]">Any Destination Worldwide</span> at Best Fares!
+                  Book Flight Tickets for <span className="text-[#D4AF37]">Middle East, India & BD Domestic</span> at Best Fares!
                 </>
               )}
             </h1>
 
             <p className="text-xs sm:text-sm text-emerald-100/90 leading-relaxed font-sans max-w-2xl">
               {isBn
-                ? 'ঢাকা (DAC), চট্টগ্রাম (CGP) ও সিলেট (ZYL) থেকে সৌদি আরব (জেদ্দা, মদিনা, রিয়াদ), দুবাই, কাতার, লন্ডন, নিউ ইয়র্ক, টরন্টো, কুয়ালালামপুর, সিঙ্গাপুরসহ বিশ্বের সকল দেশ ও বাংলাদেশের অভ্যন্তরীণ সকল রুটের অফিসিয়াল সর্বনিম্ন ফেয়ারে এয়ার টিকিট সংগ্রহ করুন।'
-                : 'Get official confirmed air tickets from Dhaka, Chittagong, and Sylhet to Saudi Arabia (Jeddah, Madinah, Riyadh), UAE, Qatar, UK, USA, Canada, Malaysia, Singapore, and worldwide destinations plus all domestic Bangladesh routes.'
+                ? 'ঢাকা (DAC), চট্টগ্রাম (CGP) ও সিলেট (ZYL) থেকে সৌদি আরব (জেদ্দা, মদিনা, রিয়াদ, দাম্মাম), দুবাই, আবুধাবি, শারজাহ, কাতার, কুয়েত, ওমান, বাহরাইন, ভারত (কলকাতা, দিল্লি, চেন্নাই) এবং বাংলাদেশের অভ্যন্তরীণ সকল রুটের অফিসিয়াল সর্বনিম্ন ফেয়ারে এয়ার টিকিট সংগ্রহ করুন।'
+                : 'Get official confirmed air tickets from Dhaka, Chittagong, and Sylhet to Saudi Arabia (Jeddah, Madinah, Riyadh, Dammam), UAE (Dubai, Abu Dhabi, Sharjah), Qatar, Kuwait, Oman, Bahrain, India (Kolkata, Delhi, Chennai), and all domestic Bangladesh routes.'
               }
             </p>
 
