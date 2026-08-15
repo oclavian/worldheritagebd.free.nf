@@ -165,110 +165,190 @@ export const HomePage: React.FC<HomePageProps> = ({
           </div>
         </div>
 
-        {/* Ultra-High-Quality Animated Liquid Ocean Wave Bottom Divider */}
-        <div className="absolute bottom-0 left-0 right-0 overflow-hidden leading-none z-10 pointer-events-none h-20 sm:h-28 lg:h-36">
+        {/* Multi-Layered Natural Surging Ocean & Aqua Water Wave Bottom Divider */}
+        <div className="absolute bottom-0 left-0 right-0 overflow-hidden leading-none z-10 pointer-events-none h-24 sm:h-36 lg:h-44">
           
-          {/* Floating Gold & Water Particle Droplets */}
+          {/* Floating Crystal Water Droplets & Bubbles */}
           <div className="absolute inset-0 z-20 pointer-events-none overflow-hidden">
             <style>{`
-              @keyframes bubbleRise1 {
+              @keyframes waterBubbleRise1 {
                 0% { transform: translate(10vw, 100%) scale(0.6); opacity: 0; }
-                50% { opacity: 0.8; }
-                100% { transform: translate(12vw, -20px) scale(1.2); opacity: 0; }
+                40% { opacity: 0.9; }
+                100% { transform: translate(14vw, -30px) scale(1.3); opacity: 0; }
               }
-              @keyframes bubbleRise2 {
-                0% { transform: translate(35vw, 100%) scale(0.8); opacity: 0; }
+              @keyframes waterBubbleRise2 {
+                0% { transform: translate(30vw, 100%) scale(0.8); opacity: 0; }
+                50% { opacity: 0.95; }
+                100% { transform: translate(27vw, -35px) scale(1.4); opacity: 0; }
+              }
+              @keyframes waterBubbleRise3 {
+                0% { transform: translate(55vw, 100%) scale(0.5); opacity: 0; }
+                45% { opacity: 0.85; }
+                100% { transform: translate(58vw, -25px) scale(1.2); opacity: 0; }
+              }
+              @keyframes waterBubbleRise4 {
+                0% { transform: translate(75vw, 100%) scale(0.7); opacity: 0; }
                 50% { opacity: 0.9; }
-                100% { transform: translate(32vw, -25px) scale(1.4); opacity: 0; }
+                100% { transform: translate(72vw, -40px) scale(1.45); opacity: 0; }
               }
-              @keyframes bubbleRise3 {
-                0% { transform: translate(65vw, 100%) scale(0.5); opacity: 0; }
-                50% { opacity: 0.7; }
-                100% { transform: translate(68vw, -15px) scale(1.1); opacity: 0; }
+              @keyframes waterBubbleRise5 {
+                0% { transform: translate(90vw, 100%) scale(0.6); opacity: 0; }
+                40% { opacity: 0.8; }
+                100% { transform: translate(93vw, -30px) scale(1.25); opacity: 0; }
               }
-              @keyframes bubbleRise4 {
-                0% { transform: translate(88vw, 100%) scale(0.7); opacity: 0; }
-                50% { opacity: 0.85; }
-                100% { transform: translate(85vw, -30px) scale(1.3); opacity: 0; }
-              }
-              .bubble-1 { animation: bubbleRise1 5s ease-in-out infinite; }
-              .bubble-2 { animation: bubbleRise2 7s ease-in-out infinite 1.5s; }
-              .bubble-3 { animation: bubbleRise3 6s ease-in-out infinite 0.8s; }
-              .bubble-4 { animation: bubbleRise4 8s ease-in-out infinite 2.2s; }
 
-              @keyframes seamlessWaveSlow {
-                0% { transform: translate3d(0, 0, 0); }
-                100% { transform: translate3d(-50%, 0, 0); }
-              }
-              @keyframes seamlessWaveFast {
-                0% { transform: translate3d(-50%, 0, 0); }
-                100% { transform: translate3d(0, 0, 0); }
-              }
-              @keyframes seamlessWaveMid {
+              /* Realistic High-Amplitude Surging & Undulating Water Wave Physics */
+              @keyframes waveSurgeDeep {
                 0% { transform: translate3d(0, 0, 0) scaleY(1); }
-                50% { transform: translate3d(-25%, -3px, 0) scaleY(1.08); }
+                25% { transform: translate3d(-12.5%, -8px, 0) scaleY(1.2); }
+                50% { transform: translate3d(-25%, 6px, 0) scaleY(0.88); }
+                75% { transform: translate3d(-37.5%, -10px, 0) scaleY(1.25); }
                 100% { transform: translate3d(-50%, 0, 0) scaleY(1); }
               }
 
-              .ocean-wave-back {
-                animation: seamlessWaveSlow 22s linear infinite;
+              @keyframes waveSurgeMid {
+                0% { transform: translate3d(-50%, 0, 0) scaleY(1.15); }
+                30% { transform: translate3d(-35%, 8px, 0) scaleY(0.85); }
+                70% { transform: translate3d(-15%, -12px, 0) scaleY(1.3); }
+                100% { transform: translate3d(0, 0, 0) scaleY(1.15); }
               }
-              .ocean-wave-mid {
-                animation: seamlessWaveFast 15s linear infinite;
+
+              @keyframes waveSurgeRipple {
+                0% { transform: translate3d(0, 0, 0) scaleY(0.9); }
+                40% { transform: translate3d(-20%, -14px, 0) scaleY(1.35); }
+                80% { transform: translate3d(-40%, 7px, 0) scaleY(0.85); }
+                100% { transform: translate3d(-50%, 0, 0) scaleY(0.9); }
               }
-              .ocean-wave-front {
-                animation: seamlessWaveMid 11s ease-in-out infinite;
+
+              @keyframes waveSurgeSwell {
+                0% { transform: translate3d(-50%, 0, 0) scaleY(1); }
+                50% { transform: translate3d(-25%, -10px, 0) scaleY(1.25); }
+                100% { transform: translate3d(0, 0, 0) scaleY(1); }
               }
-              .ocean-wave-gold-crest {
-                animation: seamlessWaveMid 11s ease-in-out infinite;
+
+              @keyframes waveSurgeFront {
+                0% { transform: translate3d(0, 0, 0) scaleY(1); }
+                35% { transform: translate3d(-17.5%, -9px, 0) scaleY(1.22); }
+                70% { transform: translate3d(-35%, 6px, 0) scaleY(0.9); }
+                100% { transform: translate3d(-50%, 0, 0) scaleY(1); }
               }
+
+              .water-bubble-1 { animation: waterBubbleRise1 5.5s ease-in-out infinite; }
+              .water-bubble-2 { animation: waterBubbleRise2 7.5s ease-in-out infinite 1.2s; }
+              .water-bubble-3 { animation: waterBubbleRise3 6.0s ease-in-out infinite 0.6s; }
+              .water-bubble-4 { animation: waterBubbleRise4 8.2s ease-in-out infinite 2.0s; }
+              .water-bubble-5 { animation: waterBubbleRise5 6.8s ease-in-out infinite 3.1s; }
+
+              .water-wave-layer-1 { animation: waveSurgeDeep 20s ease-in-out infinite; }
+              .water-wave-layer-2 { animation: waveSurgeMid 15s ease-in-out infinite; }
+              .water-wave-layer-3 { animation: waveSurgeRipple 12s ease-in-out infinite; }
+              .water-wave-layer-4 { animation: waveSurgeSwell 9s ease-in-out infinite; }
+              .water-wave-layer-5 { animation: waveSurgeFront 8s ease-in-out infinite; }
+              .water-wave-layer-crest { animation: waveSurgeFront 8s ease-in-out infinite; }
             `}</style>
             
-            <div className="bubble-1 absolute bottom-0 w-2.5 h-2.5 rounded-full bg-[#D4AF37]/80 blur-[0.5px] shadow-[0_0_8px_#D4AF37]" />
-            <div className="bubble-2 absolute bottom-0 w-3 h-3 rounded-full bg-emerald-300/60 blur-[0.5px]" />
-            <div className="bubble-3 absolute bottom-0 w-2 h-2 rounded-full bg-[#F3E0A0]/90 blur-[0.5px] shadow-[0_0_6px_#F3E0A0]" />
-            <div className="bubble-4 absolute bottom-0 w-3.5 h-3.5 rounded-full bg-emerald-200/50 blur-[1px]" />
+            {/* Luminous Aqua-Blue Water Bubbles */}
+            <div className="water-bubble-1 absolute bottom-0 w-2.5 h-2.5 rounded-full bg-cyan-300/80 shadow-[0_0_8px_#38bdf8] border border-white/60" />
+            <div className="water-bubble-2 absolute bottom-0 w-3.5 h-3.5 rounded-full bg-sky-200/70 shadow-[0_0_10px_#7dd3fc] border border-cyan-100" />
+            <div className="water-bubble-3 absolute bottom-0 w-2 h-2 rounded-full bg-blue-300/75 shadow-[0_0_6px_#60a5fa]" />
+            <div className="water-bubble-4 absolute bottom-0 w-4 h-4 rounded-full bg-cyan-200/60 shadow-[0_0_12px_#38bdf8] border border-white/80" />
+            <div className="water-bubble-5 absolute bottom-0 w-2.5 h-2.5 rounded-full bg-sky-300/80 shadow-[0_0_8px_#0ea5e9]" />
           </div>
 
-          {/* SVG Wave Canvas */}
+          {/* SVG Wave Canvas with 5 Layers + Dynamic Crest Highlight */}
           <div className="relative w-full h-full">
             <svg 
-              className="absolute bottom-0 left-0 w-[200%] h-full block text-[#FAF8F5]"
-              viewBox="0 0 2880 120" 
+              className="absolute bottom-0 left-0 w-[200%] h-full block"
+              viewBox="0 0 2880 150" 
               preserveAspectRatio="none"
             >
-              {/* Layer 1: Deep Background Ambient Emerald Wave */}
+              <defs>
+                {/* Natural Translucent Cyan & Ocean Blue Water Gradients */}
+                <linearGradient id="deepOceanGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stopColor="#0284c7" stopOpacity="0.65" />
+                  <stop offset="60%" stopColor="#0369a1" stopOpacity="0.85" />
+                  <stop offset="100%" stopColor="#075985" stopOpacity="0.95" />
+                </linearGradient>
+
+                <linearGradient id="midAquaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.55" />
+                  <stop offset="50%" stopColor="#0284c7" stopOpacity="0.7" />
+                  <stop offset="100%" stopColor="#0369a1" stopOpacity="0.85" />
+                </linearGradient>
+
+                <linearGradient id="softSkyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stopColor="#7dd3fc" stopOpacity="0.5" />
+                  <stop offset="60%" stopColor="#38bdf8" stopOpacity="0.65" />
+                  <stop offset="100%" stopColor="#0284c7" stopOpacity="0.8" />
+                </linearGradient>
+
+                <linearGradient id="translucentWaveGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stopColor="#bae6fd" stopOpacity="0.45" />
+                  <stop offset="50%" stopColor="#7dd3fc" stopOpacity="0.6" />
+                  <stop offset="100%" stopColor="#38bdf8" stopOpacity="0.75" />
+                </linearGradient>
+
+                {/* Front Wave: Soft Water Cyan Gradient blending gently into the page base */}
+                <linearGradient id="frontWaterGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stopColor="#e0f2fe" stopOpacity="0.65" />
+                  <stop offset="35%" stopColor="#bae6fd" stopOpacity="0.8" />
+                  <stop offset="70%" stopColor="#dbeafe" stopOpacity="0.92" />
+                  <stop offset="100%" stopColor="#FAF8F5" stopOpacity="1" />
+                </linearGradient>
+
+                {/* Shimmering Aqua Water Crest Gradient */}
+                <linearGradient id="waterCrestGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#0284c7" stopOpacity="0.4" />
+                  <stop offset="25%" stopColor="#38bdf8" stopOpacity="0.95" />
+                  <stop offset="50%" stopColor="#ffffff" stopOpacity="1" />
+                  <stop offset="75%" stopColor="#38bdf8" stopOpacity="0.95" />
+                  <stop offset="100%" stopColor="#0284c7" stopOpacity="0.4" />
+                </linearGradient>
+              </defs>
+
+              {/* Layer 1: Deep Ocean Rolling Swell (High amplitude crests: 15 to 95) */}
               <path 
-                className="ocean-wave-back"
-                fill="#04331d"
-                fillOpacity="0.4"
-                d="M0,45 C360,85 720,15 1080,60 C1260,80 1350,30 1440,45 C1800,85 2160,15 2520,60 C2700,80 2790,30 2880,45 L2880,120 L0,120 Z"
+                className="water-wave-layer-1"
+                fill="url(#deepOceanGrad)"
+                d="M 0,60 C 260,110 520,10 780,65 C 1040,115 1240,20 1440,60 C 1700,110 1960,10 2220,65 C 2480,115 2680,20 2880,60 L 2880,150 L 0,150 Z"
               />
 
-              {/* Layer 2: Translucent Light Wave */}
+              {/* Layer 2: Mid Aqua Marine Rolling Wave (Counter Swell: 20 to 105) */}
               <path 
-                className="ocean-wave-mid"
-                fill="currentColor"
-                fillOpacity="0.45"
-                d="M0,25 C240,70 480,-10 720,35 C960,80 1200,10 1440,25 C1680,70 1920,-10 2160,35 C2400,80 2640,10 2880,25 L2880,120 L0,120 Z"
+                className="water-wave-layer-2"
+                fill="url(#midAquaGrad)"
+                d="M 0,45 C 300,105 600,-5 900,55 C 1150,110 1320,15 1440,45 C 1740,105 2040,-5 2340,55 C 2590,110 2760,15 2880,45 L 2880,150 L 0,150 Z"
               />
 
-              {/* Layer 3: Main Foreground Ocean Wave (Matches page background) */}
+              {/* Layer 3: Added Wave 1 - Soft Azure Sky Blue Ripple Wave (Surging crests: 12 to 85) */}
               <path 
-                className="ocean-wave-front"
-                fill="currentColor"
-                fillOpacity="1"
-                d="M0,35 C300,5 600,75 900,30 C1100,0 1300,60 1440,35 C1740,5 2040,75 2340,30 C2540,0 2740,60 2880,35 L2880,120 L0,120 Z"
+                className="water-wave-layer-3"
+                fill="url(#softSkyGrad)"
+                d="M 0,52 C 240,8 480,95 720,40 C 980,-2 1220,90 1440,52 C 1680,8 1920,95 2160,40 C 2420,-2 2660,90 2880,52 L 2880,150 L 0,150 Z"
               />
 
-              {/* Layer 4: Golden Shimmer Crest Stroke */}
+              {/* Layer 4: Added Wave 2 - Crystal Translucent Water Swell (Dynamic rolling) */}
               <path 
-                className="ocean-wave-gold-crest"
+                className="water-wave-layer-4"
+                fill="url(#translucentWaveGrad)"
+                d="M 0,35 C 320,90 640,-10 960,48 C 1200,98 1350,10 1440,35 C 1760,90 2080,-10 2400,48 C 2640,98 2790,10 2880,35 L 2880,150 L 0,150 Z"
+              />
+
+              {/* Layer 5: Main Foreground Surface Wave (Natural water gradient transitioning gently to #FAF8F5) */}
+              <path 
+                className="water-wave-layer-5"
+                fill="url(#frontWaterGrad)"
+                d="M 0,42 C 280,0 560,92 860,32 C 1120,-8 1320,78 1440,42 C 1720,0 2000,92 2300,32 C 2560,-8 2760,78 2880,42 L 2880,150 L 0,150 Z"
+              />
+
+              {/* Layer 6: Crystal Cyan-White Water Reflection Crest Line */}
+              <path 
+                className="water-wave-layer-crest"
                 fill="none"
-                stroke="#D4AF37"
-                strokeWidth="2.5"
-                strokeOpacity="0.75"
-                d="M0,35 C300,5 600,75 900,30 C1100,0 1300,60 1440,35 C1740,5 2040,75 2340,30 C2540,0 2740,60 2880,35"
+                stroke="url(#waterCrestGrad)"
+                strokeWidth="3"
+                strokeLinecap="round"
+                d="M 0,42 C 280,0 560,92 860,32 C 1120,-8 1320,78 1440,42 C 1720,0 2000,92 2300,32 C 2560,-8 2760,78 2880,42"
               />
             </svg>
           </div>
@@ -321,10 +401,13 @@ export const HomePage: React.FC<HomePageProps> = ({
             </div>
 
             <button
-              onClick={() => onNavigate('umrah')}
+              onClick={() => onOpenBookingModal(
+                lang === 'bn' ? 'হজ্ব ও উমরাহ্ সেবা' : 'Hajj & Umrah Service',
+                lang === 'bn' ? 'পবিত্র উমরাহ্ ও হজ্ব সরাসরি পরামর্শ ও বুকিং তথ্য' : 'Holy Umrah & Hajj Direct Booking & Guidance'
+              )}
               className="inline-flex items-center gap-2 bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white font-extrabold px-7 py-2.5 rounded-full text-xs sm:text-sm shadow-md hover:shadow-lg transition-all transform hover:scale-105"
             >
-              <span>{lang === 'bn' ? 'বিস্তারিত জানতে ক্লিক করুন' : 'Click to Read Details'}</span>
+              <span>{lang === 'bn' ? 'বিস্তারিত জানতে যোগাযোগ করুন' : 'Contact for More Details'}</span>
               <ArrowRight className="w-4 h-4" />
             </button>
             <div className="hidden sm:block w-10" />
