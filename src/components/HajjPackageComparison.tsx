@@ -63,12 +63,12 @@ export const HajjPackageComparison: React.FC<HajjPackageComparisonProps> = ({
           featureBn: 'প্যাকেজের সম্ভাব্য মেয়াদকাল',
           featureEn: 'Package Duration',
           economy: {
-            textBn: '৩০ থেকে ৪৫ দিন',
-            textEn: '30 to 45 Days',
+            textBn: '৩০ থেকে ৩৫ দিন',
+            textEn: '30 to 35 Days',
           },
           standard: {
-            textBn: '৩০ থেকে ৪৫ দিন',
-            textEn: '30 to 45 Days',
+            textBn: '৩০ থেকে ৩৫ দিন',
+            textEn: '30 to 35 Days',
           },
         },
         {

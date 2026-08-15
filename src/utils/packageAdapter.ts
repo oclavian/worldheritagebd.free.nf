@@ -222,8 +222,8 @@ export function adaptHajjPackage(pkg: HajjPackage): StandardPackageItem {
     serviceType: 'Hajj',
     titleBn: pkg.titleBn,
     titleEn: pkg.titleEn,
-    durationBn: pkg.durationBn,
-    durationEn: pkg.durationEn,
+    durationBn: (!pkg.durationBn || pkg.durationBn.includes('৪৫')) ? '৩০ থেকে ৩৫ দিন' : pkg.durationBn,
+    durationEn: (!pkg.durationEn || pkg.durationEn.includes('45')) ? '30 to 35 Days' : pkg.durationEn,
     locationBn: isStandardWithTrain 
       ? 'মক্কা, মদীনা, তায়েফ, জেদ্দা, মিনা, আরাফাত ও মুজদালিফা' 
       : 'মক্কা, মদীনা, মিনা, আরাফাত ও মুজদালিফা',
@@ -323,7 +323,7 @@ export function adaptHajjPackage(pkg: HajjPackage): StandardPackageItem {
         mealsEn: '3 Meals Daily',
       },
       {
-        dayNumber: '13-35',
+        dayNumber: '13-28',
         titleBn: isStandardWithTrain 
           ? 'মক্কা-মদিনা বুলেট ট্রেনে ভ্রমণ ও ঐতিহাসিক জিয়ারাহ (তায়েফ, জেদ্দা, বদর)' 
           : 'মক্কা ও মদিনা মুনাওয়ারাহ অবস্থান ও পবিত্র জিয়ারাহ',
@@ -340,7 +340,7 @@ export function adaptHajjPackage(pkg: HajjPackage): StandardPackageItem {
         mealsEn: '3 Bengali Meals Daily',
       },
       {
-        dayNumber: '36-45',
+        dayNumber: '29-35',
         titleBn: 'বিদায়ী তাওয়াফ ও ডিরেক্ট ফ্লাইটে ঢাকায় প্রত্যাবর্তন',
         titleEn: 'Farewell Tawaf & Direct Flight Back to Dhaka',
         descBn: 'পবিত্র কাবা শরিফে বিদায়ী তাওয়াফ সম্পন্ন করে জেদ্দা/মদীনা আন্তর্জাতিক বিমানবন্দর থেকে ডিরেক্ট ফ্লাইটে হযরত শাহজালাল আন্তর্জাতিক বিমানবন্দর ঢাকায় প্রত্যাবর্তন।',

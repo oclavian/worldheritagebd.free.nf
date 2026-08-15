@@ -5,6 +5,7 @@ import {
 } from 'lucide-react';
 import { Language } from '../types';
 import { StandardPackageItem } from '../utils/packageAdapter';
+import { toBengaliDigits } from '../utils/formatters';
 
 interface PackageDetailModalProps {
   lang: Language;
@@ -158,24 +159,25 @@ export const PackageDetailModal: React.FC<PackageDetailModalProps> = ({
                   {pkg.itinerary.map((item, idx) => (
                     <div
                       key={idx}
-                      className="p-4 rounded-xl bg-[#FAF8F5] border border-slate-200/80 space-y-2 relative pl-12"
+                      className="p-4 rounded-xl bg-[#FAF8F5] border border-slate-200/80 space-y-2.5 transition-all hover:border-[#0D472B]/30 hover:bg-[#FAF6EF]"
                     >
-                      <span className="absolute left-3 top-4 w-7 h-7 rounded-full bg-[#0D472B] text-white font-black text-xs flex items-center justify-center">
-                        {item.dayNumber}
-                      </span>
-
-                      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-2">
-                        <h4 className="font-bold text-[#0D472B] text-sm sm:text-base">
-                          {isBn ? item.titleBn : item.titleEn}
-                        </h4>
+                      <div className="flex flex-wrap items-center justify-between gap-2.5 border-b border-slate-200 pb-2.5">
+                        <div className="flex items-center gap-2.5 flex-wrap">
+                          <span className="px-3 py-0.5 rounded-full bg-[#0D472B] text-[#F3E0A0] font-black text-xs whitespace-nowrap shadow-sm tracking-wide shrink-0">
+                            {isBn ? `দিন ${toBengaliDigits(item.dayNumber)}` : `Day ${item.dayNumber}`}
+                          </span>
+                          <h4 className="font-bold text-[#0D472B] text-sm sm:text-base">
+                            {isBn ? item.titleBn : item.titleEn}
+                          </h4>
+                        </div>
                         {(item.mealsBn || item.mealsEn) && (
-                          <span className="text-[11px] bg-emerald-100 text-emerald-900 px-2.5 py-0.5 rounded-md font-bold">
+                          <span className="text-[11px] bg-emerald-100 text-emerald-900 px-2.5 py-0.5 rounded-md font-bold shrink-0">
                             🍴 {isBn ? item.mealsBn : item.mealsEn}
                           </span>
                         )}
                       </div>
 
-                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed pt-1">
+                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed pt-0.5">
                         {isBn ? item.descBn : item.descEn}
                       </p>
                     </div>

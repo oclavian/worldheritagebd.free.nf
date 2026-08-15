@@ -88,12 +88,15 @@ export default function App() {
 
   const [hajjPackages, setHajjPackages] = useState<HajjPackage[]>(() => {
     try {
-      const saved = localStorage.getItem('wh_hajj_packages_2027_v5');
+      const saved = localStorage.getItem('wh_hajj_packages_2027_v6');
       if (saved) {
         const parsed = JSON.parse(saved);
         if (Array.isArray(parsed) && parsed.length >= 2) {
-          const isFresh = JSON.stringify(parsed).includes('12r4H9iF0KgHrHPi0hciMhvKPxU-4eWHt');
-          if (isFresh) return parsed;
+          return parsed.map((p: HajjPackage) => ({
+            ...p,
+            durationBn: '৩০ থেকে ৩৫ দিন',
+            durationEn: '30 to 35 Days',
+          }));
         }
       }
       return initialHajjPackages;
@@ -180,7 +183,7 @@ export default function App() {
   }, [umrahPackages]);
 
   useEffect(() => {
-    localStorage.setItem('wh_hajj_packages_2027_v5', JSON.stringify(hajjPackages));
+    localStorage.setItem('wh_hajj_packages_2027_v6', JSON.stringify(hajjPackages));
   }, [hajjPackages]);
 
   useEffect(() => {

@@ -80,10 +80,10 @@ export const PackageDetailView: React.FC<PackageDetailViewProps> = ({
   onBack,
   onBookNow,
 }) => {
-  // Auto scroll to top when detail view mounts
+  // Auto scroll to top ONLY when package changes
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [pkg]);
+  }, [pkg.id, pkg.serviceType]);
 
   const isBn = lang === 'bn';
   const isHajj = pkg.serviceType === 'Hajj';
@@ -141,16 +141,20 @@ export const PackageDetailView: React.FC<PackageDetailViewProps> = ({
     return () => clearInterval(timer);
   }, [isAutoPlaying, isHovered, currentGalleryImages.length]);
 
-  // Auto scroll active thumbnail into view
+  // Auto scroll active thumbnail horizontally inside its container only (NEVER scrolls window)
   useEffect(() => {
     if (thumbnailsRef.current && currentGalleryImages.length > 1) {
       const container = thumbnailsRef.current;
       const activeThumb = container.children[activeImageIndex] as HTMLElement;
       if (activeThumb) {
-        activeThumb.scrollIntoView({
+        const thumbLeft = activeThumb.offsetLeft;
+        const thumbWidth = activeThumb.offsetWidth;
+        const containerWidth = container.offsetWidth;
+        const targetScrollLeft = thumbLeft - (containerWidth / 2) + (thumbWidth / 2);
+        
+        container.scrollTo({
+          left: Math.max(0, targetScrollLeft),
           behavior: 'smooth',
-          block: 'nearest',
-          inline: 'center',
         });
       }
     }
@@ -532,24 +536,25 @@ export const PackageDetailView: React.FC<PackageDetailViewProps> = ({
                 {pkg.itinerary.map((item, idx) => (
                   <div
                     key={idx}
-                    className="p-4 sm:p-5 rounded-2xl bg-[#FAF8F5] border border-slate-200/80 space-y-2 relative sm:pl-14 pl-12"
+                    className="p-4 sm:p-5 rounded-2xl bg-[#FAF8F5] border border-slate-200/80 space-y-2.5 transition-all hover:border-[#0D472B]/30 hover:bg-[#FAF6EF]"
                   >
-                    <span className="absolute left-3 top-4 w-8 h-8 rounded-full bg-[#0D472B] text-white font-black text-xs sm:text-sm flex items-center justify-center shadow-sm">
-                      {item.dayNumber}
-                    </span>
-
-                    <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200/80 pb-2">
-                      <h4 className="font-bold text-[#0D472B] text-sm sm:text-base">
-                        {isBn ? item.titleBn : item.titleEn}
-                      </h4>
+                    <div className="flex flex-wrap items-center justify-between gap-2.5 border-b border-slate-200/80 pb-2.5">
+                      <div className="flex items-center gap-2.5 flex-wrap">
+                        <span className="px-3 py-1 rounded-full bg-[#0D472B] text-[#F3E0A0] font-black text-xs sm:text-sm whitespace-nowrap shadow-sm tracking-wide shrink-0">
+                          {isBn ? `দিন ${toBengaliDigits(item.dayNumber)}` : `Day ${item.dayNumber}`}
+                        </span>
+                        <h4 className="font-bold text-[#0D472B] text-sm sm:text-base">
+                          {isBn ? item.titleBn : item.titleEn}
+                        </h4>
+                      </div>
                       {(item.mealsBn || item.mealsEn) && (
-                        <span className="text-xs bg-emerald-100 text-emerald-950 px-3 py-1 rounded-full font-extrabold border border-emerald-200">
+                        <span className="text-xs bg-emerald-100/90 text-emerald-950 px-3 py-1 rounded-full font-extrabold border border-emerald-200/80 shrink-0">
                           🍴 {isBn ? item.mealsBn : item.mealsEn}
                         </span>
                       )}
                     </div>
 
-                    <p className="text-xs sm:text-sm text-slate-700 leading-relaxed pt-1">
+                    <p className="text-xs sm:text-sm text-slate-700 leading-relaxed pt-0.5">
                       {isBn ? item.descBn : item.descEn}
                     </p>
                   </div>
