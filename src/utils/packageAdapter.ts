@@ -228,13 +228,9 @@ export function adaptHajjPackage(pkg: HajjPackage): StandardPackageItem {
     badgeBn: pkg.badgeBn || 'পবিত্র হজ্ব',
     badgeEn: pkg.badgeEn || 'Holy Hajj',
     image: pkg.image,
-    galleryImages: [
-      pkg.image,
-      'https://images.unsplash.com/photo-1542816417-0983c9c9ad53?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1564769625905-50e93615e769?auto=format&fit=crop&w=800&q=80',
-      'https://images.unsplash.com/photo-1580418827493-f2b22c0a76cb?auto=format&fit=crop&w=800&q=80',
-    ],
+    galleryImages: (pkg.galleryImages && pkg.galleryImages.length > 0)
+      ? pkg.galleryImages
+      : [pkg.image],
     inclusionsBn: (pkg.facilitiesBn && pkg.facilitiesBn.length > 0)
       ? pkg.facilitiesBn
       : [
