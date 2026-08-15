@@ -88,7 +88,7 @@ export default function App() {
 
   const [hajjPackages, setHajjPackages] = useState<HajjPackage[]>(() => {
     try {
-      const saved = localStorage.getItem('wh_hajj_packages_2027_v6');
+      const saved = localStorage.getItem('wh_hajj_packages_2027_v8');
       if (saved) {
         const parsed = JSON.parse(saved);
         if (Array.isArray(parsed) && parsed.length >= 2) {
@@ -183,7 +183,7 @@ export default function App() {
   }, [umrahPackages]);
 
   useEffect(() => {
-    localStorage.setItem('wh_hajj_packages_2027_v6', JSON.stringify(hajjPackages));
+    localStorage.setItem('wh_hajj_packages_2027_v8', JSON.stringify(hajjPackages));
   }, [hajjPackages]);
 
   useEffect(() => {

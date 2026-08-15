@@ -455,33 +455,6 @@ export const HajjPackageComparison: React.FC<HajjPackageComparisonProps> = ({
         </div>
       </div>
 
-      {/* Key Differences Highlight Box */}
-      <div className="bg-amber-50/80 border-2 border-amber-300/80 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm">
-        <div className="flex items-start gap-3">
-          <div className="p-2.5 bg-[#8B0000] text-white rounded-xl shadow-sm shrink-0 mt-0.5">
-            <Train className="w-5 h-5 text-[#F3E0A0]" />
-          </div>
-          <div>
-            <h4 className="text-sm sm:text-base font-black text-slate-900">
-              {isBn ? 'মূল পার্থক্যসমূহ কি কি?' : 'What are the Key Differences?'}
-            </h4>
-            <p className="text-xs text-slate-700 mt-0.5 leading-relaxed">
-              {isBn 
-                ? 'স্ট্যান্ডার্ড প্যাকেজে আপনি পাচ্ছেন অতিরিক্ত ১,২০,০০০ টাকার বিনিময়ে "হারামাইন দ্রুতগতির বুলেট ট্রেন ভ্রমণ", "তায়েফ, জেদ্দা ও ঐতিহাসিক বদর সফর" এবং "এক্সক্লুসিভ লাক্সারি কিট ও লাগেজ সেট"।' 
-                : 'With the Standard Package, you get the Haramain Bullet Train, historic Taif/Jeddah/Badr Ziyarah, and luxury luggage & gift kit.'}
-            </p>
-          </div>
-        </div>
-
-        <button
-          onClick={() => onOpenBookingModal('Hajj', isBn ? '২০২৭ সালের হজ্ব প্যাকেজ সংক্রান্ত পরামর্শ' : 'Hajj 2027 Consultation')}
-          className="whitespace-nowrap px-4 py-2 bg-[#8B0000] hover:bg-[#6A0000] text-white text-xs font-bold rounded-xl transition-all shadow-md active:scale-95 shrink-0 flex items-center gap-1.5"
-        >
-          <span>{isBn ? 'প্যাকেজ পরামর্শ নিন' : 'Get Guidance'}</span>
-          <ChevronRight className="w-3.5 h-3.5" />
-        </button>
-      </div>
-
       {/* Category Filter Pills for Comparison */}
       <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-thin">
         <span className="text-xs font-bold text-slate-600 shrink-0 hidden sm:inline">
