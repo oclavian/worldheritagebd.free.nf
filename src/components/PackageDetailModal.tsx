@@ -156,47 +156,32 @@ export const PackageDetailModal: React.FC<PackageDetailModalProps> = ({
 
               {openAccordions.itinerary && (
                 <div className="p-4 sm:p-6 space-y-4 bg-white">
-                  {pkg.itinerary.map((item, idx) => {
-                    const isDay10 = item.dayNumber === '10' || item.titleBn.includes('তাওয়াফে জিয়ারাহ') || item.titleBn.includes('১০ জিলহজ্জ');
-                    return (
-                      <div
-                        key={idx}
-                        className={`p-4 rounded-xl border space-y-2.5 transition-all ${
-                          isDay10
-                            ? 'bg-[#FCF9EE] border-[#D4AF37] shadow-sm ring-1 ring-[#D4AF37]/30'
-                            : 'bg-[#FAF8F5] border-slate-200/80 hover:border-[#0D472B]/30 hover:bg-[#FAF6EF]'
-                        }`}
-                      >
-                        <div className="flex flex-wrap items-center justify-between gap-2.5 border-b border-slate-200 pb-2.5">
-                          <div className="flex items-center gap-2.5 flex-wrap">
-                            <span className={`px-3 py-0.5 rounded-full font-black text-xs whitespace-nowrap shadow-sm tracking-wide shrink-0 ${
-                              isDay10 ? 'bg-[#8B0000] text-amber-100' : 'bg-[#0D472B] text-[#F3E0A0]'
-                            }`}>
-                              {isBn ? `দিন ${toBengaliDigits(item.dayNumber)}` : `Day ${item.dayNumber}`}
-                            </span>
-                            <h4 className="font-bold text-[#0D472B] text-sm sm:text-base">
-                              {isBn ? item.titleBn : item.titleEn}
-                            </h4>
-                            {isDay10 && (
-                              <span className="bg-[#D4AF37]/20 border border-[#D4AF37]/60 text-[#8B0000] text-[11px] font-black px-2.5 py-0.5 rounded-full flex items-center gap-1 shadow-xs">
-                                <Sparkles className="w-3 h-3 text-[#D4AF37]" />
-                                {isBn ? 'তাওয়াফে জিয়ারাহ (ফরজ আমল)' : 'Core Pillar: Tawaf al-Ziyarah'}
-                              </span>
-                            )}
-                          </div>
-                          {(item.mealsBn || item.mealsEn) && (
-                            <span className="text-[11px] bg-emerald-100 text-emerald-900 px-2.5 py-0.5 rounded-md font-bold shrink-0">
-                              🍴 {isBn ? item.mealsBn : item.mealsEn}
-                            </span>
-                          )}
+                  {pkg.itinerary.map((item, idx) => (
+                    <div
+                      key={idx}
+                      className="p-4 rounded-xl border border-slate-200/80 bg-[#FAF8F5] hover:border-[#0D472B]/30 hover:bg-[#FAF6EF] space-y-2.5 transition-all"
+                    >
+                      <div className="flex flex-wrap items-center justify-between gap-2.5 border-b border-slate-200 pb-2.5">
+                        <div className="flex items-center gap-2.5 flex-wrap">
+                          <span className="px-3 py-0.5 rounded-full font-black text-xs whitespace-nowrap shadow-sm tracking-wide shrink-0 bg-[#0D472B] text-[#F3E0A0]">
+                            {item.dayNumber}
+                          </span>
+                          <h4 className="font-bold text-[#0D472B] text-sm sm:text-base">
+                            {isBn ? item.titleBn : item.titleEn}
+                          </h4>
                         </div>
-
-                        <p className="text-xs sm:text-sm text-slate-600 leading-relaxed pt-0.5">
-                          {isBn ? item.descBn : item.descEn}
-                        </p>
+                        {(item.mealsBn || item.mealsEn) && (
+                          <span className="text-[11px] bg-emerald-100 text-emerald-900 px-2.5 py-0.5 rounded-md font-bold shrink-0">
+                            🍴 {isBn ? item.mealsBn : item.mealsEn}
+                          </span>
+                        )}
                       </div>
-                    );
-                  })}
+
+                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed pt-0.5">
+                        {isBn ? item.descBn : item.descEn}
+                      </p>
+                    </div>
+                  ))}
                 </div>
               )}
             </div>

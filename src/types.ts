@@ -85,6 +85,8 @@ export interface HajjPackage {
   registrationStatusEn: string;
   facilitiesBn: string[];
   facilitiesEn: string[];
+  exclusionsBn?: string[];
+  exclusionsEn?: string[];
   image: string;
   galleryImages?: string[];
 }

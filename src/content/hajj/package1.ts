@@ -43,10 +43,10 @@ export const hajjPackage1: HajjPackage = {
     'বাংলাদেশ ও সৌদি সরকার অনুমোদিত ডিরেক্ট ফ্লাইট (Direct Flight)',
     'কোরবানি সম্পূর্ণ প্যাকেজের অন্তর্ভুক্ত',
     'মক্কা হোটেল: আজিজিয়াদ রোড / মিসফালাহ (৫০০ মিটার দূরত্ব)',
-    'মদিনা হোটেল: মারকাজিয়া ৩ স্টার / স্ট্যান্ডার্ড (১০০ মিটার দূরত্ব)',
+    'মদিনা হোটেল: মারকাজিয়া ৩ স্টার / স্ট্যান্ডার্ড (১০০ মিটার দূরত্ব)',
     'মিনা ও আরাফাতে শীতাতপ নিয়ন্ত্রিত এসি টেন্ট (AC Tent) ও ম্যাট্রেস সার্ভিস',
     '৩ বেলা উন্নত মানসম্মত বাংলা খাবার (মক্কা, মদিনা ও মিনা-আরাফাতে)',
-    'হজ্বযাত্রার পূর্বে বিশেষ হজ্ব প্রশিক্ষণ কর্মশালা ও মোয়াল্লেম দিকনির্দেশনা',
+    'হজযাত্রার পূর্বে বিশেষ হজ্ব প্রশিক্ষণ কর্মশালা ও মোয়াল্লেম দিকনির্দেশনা',
     'মক্কা ও মদিনার সকল পবিত্র ঐতিহাসিক স্থানসমূহ জিয়ারাহ',
     'সৌদি সরকার কর্তৃক নির্ধারিত শীতাতপ নিয়ন্ত্রিত এসি বাস সার্ভিস',
     'ইহরাম প্যাকেজ ও গিফট আইটেম (ট্রলি ব্যাগ, এহরামের কাপড়, জুতার ব্যাগ ও হজ্ব বই)',
@@ -66,6 +66,16 @@ export const hajjPackage1: HajjPackage = {
     'Complimentary Ihram Kit & Gift Bag (Trolley Bag, Ihram, Shoe Bag, Guidebook)',
     '24/7 Guidance by Experienced Scholars & Govt-registered Moallems',
     'Round-the-clock group coordinator & medical liaison support'
+  ],
+  exclusionsBn: [
+    'ব্যক্তিগত কেনাকাটা ও ব্যক্তিগত ঔষধের খরচ',
+    'অতিরিক্ত লাগেজ চার্জ ও ব্যক্তিগত আলাদা ঘোরাঘুরি',
+    'মক্কা-মদিনা বুলেট ট্রেনে ভ্রমণ',
+  ],
+  exclusionsEn: [
+    'Personal shopping, souvenirs, and personal medical expenses',
+    'Additional luggage charges & private unlisted personal travel',
+    'Haramain High-Speed Bullet Train Journey',
   ],
   image: 'https://lh3.googleusercontent.com/d/12r4H9iF0KgHrHPi0hciMhvKPxU-4eWHt',
   galleryImages: [

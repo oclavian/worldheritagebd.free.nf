@@ -204,14 +204,12 @@ export function adaptUmrahPackage(pkg: UmrahPackage): StandardPackageItem {
 
 export function adaptHajjPackage(pkg: HajjPackage): StandardPackageItem {
   const isStandardWithTrain = 
-    (pkg.totalPriceBDT >= 750000) ||
-    (pkg.titleEn && pkg.titleEn.toLowerCase().includes('bullet')) || 
-    (pkg.titleBn && pkg.titleBn.includes('স্ট্যান্ডার্ড')) ||
-    (pkg.transportEn && pkg.transportEn.toLowerCase().includes('train')) ||
-    (pkg.bulletTrainBn !== undefined && pkg.bulletTrainBn !== '') ||
-    pkg.id.includes('hajj-2') || 
-    pkg.id.includes('hajj-3') ||
-    pkg.id.includes('standard');
+    pkg.totalPriceBDT >= 750000 ||
+    Boolean(pkg.bulletTrainBn && pkg.bulletTrainBn.trim() !== '') ||
+    Boolean(pkg.bulletTrainEn && pkg.bulletTrainEn.trim() !== '') ||
+    (pkg.packageCategoryEn && pkg.packageCategoryEn.toLowerCase() === 'standard') ||
+    (pkg.packageCategoryBn && pkg.packageCategoryBn.includes('স্ট্যান্ডার্ড')) ||
+    pkg.id === 'hajj-2027-standard';
 
   return {
     id: pkg.id,
@@ -220,8 +218,12 @@ export function adaptHajjPackage(pkg: HajjPackage): StandardPackageItem {
     titleEn: pkg.titleEn,
     durationBn: pkg.durationBn,
     durationEn: pkg.durationEn,
-    locationBn: `পবিত্র মক্কা ও মদীনা মুনাওয়ারাহ (${pkg.makkahHotelBn} ও ${pkg.madinahHotelBn})`,
-    locationEn: `Holy Makkah & Madinah (${pkg.makkahHotelEn} & ${pkg.madinahHotelEn})`,
+    locationBn: isStandardWithTrain
+      ? 'মক্কা, মদীনা, তায়েফ, জেদ্দা, মিনা, আরাফাত ও মুজদালিফা'
+      : 'মক্কা, মদীনা, মিনা, আরাফাত ও মুজদালিফা',
+    locationEn: isStandardWithTrain
+      ? 'Makkah, Madinah, Taif, Jeddah, Mina, Arafat & Muzdalifah'
+      : 'Makkah, Madinah, Mina, Arafat & Muzdalifah',
     priceBDT: pkg.totalPriceBDT,
     badgeBn: pkg.badgeBn || 'পবিত্র হজ্ব',
     badgeEn: pkg.badgeEn || 'Holy Hajj',
@@ -233,40 +235,62 @@ export function adaptHajjPackage(pkg: HajjPackage): StandardPackageItem {
       'https://images.unsplash.com/photo-1564769625905-50e93615e769?auto=format&fit=crop&w=800&q=80',
       'https://images.unsplash.com/photo-1580418827493-f2b22c0a76cb?auto=format&fit=crop&w=800&q=80',
     ],
-    inclusionsBn: [
-      'বাংলাদেশ-জেদ্দা-বাংলাদেশ সরাসরি ফ্লাইট টিকিট (নন-স্টপ / প্রিমিয়াম ট্রানজিট)',
-      'পবিত্র মক্কা ও মদিনা শরীফে নির্ধারিত তারকা মানের হোটেল অবস্থান',
-      'মিনা ও আরাফাতে শীতাতপ নিয়ন্ত্রিত (AC) তাঁবু ও বিশেষ ক্যাটারিং সেবা',
-      'হজের দিনগুলোতে মুয়াল্লিম সেবা ও সার্বক্ষণিক অভিজ্ঞ গাইড টিম',
-      'অভিজ্ঞ আলেম ও মুফতি দ্বারা হজের নিয়ম ও আমল বিষয়ক বিশেষ প্রশিক্ষণ',
-      'মক্কা ও মদিনার ঐতিহাসিক স্থানসমূহ মোয়াল্লেমের তত্ত্বাবধানে জিয়ারাহ',
-      isStandardWithTrain 
-        ? 'সৌদি আরবের আধুনিক বুলেট ট্রেনে (Haramain Bullet Train) মক্কা-মদিনা যাতায়াত'
-        : 'সৌদি হজ মন্ত্রণালয়ের অনুমোদিত শীতাতপ নিয়ন্ত্রিত (AC) বাসে যাতায়াত',
-      'হজ কিট (ট্রলি ব্যাগ, ইহরাম, গাইড বই ও সহায়ক সামগ্রী)',
-    ],
-    inclusionsEn: [
-      'Round-trip scheduled flight ticket (Dhaka - Jeddah - Dhaka)',
-      'Star category hotel accommodation in Makkah & Madinah',
-      'Air-conditioned VIP tents in Mina & Arafat with full catering service',
-      'Dedicated Moallem support and 24/7 experienced guide team',
-      'Pre-Hajj workshops & religious guidance by qualified Islamic scholars',
-      'Guided historical Ziyarah in Makkah and Madinah',
-      isStandardWithTrain
-        ? 'Haramain High-Speed Bullet Train Journey between Makkah and Madinah'
-        : 'AC transport logistics as approved by Saudi Ministry of Hajj',
-      'Complimentary Hajj Kit (Luggage, Ihram, guide booklet & essentials)',
-    ],
-    exclusionsBn: [
-      'ব্যক্তিগত কেনাকাটা, শপিং ও ব্যক্তিগত ওষুধ খরচ',
-      'হোটেলের রুম সার্ভিস, অতিরিক্ত লন্ড্রি ও টেলিফোন বিল',
-      'প্যাকেজে অন্তর্ভুক্ত নয় এমন অতিরিক্ত কোনো ব্যক্তিগত ট্রান্সপোর্টেশন বা আনলিস্টেড জিয়ারাহ',
-    ],
-    exclusionsEn: [
-      'Personal shopping, souvenirs, and personal medical expenses',
-      'Hotel room service, personal laundry, and telephone charges',
-      'Any additional private transport or unlisted personal Ziyarah tours',
-    ],
+    inclusionsBn: (pkg.facilitiesBn && pkg.facilitiesBn.length > 0)
+      ? pkg.facilitiesBn
+      : [
+          'বাংলাদেশ ও সৌদি সরকার অনুমোদিত ডিরেক্ট ফ্লাইট (Direct Flight)',
+          'কোরবানি সম্পূর্ণ প্যাকেজের অন্তর্ভুক্ত',
+          'মক্কা হোটেল: আজিজিয়াদ রোড / মিসফালাহ (৫০০ মিটার দূরত্ব)',
+          'মদিনা হোটেল: মারকাজিয়া ৩ স্টার / স্ট্যান্ডার্ড (১০০ মিটার দূরত্ব)',
+          'মিনা ও আরাফাতে শীতাতপ নিয়ন্ত্রিত এসি টেন্ট (AC Tent) ও ম্যাট্রেস সার্ভিস',
+          '৩ বেলা উন্নত মানসম্মত বাংলা খাবার (মক্কা, মদিনা ও মিনা-আরাফাতে)',
+          'হজযাত্রার পূর্বে বিশেষ হজ্ব প্রশিক্ষণ কর্মশালা ও মোয়াল্লেম দিকনির্দেশনা',
+          'মক্কা ও মদিনার সকল পবিত্র ঐতিহাসিক স্থানসমূহ জিয়ারাহ',
+          'সৌদি সরকার কর্তৃক নির্ধারিত শীতাতপ নিয়ন্ত্রিত এসি বাস সার্ভিস',
+          'ইহরাম প্যাকেজ ও গিফট আইটেম (ট্রলি ব্যাগ, এহরামের কাপড়, জুতার ব্যাগ ও হজ্ব বই)',
+          'অভিজ্ঞ প্রবীণ আলেম ও সার্বক্ষণিক মোয়াল্লেম কর্তৃক প্রতিটি আরকান পরিচালন',
+          '২৪/৭ কাফেলা সহায়তা ও প্রাথমিক স্বাস্থ্যসেবা সমন্বয়',
+        ],
+    inclusionsEn: (pkg.facilitiesEn && pkg.facilitiesEn.length > 0)
+      ? pkg.facilitiesEn
+      : [
+          'Direct Flight (Dhaka - Jeddah/Madinah - Dhaka)',
+          'Qurbani / Animal Sacrifice Included in Package',
+          'Makkah Hotel: Ajyad Road / Misfalah (500m to Haram)',
+          'Madinah Hotel: Central Markazia 3-Star / Standard (100m to Nabawi Mosque)',
+          'Air-Conditioned VIP AC Tents & Mattress in Mina & Arafat',
+          '3 Quality Daily Meals & Full Catering in Mina-Arafat',
+          'Comprehensive Pre-Hajj Practical Training Workshop',
+          'Historical Ziyarah in Makkah & Madinah with Islamic Scholars',
+          'AC Bus Service throughout all inter-city & holy sites routes',
+          'Complimentary Ihram Kit & Gift Bag (Trolley Bag, Ihram, Shoe Bag, Guidebook)',
+          '24/7 Guidance by Experienced Scholars & Govt-registered Moallems',
+          'Round-the-clock group coordinator & medical liaison support',
+        ],
+    exclusionsBn: (pkg.exclusionsBn && pkg.exclusionsBn.length > 0)
+      ? pkg.exclusionsBn
+      : isStandardWithTrain
+        ? [
+            'ব্যক্তিগত কেনাকাটা ও ব্যক্তিগত ঔষধের খরচ',
+            'অতিরিক্ত লাগেজ চার্জ ও ব্যক্তিগত আলাদা ঘোরাঘুরি',
+          ]
+        : [
+            'ব্যক্তিগত কেনাকাটা ও ব্যক্তিগত ঔষধের খরচ',
+            'অতিরিক্ত লাগেজ চার্জ ও ব্যক্তিগত আলাদা ঘোরাঘুরি',
+            'মক্কা-মদিনা বুলেট ট্রেনে ভ্রমণ',
+          ],
+    exclusionsEn: (pkg.exclusionsEn && pkg.exclusionsEn.length > 0)
+      ? pkg.exclusionsEn
+      : isStandardWithTrain
+        ? [
+            'Personal shopping, souvenirs, and personal medical expenses',
+            'Additional luggage charges & private unlisted personal travel',
+          ]
+        : [
+            'Personal shopping, souvenirs, and personal medical expenses',
+            'Additional luggage charges & private unlisted personal travel',
+            'Haramain High-Speed Bullet Train Journey',
+          ],
     itinerary: isStandardWithTrain
       ? [
           {
@@ -399,9 +423,9 @@ export function adaptHajjPackage(pkg: HajjPackage): StandardPackageItem {
           },
           {
             dayNumber: '13-28',
-            titleBn: 'মক্কা ও মদিনা মুনাওয়ারাহ অবস্থান ও পবিত্র জিয়ারাহ',
+            titleBn: 'মক্কা ও মদিনা মুনাওয়ারাহ অবস্থান ও পবিত্র জিয়ারাহ',
             titleEn: 'Stay at Holy Makkah & Madinah and Sacred Ziyarah',
-            descBn: 'মদীনায় মসজিদে নববীতে নামাজ আদায় ও রাসূল (সাঃ)-এর রওজা মোবারকে সালাম নিবেদন। মক্কা ও মদিনার ঐতিহাসিক স্থানসমূহ মোয়াল্লেমের সাথে জিয়ারাহ।',
+            descBn: 'মদীনায় মসজিদে নববীতে নামাজ আদায় ও রাসূল (সাঃ)-এর রওজা মোবারকে সালাম নিবেদন। মক্কা ও মদিনার ঐতিহাসিক স্থানসমূহ মোয়াল্লেমের সাথে জিয়ারাহ।',
             descEn: 'Offer prayers at Prophet\'s Mosque in Madinah and convey Salam at Rawdah Mubarak. Visit historic sacred sites in Makkah and Madinah guided by Moallem.',
             mealsBn: '৩ বেলা মানসম্মত বাংলা খাবার',
             mealsEn: '3 Bengali Meals Daily',
@@ -421,8 +445,8 @@ export function adaptHajjPackage(pkg: HajjPackage): StandardPackageItem {
     policiesBn: [
       'জাতীয় পরিচয়পত্র (NID) ও কমপক্ষে ৬ মাস মেয়াদসহ বায়োমেট্রিক পাসপোর্ট বাধ্যতামূলক।',
       'সরকারি অনুমোদিত মেডিকেল সেন্টার থেকে স্বাস্থ্য পরীক্ষা ও ভ্যাকসিন সার্টিফিকেট আবশ্যক।',
-      'সৌদি হজ্ব ও ওমরাহ মন্ত্রণালয়ের সার্বিক নিয়ম ও গাইডলাইন মেনে চলতে হবে।',
-      'কাফেলার শৃঙ্খলা রক্ষা ও মোয়াল্লেমের নির্দেশনা অনুসরণ করা বাধ্যতামূলক।',
+      'সৌদি হজ্ব ও ওমরাহ মন্ত্রণালয়ের সার্বিক নিয়ম ও গাইডলাইন মেনে চলতে হবে।',
+      'কাফেলার শৃঙ্খলা রক্ষা ও মোয়াল্লেমের নির্দেশনা অনুসরণ করা বাধ্যতামূলক।',
     ],
     policiesEn: [
       'Valid National ID (NID) & Biometric Passport (min. 6 months validity) are mandatory.',
