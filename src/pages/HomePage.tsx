@@ -64,7 +64,7 @@ export const HomePage: React.FC<HomePageProps> = ({
     <div className="space-y-12 font-bengali pb-12">
       
       {/* 1. LUXURY HERO SECTION WITH INTERACTIVE SEARCH & STATS */}
-      <section className="relative bg-[#03180D] text-white pt-8 sm:pt-12 pb-24 lg:pt-14 lg:pb-32 overflow-hidden border-b-4 border-[#D4AF37]">
+      <section className="relative bg-[#03180D] text-white pt-3 sm:pt-4 lg:pt-5 pb-28 sm:pb-36 lg:pb-44 overflow-hidden border-b-4 border-[#D4AF37]">
         {/* Immersive Photography Overlay */}
         <div 
           className="absolute inset-0 z-0 opacity-20 bg-cover bg-center mix-blend-overlay scale-105 transition-transform duration-1000"
@@ -76,18 +76,18 @@ export const HomePage: React.FC<HomePageProps> = ({
         <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-[#D4AF37]/15 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
-          
-          {/* Top Announcement Tagline Pill */}
-          <div className="inline-flex items-center gap-2 bg-[#D4AF37]/20 border border-[#D4AF37]/60 px-4 py-1.5 rounded-full text-xs font-bold text-[#F3E0A0] shadow-md mb-6">
-            <Sparkles className="w-4 h-4 text-[#D4AF37]" />
-            <span>{lang === 'bn' ? 'অনুমোদিত ও বিশ্বস্ত হজ্ব, উমরাহ্ এবং এয়ার টিকিট এজেন্সী' : 'Authorized Hajj, Umrah & Air Ticket Agency'}</span>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-8 items-start">
             
             {/* Left Content Column (7 cols) */}
-            <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight font-sans">
+            <div className="lg:col-span-7 space-y-3.5 sm:space-y-4 text-center lg:text-left">
+              
+              {/* Top Announcement Tagline Pill with comfortable breathing room */}
+              <div className="inline-flex items-center gap-2 bg-[#D4AF37]/20 border border-[#D4AF37]/60 px-3.5 py-1.5 rounded-full text-xs font-bold text-[#F3E0A0] shadow-md mb-3 sm:mb-4">
+                <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
+                <span>{lang === 'bn' ? 'অনুমোদিত ও বিশ্বস্ত হজ্ব, উমরাহ্ এবং এয়ার টিকিট এজেন্সী' : 'Authorized Hajj, Umrah & Air Ticket Agency'}</span>
+              </div>
+
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-[40px] font-black text-white tracking-tight leading-tight font-sans">
                 {lang === 'bn' ? (
                   <>
                     পবিত্র <span className="text-[#D4AF37]">উমরাহ্, হজ্ব</span> ও ফ্লাইট টিকিটে সর্বোচ্চ বিশ্বস্ততা
@@ -99,7 +99,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                 )}
               </h1>
 
-              <p className="text-sm sm:text-base text-emerald-100/90 leading-relaxed max-w-2xl">
+              <p className="text-xs sm:text-sm text-emerald-100/90 leading-relaxed max-w-2xl">
                 {lang === 'bn' 
                   ? 'ঢাকা পান্থপথ প্রধান কার্যালয় থেকে সরাসরি বাংলাদেশ সরকার ও সৌদি ধর্ম মন্ত্রণালয়ের নিয়ম মেনে স্বচ্ছতার সাথে পরিচালিত।'
                   : 'Operating directly from Panthapath main office with 100% Shariah compliance and government licensing.'
@@ -107,46 +107,46 @@ export const HomePage: React.FC<HomePageProps> = ({
               </p>
 
               {/* Quick Stat Badges Row */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 text-left">
-                <div className="bg-white/10 backdrop-blur-md p-3 rounded-2xl border border-white/15">
-                  <span className="text-xl sm:text-2xl font-black text-[#D4AF37] block font-sans">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-2.5 pt-0.5 text-left">
+                <div className="bg-white/10 backdrop-blur-md p-2 sm:p-2.5 rounded-xl border border-white/15">
+                  <span className="text-base sm:text-xl font-black text-[#D4AF37] block font-sans">
                     {lang === 'bn' ? '৫০০০+' : '5,000+'}
                   </span>
-                  <span className="text-[11px] text-emerald-200">{lang === 'bn' ? 'সফল হাজী সেবা' : 'Pilgrims Served'}</span>
+                  <span className="text-[10px] sm:text-[11px] text-emerald-200">{lang === 'bn' ? 'সফল হাজী সেবা' : 'Pilgrims Served'}</span>
                 </div>
-                <div className="bg-white/10 backdrop-blur-md p-3 rounded-2xl border border-white/15">
-                  <span className="text-xl sm:text-2xl font-black text-[#D4AF37] block font-sans">
+                <div className="bg-white/10 backdrop-blur-md p-2 sm:p-2.5 rounded-xl border border-white/15">
+                  <span className="text-base sm:text-xl font-black text-[#D4AF37] block font-sans">
                     {lang === 'bn' ? '০৭+ বছর' : '07+ Years'}
                   </span>
-                  <span className="text-[11px] text-emerald-200">{lang === 'bn' ? 'অভিজ্ঞতা' : 'Experience'}</span>
+                  <span className="text-[10px] sm:text-[11px] text-emerald-200">{lang === 'bn' ? 'অভিজ্ঞতা' : 'Experience'}</span>
                 </div>
-                <div className="bg-white/10 backdrop-blur-md p-3 rounded-2xl border border-white/15">
-                  <span className="text-xl sm:text-2xl font-black text-[#D4AF37] block font-sans">
+                <div className="bg-white/10 backdrop-blur-md p-2 sm:p-2.5 rounded-xl border border-white/15">
+                  <span className="text-base sm:text-xl font-black text-[#D4AF37] block font-sans">
                     {lang === 'bn' ? '১০০%' : '100%'}
                   </span>
-                  <span className="text-[11px] text-emerald-200">{lang === 'bn' ? 'শরীয়তসম্মত' : 'Shariah Compliant'}</span>
+                  <span className="text-[10px] sm:text-[11px] text-emerald-200">{lang === 'bn' ? 'শরীয়তসম্মত' : 'Shariah Compliant'}</span>
                 </div>
-                <div className="bg-white/10 backdrop-blur-md p-3 rounded-2xl border border-white/15">
-                  <span className="text-xl sm:text-2xl font-black text-[#D4AF37] block font-sans">
+                <div className="bg-white/10 backdrop-blur-md p-2 sm:p-2.5 rounded-xl border border-white/15">
+                  <span className="text-base sm:text-xl font-black text-[#D4AF37] block font-sans">
                     {lang === 'bn' ? '২৪/৭' : '24/7'}
                   </span>
-                  <span className="text-[11px] text-emerald-200">{lang === 'bn' ? 'হটলাইন সাপোর্ট' : 'Hotline Support'}</span>
+                  <span className="text-[10px] sm:text-[11px] text-emerald-200">{lang === 'bn' ? 'হটলাইন সাপোর্ট' : 'Hotline Support'}</span>
                 </div>
               </div>
 
               {/* Action Buttons */}
-              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-2">
+              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2.5 pt-1">
                 <button
                   onClick={() => onNavigate('umrah')}
-                  className="bg-gradient-to-r from-[#D4AF37] to-[#B38712] hover:from-[#C59B27] hover:to-[#A2760E] text-emerald-950 px-6 py-3 rounded-full font-extrabold text-sm shadow-xl hover:shadow-2xl transition-all transform active:scale-95 flex items-center gap-2"
+                  className="bg-gradient-to-r from-[#D4AF37] to-[#B38712] hover:from-[#C59B27] hover:to-[#A2760E] text-emerald-950 px-4.5 sm:px-5 py-2.5 rounded-full font-extrabold text-xs sm:text-sm shadow-xl hover:shadow-2xl transition-all transform active:scale-95 flex items-center gap-2 cursor-pointer"
                 >
                   <span>🕋 {lang === 'bn' ? 'উমরাহ্ প্যাকেজসমূহ' : 'Umrah Packages'}</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <ArrowRight className="w-3.5 h-3.5" />
                 </button>
 
                 <button
                   onClick={() => onNavigate('hajj')}
-                  className="bg-white/10 hover:bg-white/20 text-white border border-[#D4AF37]/60 px-6 py-3 rounded-full font-extrabold text-sm backdrop-blur-md shadow-md transition-all flex items-center gap-2"
+                  className="bg-white/10 hover:bg-white/20 text-white border border-[#D4AF37]/60 px-4.5 sm:px-5 py-2.5 rounded-full font-extrabold text-xs sm:text-sm backdrop-blur-md shadow-md transition-all flex items-center gap-2 cursor-pointer"
                 >
                   <span>🕌 {lang === 'bn' ? 'পবিত্র হজ্ব ২০২৭' : 'Holy Hajj 2027'}</span>
                 </button>
@@ -166,7 +166,7 @@ export const HomePage: React.FC<HomePageProps> = ({
         </div>
 
         {/* Multi-Layered Natural Surging Ocean & Aqua Water Wave Bottom Divider */}
-        <div className="absolute bottom-0 left-0 right-0 overflow-hidden leading-none z-10 pointer-events-none h-24 sm:h-36 lg:h-44">
+        <div className="absolute bottom-0 left-0 right-0 overflow-hidden leading-none z-10 pointer-events-none h-28 sm:h-36 lg:h-44">
           
           {/* Floating Crystal Water Droplets & Bubbles */}
           <div className="absolute inset-0 z-20 pointer-events-none overflow-hidden">

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion } from 'motion/react';
 import { 
   Phone, 
   Mail, 
@@ -35,6 +36,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenBookingModal,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [hoveredTab, setHoveredTab] = useState<PageId | null>(null);
 
   const navItems: { id: PageId; labelKey: keyof typeof import('../data/translations').translations['bn'] }[] = [
     { id: 'home', labelKey: 'navHome' },
@@ -60,7 +62,7 @@ export const Header: React.FC<HeaderProps> = ({
         {/* Brand Logo & Name */}
         <button 
           onClick={() => handleNavClick('home')}
-          className="flex items-center gap-2 sm:gap-2.5 text-left group focus:outline-none min-w-0 shrink"
+          className="flex items-center gap-2 sm:gap-2.5 text-left group focus:outline-none min-w-0 shrink cursor-pointer"
         >
           {/* Agency Official Logo */}
           <Logo className="w-9 h-9 sm:w-12 sm:h-12 transform group-hover:scale-105 transition-all drop-shadow-md shrink-0" />
@@ -76,21 +78,51 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
         </button>
 
-        {/* Desktop Navigation Links */}
-        <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1.5">
+        {/* Desktop Navigation Links with Smooth Fluid Sliding Motion Bubble */}
+        <nav 
+          className="hidden lg:flex items-center gap-1 xl:gap-1.5 p-1 rounded-full bg-black/25 border border-[#D4AF37]/20 backdrop-blur-md relative"
+          onMouseLeave={() => setHoveredTab(null)}
+        >
           {navItems.map((item) => {
             const isActive = activePage === item.id;
+            const isHovered = hoveredTab === item.id;
             return (
               <button
                 key={item.id}
                 onClick={() => handleNavClick(item.id)}
-                className={`px-2 xl:px-3 py-1.5 rounded-full text-xs xl:text-sm font-bold transition-all whitespace-nowrap ${
+                onMouseEnter={() => setHoveredTab(item.id)}
+                className={`relative px-2.5 xl:px-3.5 py-1.5 rounded-full text-xs xl:text-sm font-extrabold transition-colors duration-200 whitespace-nowrap z-10 cursor-pointer ${
                   isActive
-                    ? 'bg-white text-[#052917] shadow-md'
-                    : 'text-emerald-100 hover:text-white hover:bg-white/10'
+                    ? 'text-[#052917]'
+                    : 'text-emerald-100/90 hover:text-white'
                 }`}
               >
-                {getTranslation(lang, item.labelKey)}
+                {/* Active Sliding Floating Bubble (Spring Physics Animation) */}
+                {isActive && (
+                  <motion.div
+                    layoutId="headerActiveBubble"
+                    className="absolute inset-0 bg-gradient-to-b from-white to-slate-100 rounded-full shadow-[0_4px_14px_rgba(0,0,0,0.35),0_0_12px_rgba(212,175,55,0.4)] border border-[#D4AF37]/50 -z-10"
+                    transition={{
+                      type: 'spring',
+                      stiffness: 450,
+                      damping: 32,
+                      mass: 0.8
+                    }}
+                  />
+                )}
+
+                {/* Subtle Hover Glow on Inactive Tabs */}
+                {!isActive && isHovered && (
+                  <motion.div
+                    layoutId="headerHoverGlow"
+                    className="absolute inset-0 bg-white/10 rounded-full -z-10"
+                    transition={{ duration: 0.15 }}
+                  />
+                )}
+
+                <span className="relative z-10 block">
+                  {getTranslation(lang, item.labelKey)}
+                </span>
               </button>
             );
           })}
@@ -100,7 +132,7 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="flex items-center gap-2 sm:gap-3">
           <button
             onClick={() => onOpenBookingModal()}
-            className="hidden sm:inline-flex items-center gap-2 bg-white text-[#052917] hover:bg-[#D4AF37] hover:text-emerald-950 px-4 py-2 rounded-full text-xs sm:text-sm font-extrabold shadow-md hover:shadow-lg transition-all transform active:scale-95 border border-white/40"
+            className="hidden sm:inline-flex items-center gap-2 bg-white text-[#052917] hover:bg-[#D4AF37] hover:text-emerald-950 px-4 py-2 rounded-full text-xs sm:text-sm font-extrabold shadow-md hover:shadow-lg transition-all transform active:scale-95 border border-white/40 cursor-pointer"
           >
             <span>{getTranslation(lang, 'bookNowCTA')}</span>
             <ChevronRight className="w-4 h-4 text-emerald-800 group-hover:text-emerald-950" />
@@ -110,7 +142,7 @@ export const Header: React.FC<HeaderProps> = ({
           <div className="flex items-center bg-[#02180D] rounded-full p-1 border border-[#D4AF37]/60 text-xs shadow-inner">
             <button
               onClick={() => onLanguageChange('bn')}
-              className={`px-2.5 py-1 rounded-full text-xs font-extrabold transition-all ${
+              className={`px-2.5 py-1 rounded-full text-xs font-extrabold transition-all cursor-pointer ${
                 lang === 'bn' 
                   ? 'bg-[#D4AF37] text-emerald-950 shadow-sm' 
                   : 'text-emerald-200 hover:text-white'
@@ -120,7 +152,7 @@ export const Header: React.FC<HeaderProps> = ({
             </button>
             <button
               onClick={() => onLanguageChange('en')}
-              className={`px-2.5 py-1 rounded-full text-xs font-extrabold transition-all ${
+              className={`px-2.5 py-1 rounded-full text-xs font-extrabold transition-all cursor-pointer ${
                 lang === 'en' 
                   ? 'bg-[#D4AF37] text-emerald-950 shadow-sm' 
                   : 'text-emerald-200 hover:text-white'
@@ -133,7 +165,7 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Hamburger Toggle */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-xl text-emerald-100 hover:text-white hover:bg-emerald-900/80 lg:hidden focus:outline-none border border-emerald-700/60"
+            className="p-2 rounded-xl text-emerald-100 hover:text-white hover:bg-emerald-900/80 lg:hidden focus:outline-none border border-emerald-700/60 cursor-pointer"
             aria-label="Toggle navigation menu"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -151,7 +183,7 @@ export const Header: React.FC<HeaderProps> = ({
                 <button
                   key={item.id}
                   onClick={() => handleNavClick(item.id)}
-                  className={`w-full text-left px-4 py-2.5 rounded-xl text-base font-semibold flex items-center justify-between transition-colors ${
+                  className={`w-full text-left px-4 py-2.5 rounded-xl text-base font-semibold flex items-center justify-between transition-colors cursor-pointer ${
                     isActive
                       ? 'bg-[#0D472B] text-white font-bold shadow-sm'
                       : 'text-[#1A2E26] hover:bg-emerald-50'
@@ -169,7 +201,7 @@ export const Header: React.FC<HeaderProps> = ({
                   setMobileMenuOpen(false);
                   onOpenBookingModal();
                 }}
-                className="w-full bg-[#0D472B] text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2 shadow-md border border-[#D4AF37]"
+                className="w-full bg-[#0D472B] text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2 shadow-md border border-[#D4AF37] cursor-pointer"
               >
                 <span>{getTranslation(lang, 'bookNowCTA')}</span>
                 <ChevronRight className="w-4 h-4 text-[#D4AF37]" />
