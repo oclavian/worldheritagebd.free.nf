@@ -15,13 +15,13 @@ export const FloatingActions: React.FC<FloatingActionsProps> = ({ lang, agencyIn
   )}`;
 
   return (
-    <div className="fixed bottom-5 right-5 z-40 flex flex-col gap-3 font-bengali">
+    <div className="fixed bottom-20 lg:bottom-6 right-4 lg:right-6 z-40 flex flex-col gap-3 font-bengali">
       {/* WhatsApp Floating Button */}
       <a
         href={whatsappUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="w-12 h-12 sm:w-13 sm:h-13 bg-[#25D366] text-white rounded-full flex items-center justify-center shadow-xl hover:shadow-2xl hover:scale-110 active:scale-95 transition-all border-2 border-white group"
+        className="w-12 h-12 sm:w-13 sm:h-13 bg-[#25D366] text-white rounded-full flex items-center justify-center shadow-2xl hover:shadow-emerald-500/50 hover:scale-110 active:scale-95 transition-all border-2 border-white group"
         title="Chat on WhatsApp"
         aria-label="WhatsApp Chat"
       >
@@ -34,7 +34,7 @@ export const FloatingActions: React.FC<FloatingActionsProps> = ({ lang, agencyIn
       {/* Phone Call Floating Button */}
       <a
         href={`tel:${agencyInfo.hotline}`}
-        className="w-12 h-12 sm:w-13 sm:h-13 bg-[#0D472B] text-white rounded-full flex items-center justify-center shadow-xl hover:shadow-2xl hover:scale-110 active:scale-95 transition-all border-2 border-[#D4AF37] group"
+        className="w-12 h-12 sm:w-13 sm:h-13 bg-[#0D472B] text-white rounded-full flex items-center justify-center shadow-2xl hover:shadow-emerald-950/50 hover:scale-110 active:scale-95 transition-all border-2 border-[#D4AF37] group hidden sm:flex"
         title="Call Hotline"
         aria-label="Call Hotline"
       >

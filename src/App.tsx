@@ -15,6 +15,7 @@ import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { PageTransition } from './components/PageTransition';
 import { FloatingActions } from './components/FloatingActions';
+import { MobileBottomNav } from './components/MobileBottomNav';
 import { BookingModal } from './components/BookingModal';
 import { LightboxModal } from './components/LightboxModal';
 import { IslamicPreloader } from './components/IslamicPreloader';
@@ -328,7 +329,7 @@ export default function App() {
   };
 
   return (
-    <div className={`bg-[#FAF8F5] text-[#1A2E26] flex flex-col min-h-screen w-full max-w-full overflow-x-hidden ${lang === 'bn' ? 'font-bengali' : 'font-english'}`}>
+    <div className={`bg-[#FAF8F5] text-[#1A2E26] flex flex-col min-h-screen w-full max-w-full overflow-x-hidden pb-16 lg:pb-0 ${lang === 'bn' ? 'font-bengali' : 'font-english'}`}>
       
       {/* Security & Content Protection Guard */}
       <SecurityGuard lang={lang} />
@@ -379,6 +380,15 @@ export default function App() {
         activePage={activePage}
         onNavigate={handleNavigate}
         agencyInfo={agencyInfo}
+      />
+
+      {/* Mobile App-Style Bottom Navigation Bar & Expanded Menu */}
+      <MobileBottomNav
+        lang={lang}
+        activePage={activePage}
+        onNavigate={handleNavigate}
+        agencyInfo={agencyInfo}
+        onOpenBookingModal={handleOpenBookingModal}
       />
 
     </div>
