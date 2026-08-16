@@ -22,6 +22,7 @@ import { PackageDetailView } from '../components/PackageDetailView';
 import { adaptUmrahPackage, adaptHajjPackage, StandardPackageItem } from '../utils/packageAdapter';
 import { toBengaliDigits } from '../utils/formatters';
 import { HajjAnnouncementCard } from '../components/HajjAnnouncementCard';
+import { HajjHadithMarquee } from '../components/HajjHadithMarquee';
 
 interface HomePageProps {
   lang: Language;
@@ -122,19 +123,22 @@ export const HomePage: React.FC<HomePageProps> = ({
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-8 items-start">
             
-            {/* Left Content Column (7 cols) */}
-            <div className="lg:col-span-7 space-y-3.5 sm:space-y-4 text-center lg:text-left">
+            {/* Left Content Column (7 cols) - Balanced Vertical Flow & Spacing */}
+            <div className="lg:col-span-7 space-y-4 sm:space-y-5 lg:space-y-5.5 text-center lg:text-left flex flex-col justify-between">
               
               {/* Top Announcement Tagline Pill with LIVE TYPEWRITER EFFECT */}
-              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-[#D4AF37]/25 via-emerald-900/40 to-[#D4AF37]/20 border border-[#D4AF37]/60 px-4 py-1.5 rounded-full text-xs font-bold text-[#F3E0A0] shadow-[0_0_15px_rgba(212,175,55,0.2)] mb-3 sm:mb-4 min-h-[32px]">
-                <Sparkles className="w-3.5 h-3.5 text-[#D4AF37] animate-pulse shrink-0" />
-                <span className="font-medium tracking-wide">
-                  {typewriterText}
-                  <span className="inline-block w-1.5 h-3.5 bg-[#D4AF37] ml-1 rounded-sm animate-ping align-middle" />
-                </span>
+              <div>
+                <div className="inline-flex items-center gap-2 bg-gradient-to-r from-[#D4AF37]/25 via-emerald-900/40 to-[#D4AF37]/20 border border-[#D4AF37]/60 px-4 py-1.5 rounded-full text-xs font-bold text-[#F3E0A0] shadow-[0_0_15px_rgba(212,175,55,0.2)] min-h-[32px]">
+                  <Sparkles className="w-3.5 h-3.5 text-[#D4AF37] animate-pulse shrink-0" />
+                  <span className="font-medium tracking-wide">
+                    {typewriterText}
+                    <span className="inline-block w-1.5 h-3.5 bg-[#D4AF37] ml-1 rounded-sm animate-ping align-middle" />
+                  </span>
+                </div>
               </div>
 
-              <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-[40px] font-black text-white tracking-tight leading-tight font-sans">
+              {/* Main Headline */}
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-[42px] font-black text-white tracking-tight leading-[1.25] font-sans">
                 {lang === 'bn' ? (
                   <>
                     পবিত্র <span className="text-[#D4AF37]">উমরাহ্, হজ্ব</span> ও ফ্লাইট টিকিটে সর্বোচ্চ বিশ্বস্ততা
@@ -146,43 +150,60 @@ export const HomePage: React.FC<HomePageProps> = ({
                 )}
               </h1>
 
-              <p className="text-xs sm:text-sm text-emerald-100/90 leading-relaxed max-w-2xl">
+              {/* Sub-headline description */}
+              <p className="text-xs sm:text-sm md:text-base text-emerald-100/90 leading-relaxed max-w-2xl">
                 {lang === 'bn' 
                   ? 'ঢাকা পান্থপথ প্রধান কার্যালয় থেকে সরাসরি বাংলাদেশ সরকার ও সৌদি ধর্ম মন্ত্রণালয়ের নিয়ম মেনে স্বচ্ছতার সাথে পরিচালিত।'
                   : 'Operating directly from Panthapath main office with 100% Shariah compliance and government licensing.'
                 }
               </p>
 
-              {/* Quick Stat Badges Row */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-2.5 pt-0.5 text-left">
-                <div className="bg-white/10 backdrop-blur-md p-2 sm:p-2.5 rounded-xl border border-white/15">
-                  <span className="text-base sm:text-xl font-black text-[#D4AF37] block font-sans">
+              {/* Quick Stat Badges Row with Enhanced Spacing & Padding */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 text-left">
+                <div className="bg-white/10 backdrop-blur-md p-3 sm:p-3.5 rounded-2xl border border-white/15 shadow-sm hover:border-[#D4AF37]/50 transition-colors">
+                  <span className="text-lg sm:text-2xl font-black text-[#D4AF37] block font-sans">
                     {lang === 'bn' ? '৫০০০+' : '5,000+'}
                   </span>
-                  <span className="text-[10px] sm:text-[11px] text-emerald-200">{lang === 'bn' ? 'সফল হাজী সেবা' : 'Pilgrims Served'}</span>
+                  <span className="text-[11px] sm:text-xs text-emerald-200 font-medium">{lang === 'bn' ? 'সফল হাজী সেবা' : 'Pilgrims Served'}</span>
                 </div>
-                <div className="bg-white/10 backdrop-blur-md p-2 sm:p-2.5 rounded-xl border border-white/15">
-                  <span className="text-base sm:text-xl font-black text-[#D4AF37] block font-sans">
+                <div className="bg-white/10 backdrop-blur-md p-3 sm:p-3.5 rounded-2xl border border-white/15 shadow-sm hover:border-[#D4AF37]/50 transition-colors">
+                  <span className="text-lg sm:text-2xl font-black text-[#D4AF37] block font-sans">
                     {lang === 'bn' ? '০৭+ বছর' : '07+ Years'}
                   </span>
-                  <span className="text-[10px] sm:text-[11px] text-emerald-200">{lang === 'bn' ? 'অভিজ্ঞতা' : 'Experience'}</span>
+                  <span className="text-[11px] sm:text-xs text-emerald-200 font-medium">{lang === 'bn' ? 'অভিজ্ঞতা' : 'Experience'}</span>
                 </div>
-                <div className="bg-white/10 backdrop-blur-md p-2 sm:p-2.5 rounded-xl border border-white/15">
-                  <span className="text-base sm:text-xl font-black text-[#D4AF37] block font-sans">
+                <div className="bg-white/10 backdrop-blur-md p-3 sm:p-3.5 rounded-2xl border border-white/15 shadow-sm hover:border-[#D4AF37]/50 transition-colors">
+                  <span className="text-lg sm:text-2xl font-black text-[#D4AF37] block font-sans">
                     {lang === 'bn' ? '১০০%' : '100%'}
                   </span>
-                  <span className="text-[10px] sm:text-[11px] text-emerald-200">{lang === 'bn' ? 'শরীয়তসম্মত' : 'Shariah Compliant'}</span>
+                  <span className="text-[11px] sm:text-xs text-emerald-200 font-medium">{lang === 'bn' ? 'শরীয়তসম্মত' : 'Shariah Compliant'}</span>
                 </div>
-                <div className="bg-white/10 backdrop-blur-md p-2 sm:p-2.5 rounded-xl border border-white/15">
-                  <span className="text-base sm:text-xl font-black text-[#D4AF37] block font-sans">
+                <div className="bg-white/10 backdrop-blur-md p-3 sm:p-3.5 rounded-2xl border border-white/15 shadow-sm hover:border-[#D4AF37]/50 transition-colors">
+                  <span className="text-lg sm:text-2xl font-black text-[#D4AF37] block font-sans">
                     {lang === 'bn' ? '২৪/৭' : '24/7'}
                   </span>
-                  <span className="text-[10px] sm:text-[11px] text-emerald-200">{lang === 'bn' ? 'হটলাইন সাপোর্ট' : 'Hotline Support'}</span>
+                  <span className="text-[11px] sm:text-xs text-emerald-200 font-medium">{lang === 'bn' ? 'হটলাইন সাপোর্ট' : 'Hotline Support'}</span>
                 </div>
               </div>
 
-              {/* Action Buttons with EYE-CATCHING GENTLE BOUNCE & SHIMMER */}
-              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-2">
+              {/* Key Trust Assurance Features Chips - Evenly Distributed with Generous Gap */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3.5 pt-0.5 text-xs text-emerald-100 font-medium">
+                <span className="flex items-center justify-center gap-2 bg-emerald-950/80 border border-emerald-700/60 px-3.5 py-2 rounded-full shadow-xs text-center">
+                  <CheckCircle2 className="w-4 h-4 text-[#D4AF37] shrink-0" />
+                  <span>{lang === 'bn' ? 'সরকারি অনুমোদিত এজেন্সী' : 'Govt. Licensed Agency'}</span>
+                </span>
+                <span className="flex items-center justify-center gap-2 bg-emerald-950/80 border border-emerald-700/60 px-3.5 py-2 rounded-full shadow-xs text-center">
+                  <CheckCircle2 className="w-4 h-4 text-[#D4AF37] shrink-0" />
+                  <span>{lang === 'bn' ? 'অভিজ্ঞ আলেম ও মোয়াল্লিম গাইড' : 'Scholarly Guidance'}</span>
+                </span>
+                <span className="flex items-center justify-center gap-2 bg-emerald-950/80 border border-emerald-700/60 px-3.5 py-2 rounded-full shadow-xs text-center">
+                  <CheckCircle2 className="w-4 h-4 text-[#D4AF37] shrink-0" />
+                  <span>{lang === 'bn' ? 'নিকটবর্তী হারাম শরীফ হোটেল' : 'Nearby Haram Hotels'}</span>
+                </span>
+              </div>
+
+              {/* Action Buttons with Generous Separation and Eye-Catching Bounce */}
+              <div className="flex flex-wrap sm:flex-nowrap items-center justify-between sm:justify-start gap-4 sm:gap-6 lg:gap-8 pt-1">
                 <motion.button
                   onClick={() => onNavigate('umrah')}
                   animate={{
@@ -195,7 +216,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                   }}
                   whileHover={{ scale: 1.06 }}
                   whileTap={{ scale: 0.95 }}
-                  className="bg-gradient-to-r from-[#D4AF37] via-[#E5C158] to-[#B38712] text-emerald-950 px-5 sm:px-6 py-2.5 sm:py-3 rounded-full font-black text-xs sm:text-sm shadow-[0_6px_20px_rgba(212,175,55,0.45)] hover:shadow-[0_8px_25px_rgba(212,175,55,0.6)] transition-shadow flex items-center gap-2 cursor-pointer border border-[#FFF0A0]"
+                  className="flex-1 sm:flex-initial justify-center bg-gradient-to-r from-[#D4AF37] via-[#E5C158] to-[#B38712] text-emerald-950 px-6 sm:px-8 py-3.5 rounded-full font-black text-xs sm:text-sm shadow-[0_6px_20px_rgba(212,175,55,0.45)] hover:shadow-[0_8px_25px_rgba(212,175,55,0.6)] transition-shadow flex items-center gap-2.5 cursor-pointer border border-[#FFF0A0]"
                 >
                   <span className="text-base">🕋</span>
                   <span>{lang === 'bn' ? 'উমরাহ্ প্যাকেজসমূহ' : 'Umrah Packages'}</span>
@@ -215,12 +236,17 @@ export const HomePage: React.FC<HomePageProps> = ({
                   }}
                   whileHover={{ scale: 1.06 }}
                   whileTap={{ scale: 0.95 }}
-                  className="bg-emerald-900/60 hover:bg-emerald-800/80 text-white border-2 border-[#D4AF37] px-5 sm:px-6 py-2.5 sm:py-3 rounded-full font-black text-xs sm:text-sm backdrop-blur-md shadow-[0_4px_16px_rgba(0,0,0,0.4)] hover:shadow-[0_6px_20px_rgba(212,175,55,0.35)] transition-all flex items-center gap-2 cursor-pointer"
+                  className="flex-1 sm:flex-initial justify-center bg-emerald-900/60 hover:bg-emerald-800/80 text-white border-2 border-[#D4AF37] px-6 sm:px-8 py-3.5 rounded-full font-black text-xs sm:text-sm backdrop-blur-md shadow-[0_4px_16px_rgba(0,0,0,0.4)] hover:shadow-[0_6px_20px_rgba(212,175,55,0.35)] transition-all flex items-center gap-2.5 cursor-pointer"
                 >
                   <span className="text-base">🕌</span>
                   <span>{lang === 'bn' ? 'পবিত্র হজ্ব ২০২৭' : 'Holy Hajj 2027'}</span>
                   <span className="inline-block w-2 h-2 rounded-full bg-[#D4AF37] animate-ping ml-1" />
                 </motion.button>
+              </div>
+
+              {/* Quran & Hadith Scrolling Marquee Ticker */}
+              <div className="pt-1">
+                <HajjHadithMarquee lang={lang} />
               </div>
 
             </div>
