@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { motion } from 'motion/react';
 import { 
   CheckCircle2, 
   ChevronRight, 
@@ -48,6 +49,49 @@ export const HomePage: React.FC<HomePageProps> = ({
   const [openAccordion, setOpenAccordion] = useState<number | null>(0);
   const [selectedDetailPackage, setSelectedDetailPackage] = useState<StandardPackageItem | null>(null);
 
+  // Live Typewriter Effect for Top Tagline
+  const [typewriterText, setTypewriterText] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [loopIndex, setLoopIndex] = useState(0);
+
+  useEffect(() => {
+    const messages = lang === 'bn' 
+      ? [
+          'অনুমোদিত ও বিশ্বস্ত হজ্ব, উমরাহ্ এবং এয়ার টিকিট এজেন্সী',
+          '১০০% বিশ্বস্ত ও শরীয়তসম্মত হজ্ব-উমরাহ্ সেবা',
+          'বিশ্বস্ততায় আমাদের ৭+ বছরের গৌরবময় অভিজ্ঞতা',
+          'সরাসরি পান্থপথ প্রধান কার্যালয় থেকে পরিচালিত'
+        ]
+      : [
+          'Authorized & Trusted Hajj, Umrah & Air Ticket Agency',
+          '100% Shariah-Compliant Hajj & Umrah Services',
+          'Over 7+ Years of Trusted Pilgrimage Heritage',
+          'Operated Directly from Panthapath Main Office'
+        ];
+
+    const currentFullText = messages[loopIndex % messages.length];
+
+    const typingTimer = setTimeout(() => {
+      if (!isDeleting) {
+        // Typing forward
+        setTypewriterText(currentFullText.substring(0, typewriterText.length + 1));
+        if (typewriterText.length + 1 >= currentFullText.length) {
+          // Pause when full text is typed
+          setTimeout(() => setIsDeleting(true), 2500);
+        }
+      } else {
+        // Deleting backward
+        setTypewriterText(currentFullText.substring(0, typewriterText.length - 1));
+        if (typewriterText.length <= 1) {
+          setIsDeleting(false);
+          setLoopIndex((prev) => prev + 1);
+        }
+      }
+    }, isDeleting ? 30 : 65);
+
+    return () => clearTimeout(typingTimer);
+  }, [typewriterText, isDeleting, loopIndex, lang]);
+
   // If a package detail is selected, render full page view
   if (selectedDetailPackage) {
     return (
@@ -81,10 +125,13 @@ export const HomePage: React.FC<HomePageProps> = ({
             {/* Left Content Column (7 cols) */}
             <div className="lg:col-span-7 space-y-3.5 sm:space-y-4 text-center lg:text-left">
               
-              {/* Top Announcement Tagline Pill with comfortable breathing room */}
-              <div className="inline-flex items-center gap-2 bg-[#D4AF37]/20 border border-[#D4AF37]/60 px-3.5 py-1.5 rounded-full text-xs font-bold text-[#F3E0A0] shadow-md mb-3 sm:mb-4">
-                <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
-                <span>{lang === 'bn' ? 'অনুমোদিত ও বিশ্বস্ত হজ্ব, উমরাহ্ এবং এয়ার টিকিট এজেন্সী' : 'Authorized Hajj, Umrah & Air Ticket Agency'}</span>
+              {/* Top Announcement Tagline Pill with LIVE TYPEWRITER EFFECT */}
+              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-[#D4AF37]/25 via-emerald-900/40 to-[#D4AF37]/20 border border-[#D4AF37]/60 px-4 py-1.5 rounded-full text-xs font-bold text-[#F3E0A0] shadow-[0_0_15px_rgba(212,175,55,0.2)] mb-3 sm:mb-4 min-h-[32px]">
+                <Sparkles className="w-3.5 h-3.5 text-[#D4AF37] animate-pulse shrink-0" />
+                <span className="font-medium tracking-wide">
+                  {typewriterText}
+                  <span className="inline-block w-1.5 h-3.5 bg-[#D4AF37] ml-1 rounded-sm animate-ping align-middle" />
+                </span>
               </div>
 
               <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-[40px] font-black text-white tracking-tight leading-tight font-sans">
@@ -134,22 +181,46 @@ export const HomePage: React.FC<HomePageProps> = ({
                 </div>
               </div>
 
-              {/* Action Buttons */}
-              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2.5 pt-1">
-                <button
+              {/* Action Buttons with EYE-CATCHING GENTLE BOUNCE & SHIMMER */}
+              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-2">
+                <motion.button
                   onClick={() => onNavigate('umrah')}
-                  className="bg-gradient-to-r from-[#D4AF37] to-[#B38712] hover:from-[#C59B27] hover:to-[#A2760E] text-emerald-950 px-4.5 sm:px-5 py-2.5 rounded-full font-extrabold text-xs sm:text-sm shadow-xl hover:shadow-2xl transition-all transform active:scale-95 flex items-center gap-2 cursor-pointer"
+                  animate={{
+                    y: [0, -6, 0],
+                  }}
+                  transition={{
+                    duration: 2.2,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                  whileHover={{ scale: 1.06 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="bg-gradient-to-r from-[#D4AF37] via-[#E5C158] to-[#B38712] text-emerald-950 px-5 sm:px-6 py-2.5 sm:py-3 rounded-full font-black text-xs sm:text-sm shadow-[0_6px_20px_rgba(212,175,55,0.45)] hover:shadow-[0_8px_25px_rgba(212,175,55,0.6)] transition-shadow flex items-center gap-2 cursor-pointer border border-[#FFF0A0]"
                 >
-                  <span>🕋 {lang === 'bn' ? 'উমরাহ্ প্যাকেজসমূহ' : 'Umrah Packages'}</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </button>
+                  <span className="text-base">🕋</span>
+                  <span>{lang === 'bn' ? 'উমরাহ্ প্যাকেজসমূহ' : 'Umrah Packages'}</span>
+                  <ArrowRight className="w-4 h-4 text-emerald-950 font-bold ml-0.5" />
+                </motion.button>
 
-                <button
+                <motion.button
                   onClick={() => onNavigate('hajj')}
-                  className="bg-white/10 hover:bg-white/20 text-white border border-[#D4AF37]/60 px-4.5 sm:px-5 py-2.5 rounded-full font-extrabold text-xs sm:text-sm backdrop-blur-md shadow-md transition-all flex items-center gap-2 cursor-pointer"
+                  animate={{
+                    y: [0, -5, 0],
+                  }}
+                  transition={{
+                    duration: 2.2,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: 0.55
+                  }}
+                  whileHover={{ scale: 1.06 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="bg-emerald-900/60 hover:bg-emerald-800/80 text-white border-2 border-[#D4AF37] px-5 sm:px-6 py-2.5 sm:py-3 rounded-full font-black text-xs sm:text-sm backdrop-blur-md shadow-[0_4px_16px_rgba(0,0,0,0.4)] hover:shadow-[0_6px_20px_rgba(212,175,55,0.35)] transition-all flex items-center gap-2 cursor-pointer"
                 >
-                  <span>🕌 {lang === 'bn' ? 'পবিত্র হজ্ব ২০২৭' : 'Holy Hajj 2027'}</span>
-                </button>
+                  <span className="text-base">🕌</span>
+                  <span>{lang === 'bn' ? 'পবিত্র হজ্ব ২০২৭' : 'Holy Hajj 2027'}</span>
+                  <span className="inline-block w-2 h-2 rounded-full bg-[#D4AF37] animate-ping ml-1" />
+                </motion.button>
               </div>
 
             </div>
