@@ -8,7 +8,6 @@ import { TeamAlbum } from '../components/TeamAlbum';
 interface ContactPageProps {
   lang: Language;
   agencyInfo: AgencyInfo;
-  onSaveInquiry: (inquiry: Omit<BookingInquiry, 'id' | 'createdAt' | 'status'>) => void;
 }
 
 export const ContactPage: React.FC<ContactPageProps> = ({

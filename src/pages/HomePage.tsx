@@ -45,7 +45,6 @@ export const HomePage: React.FC<HomePageProps> = ({
   agencyInfo,
   onOpenBookingModal,
 }) => {
-  const [activeTab, setActiveTab] = useState<'umrah' | 'hajj' | 'air' | 'tour'>('umrah');
   const [packageCategory, setPackageCategory] = useState<'all' | 'umrah' | 'hajj'>('all');
   const [openAccordion, setOpenAccordion] = useState<number | null>(0);
   const [selectedDetailPackage, setSelectedDetailPackage] = useState<StandardPackageItem | null>(null);

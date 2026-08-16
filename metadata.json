@@ -1,6 +1,6 @@
 {
   "name": "World Heritage Tours & Travels",
-  "description": "Your Trusted Travel Partner for Hajj, Umrah, Air Tickets, Visa Services, and Domestic & International Tours.",
+  "description": "বিশ্বস্ত হজ্ব, উমরাহ্, আন্তর্জাতিক এয়ার টিকিট ও নির্ভরযোগ্য ভিসা প্রসেসিং সার্ভিস এজেন্সি। পান্থপথ, ঢাকা।",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

@@ -223,18 +223,6 @@ export default function App() {
     setInquiries([newInquiry, ...inquiries]);
   };
 
-  const handleUpdateInquiryStatus = (id: string, status: BookingInquiry['status']) => {
-    setInquiries(inquiries.map((inq) => (inq.id === id ? { ...inq, status } : inq)));
-  };
-
-  const handleAddUmrahPackage = (newPkg: UmrahPackage) => {
-    setUmrahPackages([newPkg, ...umrahPackages]);
-  };
-
-  const handleDeleteUmrahPackage = (id: string) => {
-    setUmrahPackages(umrahPackages.filter((p) => p.id !== id));
-  };
-
   const handleAddReview = (newRevData: Omit<Review, 'id' | 'date' | 'verified'>) => {
     const newRev: Review = {
       ...newRevData,
@@ -321,7 +309,6 @@ export default function App() {
           <ContactPage
             lang={lang}
             agencyInfo={agencyInfo}
-            onSaveInquiry={handleSaveInquiry}
           />
         );
       default:
