@@ -134,89 +134,106 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
       {/* 1. Fixed Bottom Navigation Bar (Visible on Mobile & Tablet: < lg) */}
       <nav 
         aria-label="Mobile Navigation" 
-        className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#052917]/95 backdrop-blur-xl border-t border-[#D4AF37]/50 shadow-[0_-8px_30px_rgba(0,0,0,0.6)] px-2 py-1.5 pb-safe"
+        className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#052917]/95 backdrop-blur-xl border-t border-[#D4AF37]/50 shadow-[0_-8px_30px_rgba(0,0,0,0.6)] px-1 py-1 pb-safe"
       >
-        <div className="max-w-md mx-auto grid grid-cols-5 items-center gap-1">
+        <div className="max-w-lg mx-auto grid grid-cols-6 items-center gap-0.5">
           
           {/* 1. হোম (Home) */}
           <button
             onClick={() => handleItemClick('home')}
-            className={`flex flex-col items-center justify-center py-1 px-1 rounded-2xl transition-all cursor-pointer relative ${
+            className={`flex flex-col items-center justify-center py-1 px-0.5 rounded-xl transition-all cursor-pointer relative ${
               activePage === 'home'
-                ? 'bg-[#D4AF37]/20 text-[#F3E0A0] font-black shadow-inner border border-[#D4AF37]/40'
+                ? 'bg-[#D4AF37]/25 text-[#F3E0A0] font-black shadow-inner border border-[#D4AF37]/50'
                 : 'text-emerald-100/80 hover:text-white'
             }`}
           >
-            <div className={`p-1 rounded-xl transition-transform ${activePage === 'home' ? 'scale-110 text-[#D4AF37]' : ''}`}>
-              <Home className="w-5 h-5" />
+            <div className={`p-0.5 rounded-lg transition-transform ${activePage === 'home' ? 'scale-110 text-[#D4AF37]' : ''}`}>
+              <Home className="w-4.5 h-4.5 sm:w-5 sm:h-5" />
             </div>
-            <span className="text-[11px] font-bold tracking-tight mt-0.5 whitespace-nowrap">
+            <span className="text-[10px] sm:text-[11px] font-bold tracking-tight mt-0.5 whitespace-nowrap">
               {lang === 'bn' ? 'হোম' : 'Home'}
             </span>
           </button>
 
-          {/* 2. প্যাকেজ (Packages / Tours) */}
+          {/* 2. উমরাহ্ (Umrah Packages Dedicated Page) */}
           <button
-            onClick={() => handleItemClick('tours-visas')}
-            className={`flex flex-col items-center justify-center py-1 px-1 rounded-2xl transition-all cursor-pointer relative ${
-              activePage === 'tours-visas'
-                ? 'bg-[#D4AF37]/20 text-[#F3E0A0] font-black shadow-inner border border-[#D4AF37]/40'
+            onClick={() => handleItemClick('umrah')}
+            className={`flex flex-col items-center justify-center py-1 px-0.5 rounded-xl transition-all cursor-pointer relative ${
+              activePage === 'umrah'
+                ? 'bg-[#D4AF37]/25 text-[#F3E0A0] font-black shadow-inner border border-[#D4AF37]/50'
                 : 'text-emerald-100/80 hover:text-white'
             }`}
           >
-            <div className={`p-1 rounded-xl transition-transform ${activePage === 'tours-visas' ? 'scale-110 text-[#D4AF37]' : ''}`}>
-              <Compass className="w-5 h-5" />
+            <div className={`p-0.5 rounded-lg transition-transform ${activePage === 'umrah' ? 'scale-110 text-[#D4AF37]' : ''}`}>
+              <Moon className="w-4.5 h-4.5 sm:w-5 sm:h-5" />
             </div>
-            <span className="text-[11px] font-bold tracking-tight mt-0.5 whitespace-nowrap">
+            <span className="text-[10px] sm:text-[11px] font-bold tracking-tight mt-0.5 whitespace-nowrap">
+              {lang === 'bn' ? 'উমরাহ্' : 'Umrah'}
+            </span>
+          </button>
+
+          {/* 3. পবিত্র হজ্ব (Holy Hajj Dedicated Page) */}
+          <button
+            onClick={() => handleItemClick('hajj')}
+            className={`flex flex-col items-center justify-center py-1 px-0.5 rounded-xl transition-all cursor-pointer relative ${
+              activePage === 'hajj'
+                ? 'bg-[#D4AF37]/25 text-[#F3E0A0] font-black shadow-inner border border-[#D4AF37]/50'
+                : 'text-emerald-100/80 hover:text-white'
+            }`}
+          >
+            <div className={`p-0.5 rounded-lg transition-transform ${activePage === 'hajj' ? 'scale-110 text-[#D4AF37]' : ''}`}>
+              <Sparkles className="w-4.5 h-4.5 sm:w-5 sm:h-5" />
+            </div>
+            <span className="text-[10px] sm:text-[11px] font-bold tracking-tight mt-0.5 whitespace-nowrap">
+              {lang === 'bn' ? 'হজ্ব' : 'Hajj'}
+            </span>
+          </button>
+
+          {/* 4. প্যাকেজ ও ট্যুর (Packages / Tours) */}
+          <button
+            onClick={() => handleItemClick('tours-visas')}
+            className={`flex flex-col items-center justify-center py-1 px-0.5 rounded-xl transition-all cursor-pointer relative ${
+              activePage === 'tours-visas'
+                ? 'bg-[#D4AF37]/25 text-[#F3E0A0] font-black shadow-inner border border-[#D4AF37]/50'
+                : 'text-emerald-100/80 hover:text-white'
+            }`}
+          >
+            <div className={`p-0.5 rounded-lg transition-transform ${activePage === 'tours-visas' ? 'scale-110 text-[#D4AF37]' : ''}`}>
+              <Compass className="w-4.5 h-4.5 sm:w-5 sm:h-5" />
+            </div>
+            <span className="text-[10px] sm:text-[11px] font-bold tracking-tight mt-0.5 whitespace-nowrap">
               {lang === 'bn' ? 'প্যাকেজ' : 'Packages'}
             </span>
           </button>
 
-          {/* 3. ওমরাহ / হজ্ব (Umrah/Hajj Featured Tab) */}
-          <button
-            onClick={() => handleItemClick('umrah')}
-            className={`flex flex-col items-center justify-center py-1 px-1 rounded-2xl transition-all cursor-pointer relative ${
-              activePage === 'umrah' || activePage === 'hajj'
-                ? 'bg-[#D4AF37]/20 text-[#F3E0A0] font-black shadow-inner border border-[#D4AF37]/40'
-                : 'text-emerald-100/80 hover:text-white'
-            }`}
-          >
-            <div className={`p-1 rounded-xl transition-transform ${activePage === 'umrah' || activePage === 'hajj' ? 'scale-110 text-[#D4AF37]' : ''}`}>
-              <Moon className="w-5 h-5" />
-            </div>
-            <span className="text-[11px] font-bold tracking-tight mt-0.5 whitespace-nowrap">
-              {lang === 'bn' ? 'ওমরাহ' : 'Umrah'}
-            </span>
-          </button>
-
-          {/* 4. কল / হেল্পলাইন (Direct Phone Call) */}
+          {/* 5. কল / হেল্পলাইন (Direct Phone Call) */}
           <a
             href={`tel:${agencyInfo.hotline}`}
-            className="flex flex-col items-center justify-center py-1 px-1 rounded-2xl text-emerald-100/80 hover:text-white transition-all cursor-pointer active:scale-95"
+            className="flex flex-col items-center justify-center py-1 px-0.5 rounded-xl text-emerald-100/80 hover:text-white transition-all cursor-pointer active:scale-95"
             title="Call Helpline"
           >
-            <div className="p-1 rounded-xl text-emerald-300">
-              <Phone className="w-5 h-5" />
+            <div className="p-0.5 rounded-lg text-emerald-300">
+              <Phone className="w-4.5 h-4.5 sm:w-5 sm:h-5" />
             </div>
-            <span className="text-[11px] font-bold tracking-tight mt-0.5 whitespace-nowrap">
+            <span className="text-[10px] sm:text-[11px] font-bold tracking-tight mt-0.5 whitespace-nowrap">
               {lang === 'bn' ? 'কল' : 'Call'}
             </span>
           </a>
 
-          {/* 5. অফিস / মেনু (Full Drawer Trigger) */}
+          {/* 6. মেনু / অফিস (Full Drawer Trigger) */}
           <button
             onClick={() => setDrawerOpen(true)}
-            className={`flex flex-col items-center justify-center py-1 px-1 rounded-2xl transition-all cursor-pointer ${
+            className={`flex flex-col items-center justify-center py-1 px-0.5 rounded-xl transition-all cursor-pointer ${
               drawerOpen || activePage === 'contact'
                 ? 'bg-[#D4AF37]/25 text-[#F3E0A0] font-black border border-[#D4AF37]/50 shadow-inner'
                 : 'text-emerald-100/80 hover:text-white'
             }`}
           >
-            <div className={`p-1 rounded-xl transition-transform ${drawerOpen ? 'scale-110 text-[#D4AF37]' : ''}`}>
-              <Menu className="w-5 h-5" />
+            <div className={`p-0.5 rounded-lg transition-transform ${drawerOpen ? 'scale-110 text-[#D4AF37]' : ''}`}>
+              <Menu className="w-4.5 h-4.5 sm:w-5 sm:h-5" />
             </div>
-            <span className="text-[11px] font-bold tracking-tight mt-0.5 whitespace-nowrap">
-              {lang === 'bn' ? 'অফিস/মেনু' : 'Menu'}
+            <span className="text-[10px] sm:text-[11px] font-bold tracking-tight mt-0.5 whitespace-nowrap">
+              {lang === 'bn' ? 'মেনু' : 'Menu'}
             </span>
           </button>
 
