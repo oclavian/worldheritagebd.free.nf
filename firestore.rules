@@ -1,0 +1,52 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Umrah Packages - Publicly readable, admin manageable
+    match /umrah_packages/{packageId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Hajj Packages - Publicly readable, admin manageable
+    match /hajj_packages/{packageId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Tour Packages - Publicly readable, admin manageable
+    match /tour_packages/{packageId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Blog & Islamic Guides - Publicly readable, admin manageable
+    match /blog_posts/{postId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Gallery Photos - Publicly readable, admin manageable
+    match /gallery_items/{itemId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Customer Reviews - Publicly readable, admin manageable
+    match /reviews/{reviewId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Customer Booking Inquiries - Publicly writable (create), admin readable/updatable
+    match /inquiries/{inquiryId} {
+      allow read, write: if true;
+    }
+
+    // Global Site Settings - Publicly readable, admin manageable
+    match /site_settings/{settingId} {
+      allow read: if true;
+      allow write: if true;
+    }
+  }
+}

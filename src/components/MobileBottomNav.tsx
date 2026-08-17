@@ -17,7 +17,8 @@ import {
   Clock,
   ShieldCheck,
   Building2,
-  Users
+  Users,
+  Lock
 } from 'lucide-react';
 import { Language, PageId, AgencyInfo } from '../types';
 import { getTranslation } from '../data/translations';
@@ -371,13 +372,26 @@ export const MobileBottomNav: React.FC<MobileBottomNavProps> = ({
                     <ChevronRight className="w-4 h-4 text-emerald-950" />
                   </button>
 
-                  {/* Office Info card */}
-                  <div className="bg-black/40 p-3 rounded-xl border border-emerald-800/50 text-xs text-emerald-100 space-y-1">
+                  {/* Office Info card & Admin Entry */}
+                  <div className="bg-black/40 p-3 rounded-xl border border-emerald-800/50 text-xs text-emerald-100 space-y-2">
                     <div className="flex items-start gap-2">
                       <MapPin className="w-4 h-4 text-[#D4AF37] shrink-0 mt-0.5" />
                       <span className="leading-tight text-emerald-200 font-medium">
                         {lang === 'bn' ? agencyInfo.addressBn : agencyInfo.addressEn}
                       </span>
+                    </div>
+                    <div className="pt-2 border-t border-emerald-800/60 flex items-center justify-between">
+                      <span className="text-[11px] text-emerald-300/70">ম্যানেজমেন্ট এক্সেস:</span>
+                      <button
+                        onClick={() => {
+                          setDrawerOpen(false);
+                          onNavigate('admin');
+                        }}
+                        className="text-[11px] text-[#F3E0A0] bg-emerald-900/80 hover:bg-emerald-800 px-2.5 py-1 rounded-lg border border-[#D4AF37]/40 flex items-center gap-1 font-bold"
+                      >
+                        <Lock className="w-3 h-3 text-[#D4AF37]" />
+                        <span>{lang === 'bn' ? 'এডমিন প্যানেল' : 'Admin Panel'}</span>
+                      </button>
                     </div>
                   </div>
                 </div>

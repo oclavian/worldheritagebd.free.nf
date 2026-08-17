@@ -1,0 +1,239 @@
+{
+  "entities": {
+    "UmrahPackage": {
+      "title": "UmrahPackage",
+      "type": "object",
+      "description": "Umrah package with hotel details, inclusions and pricing",
+      "properties": {
+        "titleBn": { "type": "string" },
+        "titleEn": { "type": "string" },
+        "badgeBn": { "type": "string" },
+        "badgeEn": { "type": "string" },
+        "durationBn": { "type": "string" },
+        "durationEn": { "type": "string" },
+        "makkahHotelBn": { "type": "string" },
+        "makkahHotelEn": { "type": "string" },
+        "makkahDistanceBn": { "type": "string" },
+        "makkahDistanceEn": { "type": "string" },
+        "madinahHotelBn": { "type": "string" },
+        "madinahHotelEn": { "type": "string" },
+        "madinahDistanceBn": { "type": "string" },
+        "madinahDistanceEn": { "type": "string" },
+        "foodBn": { "type": "string" },
+        "foodEn": { "type": "string" },
+        "transportBn": { "type": "string" },
+        "transportEn": { "type": "string" },
+        "ziyaraBn": { "type": "string" },
+        "ziyaraEn": { "type": "string" },
+        "visaAndTicketBn": { "type": "string" },
+        "visaAndTicketEn": { "type": "string" },
+        "priceBDT": { "type": "number" },
+        "featured": { "type": "boolean" },
+        "image": { "type": "string" },
+        "inclusionsBn": { "type": "array", "items": { "type": "string" } },
+        "inclusionsEn": { "type": "array", "items": { "type": "string" } },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["titleBn", "priceBDT", "image"]
+    },
+    "HajjPackage": {
+      "title": "HajjPackage",
+      "type": "object",
+      "description": "Hajj package with registration details and facilities",
+      "properties": {
+        "titleBn": { "type": "string" },
+        "titleEn": { "type": "string" },
+        "packageCategoryBn": { "type": "string" },
+        "packageCategoryEn": { "type": "string" },
+        "badgeBn": { "type": "string" },
+        "badgeEn": { "type": "string" },
+        "year": { "type": "number" },
+        "durationBn": { "type": "string" },
+        "durationEn": { "type": "string" },
+        "regFeeBDT": { "type": "number" },
+        "totalPriceBDT": { "type": "number" },
+        "flightTypeBn": { "type": "string" },
+        "flightTypeEn": { "type": "string" },
+        "qurbaniBn": { "type": "string" },
+        "qurbaniEn": { "type": "string" },
+        "makkahHotelBn": { "type": "string" },
+        "makkahHotelEn": { "type": "string" },
+        "makkahDistanceBn": { "type": "string" },
+        "makkahDistanceEn": { "type": "string" },
+        "madinahHotelBn": { "type": "string" },
+        "madinahHotelEn": { "type": "string" },
+        "madinahDistanceBn": { "type": "string" },
+        "madinahDistanceEn": { "type": "string" },
+        "minaArafatBn": { "type": "string" },
+        "minaArafatEn": { "type": "string" },
+        "foodBn": { "type": "string" },
+        "foodEn": { "type": "string" },
+        "transportBn": { "type": "string" },
+        "transportEn": { "type": "string" },
+        "bulletTrainBn": { "type": "string" },
+        "bulletTrainEn": { "type": "string" },
+        "ziyarahBn": { "type": "string" },
+        "ziyarahEn": { "type": "string" },
+        "moallemBn": { "type": "string" },
+        "moallemEn": { "type": "string" },
+        "giftItemsBn": { "type": "string" },
+        "giftItemsEn": { "type": "string" },
+        "registrationStatusBn": { "type": "string" },
+        "registrationStatusEn": { "type": "string" },
+        "facilitiesBn": { "type": "array", "items": { "type": "string" } },
+        "facilitiesEn": { "type": "array", "items": { "type": "string" } },
+        "image": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["titleBn", "year", "regFeeBDT", "totalPriceBDT", "image"]
+    },
+    "TourPackage": {
+      "title": "TourPackage",
+      "type": "object",
+      "description": "Holiday tours and visa processing packages",
+      "properties": {
+        "titleBn": { "type": "string" },
+        "titleEn": { "type": "string" },
+        "category": { "type": "string" },
+        "countryBn": { "type": "string" },
+        "countryEn": { "type": "string" },
+        "durationBn": { "type": "string" },
+        "durationEn": { "type": "string" },
+        "priceBDT": { "type": "number" },
+        "image": { "type": "string" },
+        "highlightsBn": { "type": "array", "items": { "type": "string" } },
+        "highlightsEn": { "type": "array", "items": { "type": "string" } },
+        "visaRequired": { "type": "boolean" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["titleBn", "priceBDT", "image"]
+    },
+    "BlogPost": {
+      "title": "BlogPost",
+      "type": "object",
+      "description": "Blog and Islamic guide post",
+      "properties": {
+        "titleBn": { "type": "string" },
+        "titleEn": { "type": "string" },
+        "categoryBn": { "type": "string" },
+        "categoryEn": { "type": "string" },
+        "categoryKey": { "type": "string" },
+        "date": { "type": "string" },
+        "authorBn": { "type": "string" },
+        "authorEn": { "type": "string" },
+        "summaryBn": { "type": "string" },
+        "summaryEn": { "type": "string" },
+        "contentBn": { "type": "string" },
+        "contentEn": { "type": "string" },
+        "image": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["titleBn", "contentBn", "summaryBn", "image"]
+    },
+    "GalleryItem": {
+      "title": "GalleryItem",
+      "type": "object",
+      "description": "Gallery photo and album item",
+      "properties": {
+        "titleBn": { "type": "string" },
+        "titleEn": { "type": "string" },
+        "category": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "captionBn": { "type": "string" },
+        "captionEn": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["titleBn", "imageUrl", "category"]
+    },
+    "Review": {
+      "title": "Review",
+      "type": "object",
+      "description": "Client review and testimonial",
+      "properties": {
+        "nameBn": { "type": "string" },
+        "nameEn": { "type": "string" },
+        "locationBn": { "type": "string" },
+        "locationEn": { "type": "string" },
+        "serviceBn": { "type": "string" },
+        "serviceEn": { "type": "string" },
+        "rating": { "type": "number" },
+        "commentBn": { "type": "string" },
+        "commentEn": { "type": "string" },
+        "date": { "type": "string" },
+        "avatarUrl": { "type": "string" },
+        "verified": { "type": "boolean" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["nameBn", "commentBn", "rating"]
+    },
+    "BookingInquiry": {
+      "title": "BookingInquiry",
+      "type": "object",
+      "description": "Customer booking inquiry or contact message",
+      "properties": {
+        "customerName": { "type": "string" },
+        "phone": { "type": "string" },
+        "email": { "type": "string" },
+        "serviceType": { "type": "string" },
+        "packageTitle": { "type": "string" },
+        "travelersCount": { "type": "number" },
+        "expectedDate": { "type": "string" },
+        "message": { "type": "string" },
+        "status": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["customerName", "phone", "serviceType", "status"]
+    },
+    "SiteSettings": {
+      "title": "SiteSettings",
+      "type": "object",
+      "description": "Site announcement marquee and agency details",
+      "properties": {
+        "hadithBn": { "type": "string" },
+        "hadithEn": { "type": "string" },
+        "noticeBn": { "type": "string" },
+        "noticeEn": { "type": "string" },
+        "hotline": { "type": "string" },
+        "whatsappNumber": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      }
+    }
+  },
+  "firestore": {
+    "/umrah_packages/{packageId}": {
+      "schema": "UmrahPackage",
+      "description": "Umrah packages managed via admin"
+    },
+    "/hajj_packages/{packageId}": {
+      "schema": "HajjPackage",
+      "description": "Hajj packages managed via admin"
+    },
+    "/tour_packages/{packageId}": {
+      "schema": "TourPackage",
+      "description": "Tour and visa packages"
+    },
+    "/blog_posts/{postId}": {
+      "schema": "BlogPost",
+      "description": "Blog and Islamic guides"
+    },
+    "/gallery_items/{itemId}": {
+      "schema": "GalleryItem",
+      "description": "Gallery items"
+    },
+    "/reviews/{reviewId}": {
+      "schema": "Review",
+      "description": "Customer reviews"
+    },
+    "/inquiries/{inquiryId}": {
+      "schema": "BookingInquiry",
+      "description": "Customer booking inquiries"
+    },
+    "/site_settings/{settingId}": {
+      "schema": "SiteSettings",
+      "description": "Global website settings"
+    }
+  }
+}

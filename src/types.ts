@@ -9,7 +9,8 @@ export type PageId =
   | 'gallery'
   | 'reviews'
   | 'blog'
-  | 'contact';
+  | 'contact'
+  | 'admin';
 
 export interface UmrahPackage {
   id: string;

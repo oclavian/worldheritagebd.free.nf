@@ -233,8 +233,16 @@ export const Footer: React.FC<FooterProps> = ({
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-6 border-t border-emerald-800/60 flex flex-col sm:flex-row justify-center items-center gap-3 text-xs text-emerald-300/80 text-center">
+        <div className="pt-6 border-t border-emerald-800/60 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-emerald-300/80 text-center">
           <p>{getTranslation(lang, 'copyrightText')}</p>
+          <button
+            onClick={() => onNavigate('admin')}
+            className="flex items-center gap-1.5 text-xs text-emerald-300/60 hover:text-[#F3E0A0] transition-colors py-1 px-2.5 rounded-lg border border-emerald-800/50 hover:border-[#D4AF37]/50 bg-emerald-950/40 cursor-pointer"
+            title="এডমিন প্যানেলে প্রবেশ করুন"
+          >
+            <Lock className="w-3 h-3 text-[#D4AF37]" />
+            <span>{lang === 'bn' ? 'এডমিন প্যানেল' : 'Admin Panel'}</span>
+          </button>
         </div>
       </div>
 

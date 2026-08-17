@@ -135,6 +135,20 @@ const seoData: Record<PageId, Record<Language, SeoInfo>> = {
       canonicalPath: 'contact',
     },
   },
+  admin: {
+    bn: {
+      title: 'এডমিন কন্ট্রোল প্যানেল | World Heritage Tours & Travels',
+      description: 'ওয়ার্ল্ড হেরিটেজ ট্যুরস অ্যান্ড ট্রাভেলস ওয়েবসাইট কন্টেন্ট ম্যানেজমেন্ট সিস্টেম।',
+      keywords: 'admin panel, CMS, content management',
+      canonicalPath: 'admin',
+    },
+    en: {
+      title: 'Admin Control Panel | World Heritage Tours & Travels',
+      description: 'World Heritage Tours & Travels Content Management System Dashboard.',
+      keywords: 'admin panel, CMS, content management',
+      canonicalPath: 'admin',
+    },
+  },
 };
 
 /**

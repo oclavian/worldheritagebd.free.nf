@@ -31,7 +31,20 @@ import { GalleryPage } from './pages/GalleryPage';
 import { ReviewsPage } from './pages/ReviewsPage';
 import { BlogPage } from './pages/BlogPage';
 import { ContactPage } from './pages/ContactPage';
+import { AdminPage } from './pages/AdminPage';
 import { useSeoMetadata } from './utils/useSeoMetadata';
+import {
+  subscribeUmrahPackages,
+  subscribeHajjPackages,
+  subscribeTourPackages,
+  subscribeBlogPosts,
+  subscribeGalleryItems,
+  subscribeReviews,
+  subscribeInquiries,
+  subscribeSiteSettings,
+  createBookingInquiry,
+  SiteSettingsData,
+} from './services/firestoreService';
 
 export default function App() {
   // 1. Language State (Default: Bangla 'bn')
@@ -160,6 +173,54 @@ export default function App() {
     }
   });
 
+  const [siteSettings, setSiteSettings] = useState<SiteSettingsData | null>(null);
+
+  // Firestore Realtime Subscriptions
+  useEffect(() => {
+    const unsubUmrah = subscribeUmrahPackages((pkgs) => {
+      if (pkgs && pkgs.length > 0) setUmrahPackages(pkgs);
+    });
+
+    const unsubHajj = subscribeHajjPackages((pkgs) => {
+      if (pkgs && pkgs.length > 0) setHajjPackages(pkgs);
+    });
+
+    const unsubTours = subscribeTourPackages((pkgs) => {
+      if (pkgs && pkgs.length > 0) setTourPackages(pkgs);
+    });
+
+    const unsubBlogs = subscribeBlogPosts((posts) => {
+      if (posts && posts.length > 0) setBlogPosts(posts);
+    });
+
+    const unsubGallery = subscribeGalleryItems((items) => {
+      if (items && items.length > 0) setGalleryItems(items);
+    });
+
+    const unsubReviews = subscribeReviews((revs) => {
+      if (revs && revs.length > 0) setReviews(revs);
+    });
+
+    const unsubInquiries = subscribeInquiries((inqs) => {
+      if (inqs) setInquiries(inqs);
+    });
+
+    const unsubSettings = subscribeSiteSettings((settings) => {
+      if (settings) setSiteSettings(settings);
+    });
+
+    return () => {
+      unsubUmrah();
+      unsubHajj();
+      unsubTours();
+      unsubBlogs();
+      unsubGallery();
+      unsubReviews();
+      unsubInquiries();
+      unsubSettings();
+    };
+  }, []);
+
   // Modals state
   const [bookingModalOpen, setBookingModalOpen] = useState(false);
   const [prefilledService, setPrefilledService] = useState('Umrah');
@@ -214,14 +275,19 @@ export default function App() {
     setBookingModalOpen(true);
   };
 
-  const handleSaveInquiry = (inquiryData: Omit<BookingInquiry, 'id' | 'createdAt' | 'status'>) => {
-    const newInquiry: BookingInquiry = {
-      ...inquiryData,
-      id: `inq-${Date.now()}`,
-      createdAt: new Date().toLocaleDateString('bn-BD', { year: 'numeric', month: 'short', day: 'numeric' }),
-      status: 'new',
-    };
-    setInquiries([newInquiry, ...inquiries]);
+  const handleSaveInquiry = async (inquiryData: Omit<BookingInquiry, 'id' | 'createdAt' | 'status'>) => {
+    try {
+      await createBookingInquiry(inquiryData);
+    } catch (e) {
+      console.warn('Could not save inquiry to firestore, saving locally:', e);
+      const newInquiry: BookingInquiry = {
+        ...inquiryData,
+        id: `inq-${Date.now()}`,
+        createdAt: new Date().toLocaleDateString('bn-BD', { year: 'numeric', month: 'short', day: 'numeric' }),
+        status: 'new',
+      };
+      setInquiries([newInquiry, ...inquiries]);
+    }
   };
 
   const handleAddReview = (newRevData: Omit<Review, 'id' | 'date' | 'verified'>) => {
@@ -310,6 +376,21 @@ export default function App() {
           <ContactPage
             lang={lang}
             agencyInfo={agencyInfo}
+          />
+        );
+      case 'admin':
+        return (
+          <AdminPage
+            lang={lang}
+            agencyInfo={agencyInfo}
+            umrahPackages={umrahPackages}
+            hajjPackages={hajjPackages}
+            tourPackages={tourPackages}
+            blogPosts={blogPosts}
+            galleryItems={galleryItems}
+            reviews={reviews}
+            inquiries={inquiries}
+            siteSettings={siteSettings}
           />
         );
       default:
