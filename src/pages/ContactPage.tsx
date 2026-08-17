@@ -2,18 +2,20 @@ import React, { useState } from 'react';
 import { Phone, Mail, MapPin, Clock, ShieldCheck, MessageCircle, Facebook, ExternalLink } from 'lucide-react';
 import { Language, AgencyInfo, BookingInquiry } from '../types';
 import { getTranslation } from '../data/translations';
+import { initialAgencyInfo } from '../data/initialData';
 import { toBengaliDigits } from '../utils/formatters';
 import { TeamAlbum } from '../components/TeamAlbum';
 
 interface ContactPageProps {
   lang: Language;
-  agencyInfo: AgencyInfo;
+  agencyInfo?: AgencyInfo;
 }
 
 export const ContactPage: React.FC<ContactPageProps> = ({
   lang,
   agencyInfo,
 }) => {
+  const safeAgencyInfo = agencyInfo || initialAgencyInfo;
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 space-y-12 font-bengali">
       
@@ -44,7 +46,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                 World Heritage Headquarters
               </span>
               <h2 className="text-xl font-bold text-[#0D472B]">
-                {lang === 'bn' ? agencyInfo.nameBn.replace('ট্যুরস', 'ট্যুর্স') : agencyInfo.nameEn}
+                {lang === 'bn' ? safeAgencyInfo.nameBn.replace('ট্যুরস', 'ট্যুর্স') : safeAgencyInfo.nameEn}
               </h2>
             </div>
 
@@ -57,7 +59,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                 </div>
                 <div>
                   <strong className="block text-[#0D472B] font-bold text-xs uppercase">{getTranslation(lang, 'officeAddressLabel')}</strong>
-                  <span className="leading-relaxed">{lang === 'bn' ? agencyInfo.addressBn : agencyInfo.addressEn}</span>
+                  <span className="leading-relaxed">{lang === 'bn' ? safeAgencyInfo.addressBn : safeAgencyInfo.addressEn}</span>
                 </div>
               </div>
 
@@ -69,8 +71,8 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                 <div>
                   <strong className="block text-[#0D472B] font-bold text-xs uppercase">{getTranslation(lang, 'hotlineLabel')}</strong>
                   <div className="flex items-center gap-2 flex-wrap">
-                    <a href={`tel:${agencyInfo.hotline}`} className="text-lg font-extrabold text-[#0D472B] hover:underline font-sans">
-                      {lang === 'bn' ? toBengaliDigits(agencyInfo.hotline) : agencyInfo.hotline}
+                    <a href={`tel:${safeAgencyInfo.hotline}`} className="text-lg font-extrabold text-[#0D472B] hover:underline font-sans">
+                      {lang === 'bn' ? toBengaliDigits(safeAgencyInfo.hotline) : safeAgencyInfo.hotline}
                     </a>
                     <span className="text-xs sm:text-sm font-bold text-amber-600 font-bengali">
                       ({lang === 'bn' ? 'হোয়াটসঅ্যাপ & ইমো' : 'WhatsApp & Imo'})
@@ -95,8 +97,8 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                 </div>
                 <div>
                   <strong className="block text-[#0D472B] font-bold text-xs uppercase">{getTranslation(lang, 'emailLabel')}</strong>
-                  <a href={`mailto:${agencyInfo.email}`} className="font-semibold text-slate-800 hover:underline">
-                    {agencyInfo.email}
+                  <a href={`mailto:${safeAgencyInfo.email}`} className="font-semibold text-slate-800 hover:underline">
+                    {safeAgencyInfo.email}
                   </a>
                 </div>
               </div>
@@ -119,7 +121,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
             {/* Direct WhatsApp Action */}
             <div className="pt-2 border-t border-slate-100">
               <a
-                href={`https://wa.me/${agencyInfo.whatsappNumber}`}
+                href={`https://wa.me/${safeAgencyInfo.whatsappNumber || '8801711200000'}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full bg-[#25D366] text-white py-3 rounded-xl font-bold text-xs sm:text-sm shadow-md hover:opacity-95 transition-all flex items-center justify-center gap-2"
@@ -144,7 +146,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({
                 <span>{lang === 'bn' ? 'ফেসবুক অফিসিয়াল পেজ' : 'Official Facebook Page'}</span>
               </div>
               <a
-                href={agencyInfo.facebookUrl || "https://www.facebook.com/worldharitage/"}
+                href={safeAgencyInfo.facebookUrl || "https://www.facebook.com/worldharitage/"}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-xs font-bold text-[#1877F2] hover:underline flex items-center gap-1 bg-blue-50 px-2.5 py-1 rounded-lg border border-blue-100"

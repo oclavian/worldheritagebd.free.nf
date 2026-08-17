@@ -1,2 +1,2 @@
-export { partnerAirlines } from './airlines';
-export { airTicketsInfo } from './info';
+export { partnerAirlines } from "./airlines";
+export { airTicketsInfo } from "./info";

@@ -1,17 +1,19 @@
-import { BlogPost } from '../../types';
+import { BlogPost } from "../../types";
 
 export const blogPost1: BlogPost = {
-  id: 'post-umrah-guide-step-by-step',
-  titleBn: 'সহজ নিয়মে উমরাহ্ পালনের পূর্ণাঙ্গ নিয়ম ও প্রয়োজনীয় নির্দেশনা',
-  titleEn: 'Complete Step-by-Step Guide for Performing Umrah Easily',
-  categoryBn: 'উমরাহ্ নির্দেশিকা',
-  categoryEn: 'Umrah Guide',
-  categoryKey: 'umrah-guide',
-  date: '২০২৬-০২-০১',
-  authorBn: 'মাওলানা তরিকুল ইসলাম (মোয়াল্লেম)',
-  authorEn: 'Mawlana Tariqul Islam (Moallem)',
-  summaryBn: 'পবিত্র উমরাহ্ পালনের পূর্বে নিয়ত করা, এহরাম বাঁধা, তওয়াফ, সাঈ এবং হলক করার সঠিক শরিয়তসম্মত ধাপসমূহ বিস্তারিত জানুন।',
-  summaryEn: 'Learn the correct Shariah steps for performing Ihram, Niyyah, Tawaf, Sa’i, and Halq before embarking on your holy journey.',
+  id: "post-umrah-guide-step-by-step",
+  titleBn: "সহজ নিয়মে উমরাহ্ পালনের পূর্ণাঙ্গ নিয়ম ও প্রয়োজনীয় নির্দেশনা",
+  titleEn: "Complete Step-by-Step Guide for Performing Umrah Easily",
+  categoryBn: "উমরাহ্ নির্দেশিকা",
+  categoryEn: "Umrah Guide",
+  categoryKey: "umrah-guide",
+  date: "২০২৬-০২-০১",
+  authorBn: "মাওলানা তরিকুল ইসলাম (মোয়াল্লেম)",
+  authorEn: "Mawlana Tariqul Islam (Moallem)",
+  summaryBn:
+    "পবিত্র উমরাহ্ পালনের পূর্বে নিয়ত করা, এহরাম বাঁধা, তওয়াফ, সাঈ এবং হলক করার সঠিক শরিয়তসম্মত ধাপসমূহ বিস্তারিত জানুন।",
+  summaryEn:
+    "Learn the correct Shariah steps for performing Ihram, Niyyah, Tawaf, Sa’i, and Halq before embarking on your holy journey.",
   contentBn: `উমরাহ্ একটি অত্যন্ত মর্যাদাপূর্ণ ও বরকতময় ইবাদত। সঠিক নিয়মে উমরাহ্ আদায়ের জন্য চারটি প্রধান রুকন ও ওয়াজিব সম্পর্কে স্পষ্ট ধারণা রাখা জরুরি:
 
 ১. এহরাম গ্রহণ (Ihram):
@@ -34,5 +36,6 @@ export const blogPost1: BlogPost = {
 3. Sa’i: Walking 7 times between Safa and Marwah hills, commencing at Safa and ending at Marwah.
 
 4. Halq or Qasr: Shaving or trimming hair for men, and cutting a fingertip length of hair for women to exit Ihram.`,
-  image: 'https://images.unsplash.com/photo-1591604466107-ec97de577aff?auto=format&fit=crop&w=800&q=80',
+  image:
+    "https://images.unsplash.com/photo-1591604466107-ec97de577aff?auto=format&fit=crop&w=800&q=80",
 };

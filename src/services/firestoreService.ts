@@ -21,7 +21,8 @@ import {
   GalleryItem, 
   Review, 
   BookingInquiry, 
-  AgencyInfo 
+  AgencyInfo,
+  HomePageConfig
 } from '../types';
 import { 
   initialUmrahPackages, 
@@ -32,6 +33,7 @@ import {
   initialBlogPosts,
   initialAgencyInfo 
 } from '../data/initialData';
+import { initialHomePageConfig } from '../data/initialHomePageData';
 
 // Collection Names
 export const COLLECTIONS = {
@@ -43,6 +45,58 @@ export const COLLECTIONS = {
   REVIEWS: 'reviews',
   INQUIRIES: 'inquiries',
   SETTINGS: 'site_settings',
+};
+
+// ==================== DELETED IDS PERSISTENT BLACKLIST ====================
+// Tracks deleted IDs so that deleted initial/fallback posts and deleted cloud items NEVER reappear
+const DELETED_IDS_STORAGE_KEY = 'wh_deleted_doc_ids_v2';
+
+export const getDeletedDocIds = (): Set<string> => {
+  try {
+    const raw = localStorage.getItem(DELETED_IDS_STORAGE_KEY);
+    if (!raw) return new Set();
+    const arr = JSON.parse(raw);
+    return new Set(Array.isArray(arr) ? arr : []);
+  } catch (e) {
+    return new Set();
+  }
+};
+
+export const markDocAsDeleted = (id: string): void => {
+  if (!id) return;
+  try {
+    const set = getDeletedDocIds();
+    set.add(id);
+    localStorage.setItem(DELETED_IDS_STORAGE_KEY, JSON.stringify(Array.from(set)));
+  } catch (e) {
+    console.error('Error saving deleted doc id to localStorage:', e);
+  }
+};
+
+export const unmarkDocAsDeleted = (id: string): void => {
+  if (!id) return;
+  try {
+    const set = getDeletedDocIds();
+    if (set.has(id)) {
+      set.delete(id);
+      localStorage.setItem(DELETED_IDS_STORAGE_KEY, JSON.stringify(Array.from(set)));
+    }
+  } catch (e) {
+    console.error('Error unmarking deleted doc id:', e);
+  }
+};
+
+export const isDocDeleted = (id: string): boolean => {
+  if (!id) return false;
+  return getDeletedDocIds().has(id);
+};
+
+export const clearDeletedDocsBlacklist = (): void => {
+  try {
+    localStorage.removeItem(DELETED_IDS_STORAGE_KEY);
+  } catch (e) {
+    console.error('Error clearing deleted doc ids:', e);
+  }
 };
 
 // ==================== 1. UMRAH PACKAGES ====================
@@ -58,28 +112,34 @@ export const subscribeUmrahPackages = (
         if (!snapshot.empty) {
           const list: UmrahPackage[] = [];
           snapshot.forEach((d) => {
-            list.push({ id: d.id, ...(d.data() as Omit<UmrahPackage, 'id'>) });
+            if (!isDocDeleted(d.id)) {
+              list.push({ id: d.id, ...(d.data() as Omit<UmrahPackage, 'id'>) });
+            }
           });
           callback(list);
         } else {
-          callback(fallbackData);
+          const filtered = fallbackData.filter((item) => !isDocDeleted(item.id));
+          callback(filtered);
         }
       },
       (error) => {
         console.warn('Firestore Umrah snapshot error, using fallback:', error);
-        callback(fallbackData);
+        const filtered = fallbackData.filter((item) => !isDocDeleted(item.id));
+        callback(filtered);
       }
     );
   } catch (err) {
     console.error('Error in subscribeUmrahPackages:', err);
-    callback(fallbackData);
+    const filtered = fallbackData.filter((item) => !isDocDeleted(item.id));
+    callback(filtered);
     return () => {};
   }
 };
 
 export const saveUmrahPackage = async (pkg: UmrahPackage): Promise<string> => {
   const { id, ...data } = pkg;
-  if (id && id.length > 5 && !id.startsWith('temp_')) {
+  if (id && id.trim().length > 0 && !id.startsWith('temp_')) {
+    unmarkDocAsDeleted(id);
     const docRef = doc(db, COLLECTIONS.UMRAH, id);
     await setDoc(docRef, { ...data, updatedAt: new Date().toISOString() }, { merge: true });
     return id;
@@ -90,12 +150,19 @@ export const saveUmrahPackage = async (pkg: UmrahPackage): Promise<string> => {
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     });
+    unmarkDocAsDeleted(newDoc.id);
     return newDoc.id;
   }
 };
 
 export const deleteUmrahPackage = async (id: string): Promise<void> => {
-  await deleteDoc(doc(db, COLLECTIONS.UMRAH, id));
+  if (!id) return;
+  markDocAsDeleted(id);
+  try {
+    await deleteDoc(doc(db, COLLECTIONS.UMRAH, id));
+  } catch (err) {
+    console.warn('Firestore delete error for Umrah package:', err);
+  }
 };
 
 // ==================== 2. HAJJ PACKAGES ====================
@@ -111,28 +178,34 @@ export const subscribeHajjPackages = (
         if (!snapshot.empty) {
           const list: HajjPackage[] = [];
           snapshot.forEach((d) => {
-            list.push({ id: d.id, ...(d.data() as Omit<HajjPackage, 'id'>) });
+            if (!isDocDeleted(d.id)) {
+              list.push({ id: d.id, ...(d.data() as Omit<HajjPackage, 'id'>) });
+            }
           });
           callback(list);
         } else {
-          callback(fallbackData);
+          const filtered = fallbackData.filter((item) => !isDocDeleted(item.id));
+          callback(filtered);
         }
       },
       (error) => {
         console.warn('Firestore Hajj snapshot error, using fallback:', error);
-        callback(fallbackData);
+        const filtered = fallbackData.filter((item) => !isDocDeleted(item.id));
+        callback(filtered);
       }
     );
   } catch (err) {
     console.error('Error in subscribeHajjPackages:', err);
-    callback(fallbackData);
+    const filtered = fallbackData.filter((item) => !isDocDeleted(item.id));
+    callback(filtered);
     return () => {};
   }
 };
 
 export const saveHajjPackage = async (pkg: HajjPackage): Promise<string> => {
   const { id, ...data } = pkg;
-  if (id && id.length > 5 && !id.startsWith('temp_')) {
+  if (id && id.trim().length > 0 && !id.startsWith('temp_')) {
+    unmarkDocAsDeleted(id);
     const docRef = doc(db, COLLECTIONS.HAJJ, id);
     await setDoc(docRef, { ...data, updatedAt: new Date().toISOString() }, { merge: true });
     return id;
@@ -143,12 +216,19 @@ export const saveHajjPackage = async (pkg: HajjPackage): Promise<string> => {
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     });
+    unmarkDocAsDeleted(newDoc.id);
     return newDoc.id;
   }
 };
 
 export const deleteHajjPackage = async (id: string): Promise<void> => {
-  await deleteDoc(doc(db, COLLECTIONS.HAJJ, id));
+  if (!id) return;
+  markDocAsDeleted(id);
+  try {
+    await deleteDoc(doc(db, COLLECTIONS.HAJJ, id));
+  } catch (err) {
+    console.warn('Firestore delete error for Hajj package:', err);
+  }
 };
 
 // ==================== 3. BLOG POSTS ====================
@@ -164,28 +244,34 @@ export const subscribeBlogPosts = (
         if (!snapshot.empty) {
           const list: BlogPost[] = [];
           snapshot.forEach((d) => {
-            list.push({ id: d.id, ...(d.data() as Omit<BlogPost, 'id'>) });
+            if (!isDocDeleted(d.id)) {
+              list.push({ id: d.id, ...(d.data() as Omit<BlogPost, 'id'>) });
+            }
           });
           callback(list);
         } else {
-          callback(fallbackData);
+          const filtered = fallbackData.filter((item) => !isDocDeleted(item.id));
+          callback(filtered);
         }
       },
       (error) => {
         console.warn('Firestore Blog snapshot error, using fallback:', error);
-        callback(fallbackData);
+        const filtered = fallbackData.filter((item) => !isDocDeleted(item.id));
+        callback(filtered);
       }
     );
   } catch (err) {
     console.error('Error in subscribeBlogPosts:', err);
-    callback(fallbackData);
+    const filtered = fallbackData.filter((item) => !isDocDeleted(item.id));
+    callback(filtered);
     return () => {};
   }
 };
 
 export const saveBlogPost = async (post: BlogPost): Promise<string> => {
   const { id, ...data } = post;
-  if (id && id.length > 5 && !id.startsWith('temp_')) {
+  if (id && id.trim().length > 0 && !id.startsWith('temp_')) {
+    unmarkDocAsDeleted(id);
     const docRef = doc(db, COLLECTIONS.BLOGS, id);
     await setDoc(docRef, { ...data, updatedAt: new Date().toISOString() }, { merge: true });
     return id;
@@ -196,12 +282,19 @@ export const saveBlogPost = async (post: BlogPost): Promise<string> => {
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     });
+    unmarkDocAsDeleted(newDoc.id);
     return newDoc.id;
   }
 };
 
 export const deleteBlogPost = async (id: string): Promise<void> => {
-  await deleteDoc(doc(db, COLLECTIONS.BLOGS, id));
+  if (!id) return;
+  markDocAsDeleted(id);
+  try {
+    await deleteDoc(doc(db, COLLECTIONS.BLOGS, id));
+  } catch (err) {
+    console.warn('Firestore delete error for Blog post:', err);
+  }
 };
 
 // ==================== 4. TOUR PACKAGES ====================
@@ -217,28 +310,34 @@ export const subscribeTourPackages = (
         if (!snapshot.empty) {
           const list: TourPackage[] = [];
           snapshot.forEach((d) => {
-            list.push({ id: d.id, ...(d.data() as Omit<TourPackage, 'id'>) });
+            if (!isDocDeleted(d.id)) {
+              list.push({ id: d.id, ...(d.data() as Omit<TourPackage, 'id'>) });
+            }
           });
           callback(list);
         } else {
-          callback(fallbackData);
+          const filtered = fallbackData.filter((item) => !isDocDeleted(item.id));
+          callback(filtered);
         }
       },
       (error) => {
         console.warn('Firestore Tours snapshot error, using fallback:', error);
-        callback(fallbackData);
+        const filtered = fallbackData.filter((item) => !isDocDeleted(item.id));
+        callback(filtered);
       }
     );
   } catch (err) {
     console.error('Error in subscribeTourPackages:', err);
-    callback(fallbackData);
+    const filtered = fallbackData.filter((item) => !isDocDeleted(item.id));
+    callback(filtered);
     return () => {};
   }
 };
 
 export const saveTourPackage = async (pkg: TourPackage): Promise<string> => {
   const { id, ...data } = pkg;
-  if (id && id.length > 5 && !id.startsWith('temp_')) {
+  if (id && id.trim().length > 0 && !id.startsWith('temp_')) {
+    unmarkDocAsDeleted(id);
     const docRef = doc(db, COLLECTIONS.TOURS, id);
     await setDoc(docRef, { ...data, updatedAt: new Date().toISOString() }, { merge: true });
     return id;
@@ -247,13 +346,21 @@ export const saveTourPackage = async (pkg: TourPackage): Promise<string> => {
     const newDoc = await addDoc(collRef, {
       ...data,
       createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
     });
+    unmarkDocAsDeleted(newDoc.id);
     return newDoc.id;
   }
 };
 
 export const deleteTourPackage = async (id: string): Promise<void> => {
-  await deleteDoc(doc(db, COLLECTIONS.TOURS, id));
+  if (!id) return;
+  markDocAsDeleted(id);
+  try {
+    await deleteDoc(doc(db, COLLECTIONS.TOURS, id));
+  } catch (err) {
+    console.warn('Firestore delete error for Tour package:', err);
+  }
 };
 
 // ==================== 5. GALLERY ITEMS ====================
@@ -269,30 +376,36 @@ export const subscribeGalleryItems = (
         if (!snapshot.empty) {
           const list: GalleryItem[] = [];
           snapshot.forEach((d) => {
-            list.push({ id: d.id, ...(d.data() as Omit<GalleryItem, 'id'>) });
+            if (!isDocDeleted(d.id)) {
+              list.push({ id: d.id, ...(d.data() as Omit<GalleryItem, 'id'>) });
+            }
           });
           callback(list);
         } else {
-          callback(fallbackData);
+          const filtered = fallbackData.filter((item) => !isDocDeleted(item.id));
+          callback(filtered);
         }
       },
       (error) => {
         console.warn('Firestore Gallery snapshot error, using fallback:', error);
-        callback(fallbackData);
+        const filtered = fallbackData.filter((item) => !isDocDeleted(item.id));
+        callback(filtered);
       }
     );
   } catch (err) {
     console.error('Error in subscribeGalleryItems:', err);
-    callback(fallbackData);
+    const filtered = fallbackData.filter((item) => !isDocDeleted(item.id));
+    callback(filtered);
     return () => {};
   }
 };
 
 export const saveGalleryItem = async (item: GalleryItem): Promise<string> => {
   const { id, ...data } = item;
-  if (id && id.length > 5 && !id.startsWith('temp_')) {
+  if (id && id.trim().length > 0 && !id.startsWith('temp_')) {
+    unmarkDocAsDeleted(id);
     const docRef = doc(db, COLLECTIONS.GALLERY, id);
-    await setDoc(docRef, { ...data }, { merge: true });
+    await setDoc(docRef, { ...data, updatedAt: new Date().toISOString() }, { merge: true });
     return id;
   } else {
     const collRef = collection(db, COLLECTIONS.GALLERY);
@@ -300,12 +413,19 @@ export const saveGalleryItem = async (item: GalleryItem): Promise<string> => {
       ...data,
       createdAt: new Date().toISOString(),
     });
+    unmarkDocAsDeleted(newDoc.id);
     return newDoc.id;
   }
 };
 
 export const deleteGalleryItem = async (id: string): Promise<void> => {
-  await deleteDoc(doc(db, COLLECTIONS.GALLERY, id));
+  if (!id) return;
+  markDocAsDeleted(id);
+  try {
+    await deleteDoc(doc(db, COLLECTIONS.GALLERY, id));
+  } catch (err) {
+    console.warn('Firestore delete error for Gallery item:', err);
+  }
 };
 
 // ==================== 6. REVIEWS ====================
@@ -321,30 +441,36 @@ export const subscribeReviews = (
         if (!snapshot.empty) {
           const list: Review[] = [];
           snapshot.forEach((d) => {
-            list.push({ id: d.id, ...(d.data() as Omit<Review, 'id'>) });
+            if (!isDocDeleted(d.id)) {
+              list.push({ id: d.id, ...(d.data() as Omit<Review, 'id'>) });
+            }
           });
           callback(list);
         } else {
-          callback(fallbackData);
+          const filtered = fallbackData.filter((item) => !isDocDeleted(item.id));
+          callback(filtered);
         }
       },
       (error) => {
         console.warn('Firestore Reviews snapshot error, using fallback:', error);
-        callback(fallbackData);
+        const filtered = fallbackData.filter((item) => !isDocDeleted(item.id));
+        callback(filtered);
       }
     );
   } catch (err) {
     console.error('Error in subscribeReviews:', err);
-    callback(fallbackData);
+    const filtered = fallbackData.filter((item) => !isDocDeleted(item.id));
+    callback(filtered);
     return () => {};
   }
 };
 
 export const saveReview = async (rev: Review): Promise<string> => {
   const { id, ...data } = rev;
-  if (id && id.length > 5 && !id.startsWith('temp_')) {
+  if (id && id.trim().length > 0 && !id.startsWith('temp_')) {
+    unmarkDocAsDeleted(id);
     const docRef = doc(db, COLLECTIONS.REVIEWS, id);
-    await setDoc(docRef, { ...data }, { merge: true });
+    await setDoc(docRef, { ...data, updatedAt: new Date().toISOString() }, { merge: true });
     return id;
   } else {
     const collRef = collection(db, COLLECTIONS.REVIEWS);
@@ -352,12 +478,19 @@ export const saveReview = async (rev: Review): Promise<string> => {
       ...data,
       createdAt: new Date().toISOString(),
     });
+    unmarkDocAsDeleted(newDoc.id);
     return newDoc.id;
   }
 };
 
 export const deleteReview = async (id: string): Promise<void> => {
-  await deleteDoc(doc(db, COLLECTIONS.REVIEWS, id));
+  if (!id) return;
+  markDocAsDeleted(id);
+  try {
+    await deleteDoc(doc(db, COLLECTIONS.REVIEWS, id));
+  } catch (err) {
+    console.warn('Firestore delete error for Review:', err);
+  }
 };
 
 // ==================== 7. INQUIRIES ====================
@@ -371,7 +504,9 @@ export const subscribeInquiries = (
       (snapshot) => {
         const list: BookingInquiry[] = [];
         snapshot.forEach((d) => {
-          list.push({ id: d.id, ...(d.data() as Omit<BookingInquiry, 'id'>) });
+          if (!isDocDeleted(d.id)) {
+            list.push({ id: d.id, ...(d.data() as Omit<BookingInquiry, 'id'>) });
+          }
         });
         // Sort latest first
         list.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
@@ -408,10 +543,16 @@ export const updateInquiryStatus = async (
 };
 
 export const deleteInquiry = async (id: string): Promise<void> => {
-  await deleteDoc(doc(db, COLLECTIONS.INQUIRIES, id));
+  if (!id) return;
+  markDocAsDeleted(id);
+  try {
+    await deleteDoc(doc(db, COLLECTIONS.INQUIRIES, id));
+  } catch (err) {
+    console.warn('Firestore delete error for Inquiry:', err);
+  }
 };
 
-// ==================== 8. SITE SETTINGS ====================
+// ==================== 8. SITE SETTINGS & HOME PAGE CONFIG ====================
 export interface SiteSettingsData {
   hadithBn?: string;
   hadithEn?: string;
@@ -451,9 +592,61 @@ export const saveSiteSettings = async (settings: SiteSettingsData): Promise<void
   await setDoc(docRef, { ...settings, updatedAt: new Date().toISOString() }, { merge: true });
 };
 
+// ==================== 8.1 HOME PAGE LIVE CONFIG ====================
+export const subscribeHomePageConfig = (
+  callback: (config: HomePageConfig) => void,
+  fallbackConfig: HomePageConfig = initialHomePageConfig
+): Unsubscribe => {
+  try {
+    const docRef = doc(db, COLLECTIONS.SETTINGS, 'homepage_config');
+    return onSnapshot(
+      docRef,
+      (docSnap) => {
+        if (docSnap.exists()) {
+          const data = docSnap.data() as Partial<HomePageConfig>;
+          // Merge with fallback to ensure all keys exist
+          const merged: HomePageConfig = {
+            ...fallbackConfig,
+            ...data,
+            stats: Array.isArray(data.stats) && data.stats.length > 0 ? data.stats : fallbackConfig.stats,
+            trustBadges: Array.isArray(data.trustBadges) && data.trustBadges.length > 0 ? data.trustBadges : fallbackConfig.trustBadges,
+            servicesList: Array.isArray(data.servicesList) && data.servicesList.length > 0 ? data.servicesList : fallbackConfig.servicesList,
+            accordionItems: Array.isArray(data.accordionItems) && data.accordionItems.length > 0 ? data.accordionItems : fallbackConfig.accordionItems,
+            accreditationsList: Array.isArray(data.accreditationsList) && data.accreditationsList.length > 0 ? data.accreditationsList : fallbackConfig.accreditationsList,
+            featuresListBn: Array.isArray(data.featuresListBn) && data.featuresListBn.length > 0 ? data.featuresListBn : fallbackConfig.featuresListBn,
+            featuresListEn: Array.isArray(data.featuresListEn) && data.featuresListEn.length > 0 ? data.featuresListEn : fallbackConfig.featuresListEn,
+            typewriterMessagesBn: Array.isArray(data.typewriterMessagesBn) && data.typewriterMessagesBn.length > 0 ? data.typewriterMessagesBn : fallbackConfig.typewriterMessagesBn,
+            typewriterMessagesEn: Array.isArray(data.typewriterMessagesEn) && data.typewriterMessagesEn.length > 0 ? data.typewriterMessagesEn : fallbackConfig.typewriterMessagesEn,
+          };
+          callback(merged);
+        } else {
+          callback(fallbackConfig);
+        }
+      },
+      (error) => {
+        console.warn('Firestore HomePageConfig snapshot error, using fallback:', error);
+        callback(fallbackConfig);
+      }
+    );
+  } catch (err) {
+    console.error('Error in subscribeHomePageConfig:', err);
+    callback(fallbackConfig);
+    return () => {};
+  }
+};
+
+export const saveHomePageConfig = async (config: HomePageConfig): Promise<void> => {
+  const docRef = doc(db, COLLECTIONS.SETTINGS, 'homepage_config');
+  await setDoc(docRef, { ...config, updatedAt: new Date().toISOString() }, { merge: true });
+};
+
+
 // ==================== 9. SEED ALL DEFAULT DATA TO FIRESTORE ====================
 export const seedAllDefaultDataToFirestore = async (): Promise<{ success: boolean; message: string }> => {
   try {
+    // Clear deleted docs blacklist when admin explicitly seeds
+    clearDeletedDocsBlacklist();
+
     // 1. Seed Umrah Packages
     for (const pkg of initialUmrahPackages) {
       const docRef = doc(db, COLLECTIONS.UMRAH, pkg.id);

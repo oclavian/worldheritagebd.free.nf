@@ -1,9 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { MapPin, ChevronRight, ChevronLeft, Calendar, Sparkles } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
-import { Language } from '../types';
-import { StandardPackageItem } from '../utils/packageAdapter';
-import { Logo } from './Logo';
+import React, { useState, useEffect } from "react";
+import {
+  MapPin,
+  ChevronRight,
+  ChevronLeft,
+  Calendar,
+  Sparkles,
+} from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
+import { Language } from "../types";
+import { StandardPackageItem } from "../utils/packageAdapter";
+import { Logo } from "./Logo";
 
 interface PackageCardProps {
   lang: Language;
@@ -14,7 +20,7 @@ interface PackageCardProps {
 
 const slideVariants = {
   enter: (direction: number) => ({
-    x: direction > 0 ? '100%' : '-100%',
+    x: direction > 0 ? "100%" : "-100%",
     opacity: 0.4,
   }),
   center: {
@@ -22,7 +28,7 @@ const slideVariants = {
     opacity: 1,
   },
   exit: (direction: number) => ({
-    x: direction < 0 ? '100%' : '-100%',
+    x: direction < 0 ? "100%" : "-100%",
     opacity: 0.4,
   }),
 };
@@ -32,17 +38,21 @@ export const PackageCard: React.FC<PackageCardProps> = ({
   pkg,
   onViewDetails,
 }) => {
-  const isBn = lang === 'bn';
+  const isBn = lang === "bn";
   const title = isBn ? pkg.titleBn : pkg.titleEn;
   const duration = isBn ? pkg.durationBn : pkg.durationEn;
   const location = isBn ? pkg.locationBn : pkg.locationEn;
   const badge = isBn ? pkg.badgeBn : pkg.badgeEn;
 
-  const images = (pkg.galleryImages && pkg.galleryImages.length > 0) ? pkg.galleryImages : [pkg.image];
+  const images =
+    pkg.galleryImages && pkg.galleryImages.length > 0
+      ? pkg.galleryImages
+      : [pkg.image];
   const [[page, direction], setPage] = useState<[number, number]>([0, 1]);
   const [isHovered, setIsHovered] = useState<boolean>(false);
 
-  const currentImageIndex = ((page % images.length) + images.length) % images.length;
+  const currentImageIndex =
+    ((page % images.length) + images.length) % images.length;
 
   const paginate = (newDirection: number) => {
     setPage([page + newDirection, newDirection]);
@@ -60,7 +70,7 @@ export const PackageCard: React.FC<PackageCardProps> = ({
   const activeSrc = images[currentImageIndex] || pkg.image;
 
   return (
-    <div 
+    <div
       className="bg-white rounded-2xl overflow-hidden border border-slate-200/80 shadow-md hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -77,7 +87,7 @@ export const PackageCard: React.FC<PackageCardProps> = ({
             animate="center"
             exit="exit"
             transition={{
-              x: { type: 'spring', stiffness: 280, damping: 30 },
+              x: { type: "spring", stiffness: 280, damping: 30 },
               opacity: { duration: 0.3 },
             }}
             alt={title}
@@ -85,15 +95,18 @@ export const PackageCard: React.FC<PackageCardProps> = ({
             referrerPolicy="no-referrer"
             onError={(e) => {
               const target = e.currentTarget;
-              if (target.src.includes('lh3.googleusercontent.com/d/')) {
-                const fileId = target.src.split('lh3.googleusercontent.com/d/')[1]?.split('?')[0];
+              if (target.src.includes("lh3.googleusercontent.com/d/")) {
+                const fileId = target.src
+                  .split("lh3.googleusercontent.com/d/")[1]
+                  ?.split("?")[0];
                 if (fileId) {
                   target.src = `https://drive.google.com/thumbnail?id=${fileId}&sz=w1200`;
                   return;
                 }
               }
-              if (!target.src.includes('1591604466107')) {
-                target.src = 'https://images.unsplash.com/photo-1591604466107-ec97de577aff?auto=format&fit=crop&w=800&q=80';
+              if (!target.src.includes("1591604466107")) {
+                target.src =
+                  "https://images.unsplash.com/photo-1591604466107-ec97de577aff?auto=format&fit=crop&w=800&q=80";
               }
             }}
           />
@@ -153,10 +166,14 @@ export const PackageCard: React.FC<PackageCardProps> = ({
           </div>
           <div className="min-w-0">
             <h4 className="text-white text-xs sm:text-sm font-black tracking-wide truncate drop-shadow-sm">
-              {isBn ? 'ওয়ার্ল্ড হেরিটেজ ট্যুরস অ্যান্ড ট্রাভেলস' : 'World Heritage Tours & Travels'}
+              {isBn
+                ? "ওয়ার্ল্ড হেরিটেজ ট্যুরস অ্যান্ড ট্রাভেলস"
+                : "World Heritage Tours & Travels"}
             </h4>
             <p className="text-[10.5px] text-[#F3E0A0] font-semibold truncate tracking-normal">
-              {isBn ? 'গভঃ অনুমোদিত হজ্ব ও উমরাহ্ ট্রাভেল এজেন্সি' : 'Govt Approved Hajj & Umrah Agency'}
+              {isBn
+                ? "গভঃ অনুমোদিত হজ্ব ও উমরাহ্ ট্রাভেল এজেন্সি"
+                : "Govt Approved Hajj & Umrah Agency"}
             </p>
           </div>
         </div>
@@ -174,7 +191,7 @@ export const PackageCard: React.FC<PackageCardProps> = ({
           {pkg.priceBDT > 0 && (
             <div className="flex items-baseline justify-between gap-2 bg-amber-50/70 border border-amber-200/80 px-3 py-1.5 rounded-xl">
               <span className="text-xs text-amber-900 font-bold">
-                {isBn ? 'শুরু (প্রতি জন)' : 'Starts From (per person)'}
+                {isBn ? "শুরু (প্রতি জন)" : "Starts From (per person)"}
               </span>
               <span className="text-base sm:text-lg font-black text-[#8B0000]">
                 ৳{pkg.priceBDT.toLocaleString()}
@@ -196,7 +213,7 @@ export const PackageCard: React.FC<PackageCardProps> = ({
           onClick={() => onViewDetails(pkg)}
           className="w-full bg-[#8B0000] hover:bg-[#6A0000] text-white py-2.5 px-4 rounded-xl text-xs sm:text-sm font-extrabold text-center transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2 group/btn active:scale-98 border border-red-900/40 mt-1 cursor-pointer"
         >
-          <span>{isBn ? 'বিস্তারিত দেখুন' : 'View Details'}</span>
+          <span>{isBn ? "বিস্তারিত দেখুন" : "View Details"}</span>
           <ChevronRight className="w-4 h-4 text-white group-hover/btn:translate-x-1 transition-transform" />
         </button>
       </div>

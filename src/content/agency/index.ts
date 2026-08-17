@@ -1,1 +1,1 @@
-export { agencyInfo as initialAgencyInfo } from './info';
+export { agencyInfo as initialAgencyInfo } from "./info";

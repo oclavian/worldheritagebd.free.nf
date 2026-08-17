@@ -15,7 +15,7 @@ import {
   Headphones,
   Plane
 } from 'lucide-react';
-import { Language, PageId, UmrahPackage, HajjPackage, BlogPost, AgencyInfo } from '../types';
+import { Language, PageId, UmrahPackage, HajjPackage, BlogPost, AgencyInfo, HomePageConfig } from '../types';
 import { getTranslation } from '../data/translations';
 import { PackageCard } from '../components/PackageCard';
 import { PackageDetailView } from '../components/PackageDetailView';
@@ -23,6 +23,7 @@ import { adaptUmrahPackage, adaptHajjPackage, StandardPackageItem } from '../uti
 import { toBengaliDigits } from '../utils/formatters';
 import { HajjAnnouncementCard } from '../components/HajjAnnouncementCard';
 import { HajjHadithMarquee } from '../components/HajjHadithMarquee';
+import { initialHomePageConfig } from '../data/initialHomePageData';
 
 interface HomePageProps {
   lang: Language;
@@ -33,6 +34,7 @@ interface HomePageProps {
   blogPosts: BlogPost[];
   agencyInfo: AgencyInfo;
   onOpenBookingModal: (service?: string, packageTitle?: string) => void;
+  homePageConfig?: HomePageConfig | null;
 }
 
 export const HomePage: React.FC<HomePageProps> = ({
@@ -44,7 +46,11 @@ export const HomePage: React.FC<HomePageProps> = ({
   blogPosts,
   agencyInfo,
   onOpenBookingModal,
+  homePageConfig,
 }) => {
+  const config = homePageConfig || initialHomePageConfig;
+  const isBn = lang === 'bn';
+
   const [packageCategory, setPackageCategory] = useState<'all' | 'umrah' | 'hajj'>('all');
   const [openAccordion, setOpenAccordion] = useState<number | null>(0);
   const [selectedDetailPackage, setSelectedDetailPackage] = useState<StandardPackageItem | null>(null);
@@ -54,21 +60,12 @@ export const HomePage: React.FC<HomePageProps> = ({
   const [isDeleting, setIsDeleting] = useState(false);
   const [loopIndex, setLoopIndex] = useState(0);
 
-  useEffect(() => {
-    const messages = lang === 'bn' 
-      ? [
-          'অনুমোদিত ও বিশ্বস্ত হজ্ব, উমরাহ্ এবং এয়ার টিকিট এজেন্সী',
-          '১০০% বিশ্বস্ত ও শরীয়তসম্মত হজ্ব-উমরাহ্ সেবা',
-          'বিশ্বস্ততায় আমাদের ৭+ বছরের গৌরবময় অভিজ্ঞতা',
-          'সরাসরি পান্থপথ প্রধান কার্যালয় থেকে পরিচালিত'
-        ]
-      : [
-          'Authorized & Trusted Hajj, Umrah & Air Ticket Agency',
-          '100% Shariah-Compliant Hajj & Umrah Services',
-          'Over 7+ Years of Trusted Pilgrimage Heritage',
-          'Operated Directly from Panthapath Main Office'
-        ];
+  const messages = isBn 
+    ? (config.typewriterMessagesBn && config.typewriterMessagesBn.length > 0 ? config.typewriterMessagesBn : initialHomePageConfig.typewriterMessagesBn)
+    : (config.typewriterMessagesEn && config.typewriterMessagesEn.length > 0 ? config.typewriterMessagesEn : initialHomePageConfig.typewriterMessagesEn);
 
+  useEffect(() => {
+    if (!messages || messages.length === 0) return;
     const currentFullText = messages[loopIndex % messages.length];
 
     const typingTimer = setTimeout(() => {
@@ -90,7 +87,22 @@ export const HomePage: React.FC<HomePageProps> = ({
     }, isDeleting ? 30 : 65);
 
     return () => clearTimeout(typingTimer);
-  }, [typewriterText, isDeleting, loopIndex, lang]);
+  }, [typewriterText, isDeleting, loopIndex, lang, messages]);
+
+  // Helper for Accreditation Icons
+  const renderAccreditationIcon = (iconName: string) => {
+    switch (iconName) {
+      case 'Award':
+        return <Award className="w-8 h-8 text-[#D4AF37] mx-auto" />;
+      case 'Building2':
+        return <Building2 className="w-8 h-8 text-[#0D472B] mx-auto" />;
+      case 'Plane':
+        return <Plane className="w-8 h-8 text-rose-700 mx-auto" />;
+      case 'ShieldCheck':
+      default:
+        return <ShieldCheck className="w-8 h-8 text-[#0D472B] mx-auto" />;
+    }
+  };
 
   // If a package detail is selected, render full page view
   if (selectedDetailPackage) {
@@ -108,607 +120,480 @@ export const HomePage: React.FC<HomePageProps> = ({
     <div className="space-y-12 font-bengali pb-12">
       
       {/* 1. LUXURY HERO SECTION WITH INTERACTIVE SEARCH & STATS */}
-      <section className="relative bg-[#03180D] text-white pt-3 sm:pt-4 lg:pt-5 pb-28 sm:pb-36 lg:pb-44 overflow-hidden border-b-4 border-[#D4AF37]">
-        {/* Immersive Photography Overlay */}
-        <div 
-          className="absolute inset-0 z-0 opacity-20 bg-cover bg-center mix-blend-overlay scale-105 transition-transform duration-1000"
-          style={{ backgroundImage: `url('https://images.unsplash.com/photo-1591604466107-ec97de577aff?auto=format&fit=crop&w=1920&q=80')` }}
-        />
+      {config.showHeroSection !== false && (
+        <section className="relative bg-[#03180D] text-white pt-3 sm:pt-4 lg:pt-5 pb-28 sm:pb-36 lg:pb-44 overflow-hidden border-b-4 border-[#D4AF37]">
+          {/* Immersive Photography Overlay */}
+          <div 
+            className="absolute inset-0 z-0 opacity-20 bg-cover bg-center mix-blend-overlay scale-105 transition-transform duration-1000"
+            style={{ backgroundImage: `url('${config.heroBgImage || initialHomePageConfig.heroBgImage}')` }}
+          />
 
-        {/* Golden Radial Glow and Halftone Pattern Accent */}
-        <div className="absolute top-0 right-0 w-96 h-96 halftone-dots opacity-20 pointer-events-none" />
-        <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-[#D4AF37]/15 rounded-full blur-3xl pointer-events-none" />
+          {/* Golden Radial Glow and Halftone Pattern Accent */}
+          <div className="absolute top-0 right-0 w-96 h-96 halftone-dots opacity-20 pointer-events-none" />
+          <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-[#D4AF37]/15 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-8 items-start">
-            
-            {/* Left Content Column (7 cols) - Balanced Vertical Flow & Spacing */}
-            <div className="lg:col-span-7 space-y-4 sm:space-y-5 lg:space-y-5.5 text-center lg:text-left flex flex-col justify-between">
+          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-8 items-start">
               
-              {/* Top Announcement Tagline Pill with LIVE TYPEWRITER EFFECT */}
-              <div>
-                <div className="inline-flex items-center gap-2 bg-gradient-to-r from-[#D4AF37]/25 via-emerald-900/40 to-[#D4AF37]/20 border border-[#D4AF37]/60 px-4 py-1.5 rounded-full text-xs font-bold text-[#F3E0A0] shadow-[0_0_15px_rgba(212,175,55,0.2)] min-h-[32px]">
-                  <Sparkles className="w-3.5 h-3.5 text-[#D4AF37] animate-pulse shrink-0" />
-                  <span className="font-medium tracking-wide">
-                    {typewriterText}
-                    <span className="inline-block w-1.5 h-3.5 bg-[#D4AF37] ml-1 rounded-sm animate-ping align-middle" />
-                  </span>
+              {/* Left Content Column (7 cols) - Balanced Vertical Flow & Spacing */}
+              <div className="lg:col-span-7 space-y-4 sm:space-y-5 lg:space-y-5.5 text-center lg:text-left flex flex-col justify-between">
+                
+                {/* Top Announcement Tagline Pill with LIVE TYPEWRITER EFFECT */}
+                <div>
+                  <div className="inline-flex items-center gap-2 bg-gradient-to-r from-[#D4AF37]/25 via-emerald-900/40 to-[#D4AF37]/20 border border-[#D4AF37]/60 px-4 py-1.5 rounded-full text-xs font-bold text-[#F3E0A0] shadow-[0_0_15px_rgba(212,175,55,0.2)] min-h-[32px]">
+                    <Sparkles className="w-3.5 h-3.5 text-[#D4AF37] animate-pulse shrink-0" />
+                    <span className="font-medium tracking-wide">
+                      {typewriterText}
+                      <span className="inline-block w-1.5 h-3.5 bg-[#D4AF37] ml-1 rounded-sm animate-ping align-middle" />
+                    </span>
+                  </div>
                 </div>
-              </div>
 
-              {/* Main Headline */}
-              <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-[42px] font-black text-white tracking-tight leading-[1.25] font-sans">
-                {lang === 'bn' ? (
-                  <>
-                    পবিত্র <span className="text-[#D4AF37]">উমরাহ্, হজ্ব</span> ও ফ্লাইট টিকিটে সর্বোচ্চ বিশ্বস্ততা
-                  </>
-                ) : (
-                  <>
-                    Your Trusted Partner for <span className="text-[#D4AF37]">Holy Umrah, Hajj</span> & Flights
-                  </>
+                {/* Main Headline */}
+                <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-[42px] font-black text-white tracking-tight leading-[1.25] font-sans">
+                  {isBn ? (
+                    config.heroTitleBn ? (
+                      <span>{config.heroTitleBn}</span>
+                    ) : (
+                      <>
+                        পবিত্র <span className="text-[#D4AF37]">উমরাহ্, হজ্ব</span> ও ফ্লাইট টিকিটে সর্বোচ্চ বিশ্বস্ততা
+                      </>
+                    )
+                  ) : (
+                    config.heroTitleEn ? (
+                      <span>{config.heroTitleEn}</span>
+                    ) : (
+                      <>
+                        Your Trusted Partner for <span className="text-[#D4AF37]">Holy Umrah, Hajj</span> & Flights
+                      </>
+                    )
+                  )}
+                </h1>
+
+                {/* Sub-headline description */}
+                <p className="text-xs sm:text-sm md:text-base text-emerald-100/90 leading-relaxed max-w-2xl">
+                  {isBn 
+                    ? (config.heroSubtitleBn || 'ঢাকা পান্থপথ প্রধান কার্যালয় থেকে সরাসরি বাংলাদেশ সরকার ও সৌদি ধর্ম মন্ত্রণালয়ের নিয়ম মেনে স্বচ্ছতার সাথে পরিচালিত।')
+                    : (config.heroSubtitleEn || 'Operating directly from Panthapath main office with 100% Shariah compliance and government licensing.')
+                  }
+                </p>
+
+                {/* Quick Stat Badges Row */}
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 text-left">
+                  {(config.stats && config.stats.length > 0 ? config.stats : initialHomePageConfig.stats).map((stat) => (
+                    <div key={stat.id} className="bg-white/10 backdrop-blur-md p-3 sm:p-3.5 rounded-2xl border border-white/15 shadow-sm hover:border-[#D4AF37]/50 transition-colors">
+                      <span className="text-lg sm:text-2xl font-black text-[#D4AF37] block font-sans">
+                        {isBn ? stat.valueBn : stat.valueEn}
+                      </span>
+                      <span className="text-[11px] sm:text-xs text-emerald-200 font-medium">
+                        {isBn ? stat.labelBn : stat.labelEn}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Key Trust Assurance Features Chips */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3.5 pt-0.5 text-xs text-emerald-100 font-medium">
+                  {(config.trustBadges && config.trustBadges.length > 0 ? config.trustBadges : initialHomePageConfig.trustBadges).map((badge) => (
+                    <span key={badge.id} className="flex items-center justify-center gap-2 bg-emerald-950/80 border border-emerald-700/60 px-3.5 py-2 rounded-full shadow-xs text-center">
+                      <CheckCircle2 className="w-4 h-4 text-[#D4AF37] shrink-0" />
+                      <span>{isBn ? badge.textBn : badge.textEn}</span>
+                    </span>
+                  ))}
+                </div>
+
+                {/* Action Buttons */}
+                <div className="flex flex-wrap sm:flex-nowrap items-center justify-between sm:justify-start gap-4 sm:gap-6 lg:gap-8 pt-1">
+                  <motion.button
+                    onClick={() => onNavigate('umrah')}
+                    animate={{
+                      y: [0, -6, 0],
+                    }}
+                    transition={{
+                      duration: 2.2,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                    whileHover={{ scale: 1.06 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="flex-1 sm:flex-initial justify-center bg-gradient-to-r from-[#D4AF37] via-[#E5C158] to-[#B38712] text-emerald-950 px-6 sm:px-8 py-3.5 rounded-full font-black text-xs sm:text-sm shadow-[0_6px_20px_rgba(212,175,55,0.45)] hover:shadow-[0_8px_25px_rgba(212,175,55,0.6)] transition-shadow flex items-center gap-2.5 cursor-pointer border border-[#FFF0A0]"
+                  >
+                    <span className="text-base">🕋</span>
+                    <span>{isBn ? (config.heroBtnUmrahBn || 'উমরাহ্ প্যাকেজসমূহ') : (config.heroBtnUmrahEn || 'Umrah Packages')}</span>
+                    <ArrowRight className="w-4 h-4 text-emerald-950 font-bold ml-0.5" />
+                  </motion.button>
+
+                  <motion.button
+                    onClick={() => onNavigate('hajj')}
+                    animate={{
+                      y: [0, -5, 0],
+                    }}
+                    transition={{
+                      duration: 2.2,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: 0.55
+                    }}
+                    whileHover={{ scale: 1.06 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="flex-1 sm:flex-initial justify-center bg-emerald-900/60 hover:bg-emerald-800/80 text-white border-2 border-[#D4AF37] px-6 sm:px-8 py-3.5 rounded-full font-black text-xs sm:text-sm backdrop-blur-md shadow-[0_4px_16px_rgba(0,0,0,0.4)] hover:shadow-[0_6px_20px_rgba(212,175,55,0.35)] transition-all flex items-center gap-2.5 cursor-pointer"
+                  >
+                    <span className="text-base">🕌</span>
+                    <span>{isBn ? (config.heroBtnHajjBn || 'পবিত্র হজ্ব ২০২৭') : (config.heroBtnHajjEn || 'Holy Hajj 2027')}</span>
+                    <span className="inline-block w-2 h-2 rounded-full bg-[#D4AF37] animate-ping ml-1" />
+                  </motion.button>
+                </div>
+
+                {/* Quran & Hadith Scrolling Marquee Ticker */}
+                {config.showHadithMarquee !== false && (
+                  <div className="pt-1">
+                    <HajjHadithMarquee lang={lang} />
+                  </div>
                 )}
-              </h1>
 
-              {/* Sub-headline description */}
-              <p className="text-xs sm:text-sm md:text-base text-emerald-100/90 leading-relaxed max-w-2xl">
-                {lang === 'bn' 
-                  ? 'ঢাকা পান্থপথ প্রধান কার্যালয় থেকে সরাসরি বাংলাদেশ সরকার ও সৌদি ধর্ম মন্ত্রণালয়ের নিয়ম মেনে স্বচ্ছতার সাথে পরিচালিত।'
-                  : 'Operating directly from Panthapath main office with 100% Shariah compliance and government licensing.'
-                }
-              </p>
-
-              {/* Quick Stat Badges Row with Enhanced Spacing & Padding */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 text-left">
-                <div className="bg-white/10 backdrop-blur-md p-3 sm:p-3.5 rounded-2xl border border-white/15 shadow-sm hover:border-[#D4AF37]/50 transition-colors">
-                  <span className="text-lg sm:text-2xl font-black text-[#D4AF37] block font-sans">
-                    {lang === 'bn' ? '৫০০০+' : '5,000+'}
-                  </span>
-                  <span className="text-[11px] sm:text-xs text-emerald-200 font-medium">{lang === 'bn' ? 'সফল হাজী সেবা' : 'Pilgrims Served'}</span>
-                </div>
-                <div className="bg-white/10 backdrop-blur-md p-3 sm:p-3.5 rounded-2xl border border-white/15 shadow-sm hover:border-[#D4AF37]/50 transition-colors">
-                  <span className="text-lg sm:text-2xl font-black text-[#D4AF37] block font-sans">
-                    {lang === 'bn' ? '০৭+ বছর' : '07+ Years'}
-                  </span>
-                  <span className="text-[11px] sm:text-xs text-emerald-200 font-medium">{lang === 'bn' ? 'অভিজ্ঞতা' : 'Experience'}</span>
-                </div>
-                <div className="bg-white/10 backdrop-blur-md p-3 sm:p-3.5 rounded-2xl border border-white/15 shadow-sm hover:border-[#D4AF37]/50 transition-colors">
-                  <span className="text-lg sm:text-2xl font-black text-[#D4AF37] block font-sans">
-                    {lang === 'bn' ? '১০০%' : '100%'}
-                  </span>
-                  <span className="text-[11px] sm:text-xs text-emerald-200 font-medium">{lang === 'bn' ? 'শরীয়তসম্মত' : 'Shariah Compliant'}</span>
-                </div>
-                <div className="bg-white/10 backdrop-blur-md p-3 sm:p-3.5 rounded-2xl border border-white/15 shadow-sm hover:border-[#D4AF37]/50 transition-colors">
-                  <span className="text-lg sm:text-2xl font-black text-[#D4AF37] block font-sans">
-                    {lang === 'bn' ? '২৪/৭' : '24/7'}
-                  </span>
-                  <span className="text-[11px] sm:text-xs text-emerald-200 font-medium">{lang === 'bn' ? 'হটলাইন সাপোর্ট' : 'Hotline Support'}</span>
-                </div>
               </div>
 
-              {/* Key Trust Assurance Features Chips - Evenly Distributed with Generous Gap */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3.5 pt-0.5 text-xs text-emerald-100 font-medium">
-                <span className="flex items-center justify-center gap-2 bg-emerald-950/80 border border-emerald-700/60 px-3.5 py-2 rounded-full shadow-xs text-center">
-                  <CheckCircle2 className="w-4 h-4 text-[#D4AF37] shrink-0" />
-                  <span>{lang === 'bn' ? 'সরকারি অনুমোদিত এজেন্সী' : 'Govt. Licensed Agency'}</span>
-                </span>
-                <span className="flex items-center justify-center gap-2 bg-emerald-950/80 border border-emerald-700/60 px-3.5 py-2 rounded-full shadow-xs text-center">
-                  <CheckCircle2 className="w-4 h-4 text-[#D4AF37] shrink-0" />
-                  <span>{lang === 'bn' ? 'অভিজ্ঞ আলেম ও মোয়াল্লিম গাইড' : 'Scholarly Guidance'}</span>
-                </span>
-                <span className="flex items-center justify-center gap-2 bg-emerald-950/80 border border-emerald-700/60 px-3.5 py-2 rounded-full shadow-xs text-center">
-                  <CheckCircle2 className="w-4 h-4 text-[#D4AF37] shrink-0" />
-                  <span>{lang === 'bn' ? 'নিকটবর্তী হারাম শরীফ হোটেল' : 'Nearby Haram Hotels'}</span>
-                </span>
-              </div>
-
-              {/* Action Buttons with Generous Separation and Eye-Catching Bounce */}
-              <div className="flex flex-wrap sm:flex-nowrap items-center justify-between sm:justify-start gap-4 sm:gap-6 lg:gap-8 pt-1">
-                <motion.button
-                  onClick={() => onNavigate('umrah')}
-                  animate={{
-                    y: [0, -6, 0],
-                  }}
-                  transition={{
-                    duration: 2.2,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                  whileHover={{ scale: 1.06 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="flex-1 sm:flex-initial justify-center bg-gradient-to-r from-[#D4AF37] via-[#E5C158] to-[#B38712] text-emerald-950 px-6 sm:px-8 py-3.5 rounded-full font-black text-xs sm:text-sm shadow-[0_6px_20px_rgba(212,175,55,0.45)] hover:shadow-[0_8px_25px_rgba(212,175,55,0.6)] transition-shadow flex items-center gap-2.5 cursor-pointer border border-[#FFF0A0]"
-                >
-                  <span className="text-base">🕋</span>
-                  <span>{lang === 'bn' ? 'উমরাহ্ প্যাকেজসমূহ' : 'Umrah Packages'}</span>
-                  <ArrowRight className="w-4 h-4 text-emerald-950 font-bold ml-0.5" />
-                </motion.button>
-
-                <motion.button
-                  onClick={() => onNavigate('hajj')}
-                  animate={{
-                    y: [0, -5, 0],
-                  }}
-                  transition={{
-                    duration: 2.2,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: 0.55
-                  }}
-                  whileHover={{ scale: 1.06 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="flex-1 sm:flex-initial justify-center bg-emerald-900/60 hover:bg-emerald-800/80 text-white border-2 border-[#D4AF37] px-6 sm:px-8 py-3.5 rounded-full font-black text-xs sm:text-sm backdrop-blur-md shadow-[0_4px_16px_rgba(0,0,0,0.4)] hover:shadow-[0_6px_20px_rgba(212,175,55,0.35)] transition-all flex items-center gap-2.5 cursor-pointer"
-                >
-                  <span className="text-base">🕌</span>
-                  <span>{lang === 'bn' ? 'পবিত্র হজ্ব ২০২৭' : 'Holy Hajj 2027'}</span>
-                  <span className="inline-block w-2 h-2 rounded-full bg-[#D4AF37] animate-ping ml-1" />
-                </motion.button>
-              </div>
-
-              {/* Quran & Hadith Scrolling Marquee Ticker */}
-              <div className="pt-1">
-                <HajjHadithMarquee lang={lang} />
-              </div>
+              {/* Right Column - Dynamic Hajj Announcement Card (5 cols) */}
+              {config.showHajjAnnouncementCard !== false && (
+                <div className="lg:col-span-5">
+                  <HajjAnnouncementCard
+                    lang={lang}
+                    onOpenBookingModal={onOpenBookingModal}
+                    config={config}
+                  />
+                </div>
+              )}
 
             </div>
-
-            {/* Right Column - Dynamic Hajj Announcement Card (5 cols) */}
-            <div className="lg:col-span-5">
-              <HajjAnnouncementCard
-                lang={lang}
-                onOpenBookingModal={onOpenBookingModal}
-              />
-            </div>
-
           </div>
-        </div>
 
-        {/* Multi-Layered Natural Surging Ocean & Aqua Water Wave Bottom Divider */}
-        <div className="absolute bottom-0 left-0 right-0 overflow-hidden leading-none z-10 pointer-events-none h-28 sm:h-36 lg:h-44">
-          
-          {/* Floating Crystal Water Droplets & Bubbles */}
-          <div className="absolute inset-0 z-20 pointer-events-none overflow-hidden">
-            <style>{`
-              @keyframes waterBubbleRise1 {
-                0% { transform: translate(10vw, 100%) scale(0.6); opacity: 0; }
-                40% { opacity: 0.9; }
-                100% { transform: translate(14vw, -30px) scale(1.3); opacity: 0; }
-              }
-              @keyframes waterBubbleRise2 {
-                0% { transform: translate(30vw, 100%) scale(0.8); opacity: 0; }
-                50% { opacity: 0.95; }
-                100% { transform: translate(27vw, -35px) scale(1.4); opacity: 0; }
-              }
-              @keyframes waterBubbleRise3 {
-                0% { transform: translate(55vw, 100%) scale(0.5); opacity: 0; }
-                45% { opacity: 0.85; }
-                100% { transform: translate(58vw, -25px) scale(1.2); opacity: 0; }
-              }
-              @keyframes waterBubbleRise4 {
-                0% { transform: translate(75vw, 100%) scale(0.7); opacity: 0; }
-                50% { opacity: 0.9; }
-                100% { transform: translate(72vw, -40px) scale(1.45); opacity: 0; }
-              }
-              @keyframes waterBubbleRise5 {
-                0% { transform: translate(90vw, 100%) scale(0.6); opacity: 0; }
-                40% { opacity: 0.8; }
-                100% { transform: translate(93vw, -30px) scale(1.25); opacity: 0; }
-              }
-
-              /* Realistic High-Amplitude Surging & Undulating Water Wave Physics */
-              @keyframes waveSurgeDeep {
-                0% { transform: translate3d(0, 0, 0) scaleY(1); }
-                25% { transform: translate3d(-12.5%, -8px, 0) scaleY(1.2); }
-                50% { transform: translate3d(-25%, 6px, 0) scaleY(0.88); }
-                75% { transform: translate3d(-37.5%, -10px, 0) scaleY(1.25); }
-                100% { transform: translate3d(-50%, 0, 0) scaleY(1); }
-              }
-
-              @keyframes waveSurgeMid {
-                0% { transform: translate3d(-50%, 0, 0) scaleY(1.15); }
-                30% { transform: translate3d(-35%, 8px, 0) scaleY(0.85); }
-                70% { transform: translate3d(-15%, -12px, 0) scaleY(1.3); }
-                100% { transform: translate3d(0, 0, 0) scaleY(1.15); }
-              }
-
-              @keyframes waveSurgeRipple {
-                0% { transform: translate3d(0, 0, 0) scaleY(0.9); }
-                40% { transform: translate3d(-20%, -14px, 0) scaleY(1.35); }
-                80% { transform: translate3d(-40%, 7px, 0) scaleY(0.85); }
-                100% { transform: translate3d(-50%, 0, 0) scaleY(0.9); }
-              }
-
-              @keyframes waveSurgeSwell {
-                0% { transform: translate3d(-50%, 0, 0) scaleY(1); }
-                50% { transform: translate3d(-25%, -10px, 0) scaleY(1.25); }
-                100% { transform: translate3d(0, 0, 0) scaleY(1); }
-              }
-
-              @keyframes waveSurgeFront {
-                0% { transform: translate3d(0, 0, 0) scaleY(1); }
-                35% { transform: translate3d(-17.5%, -9px, 0) scaleY(1.22); }
-                70% { transform: translate3d(-35%, 6px, 0) scaleY(0.9); }
-                100% { transform: translate3d(-50%, 0, 0) scaleY(1); }
-              }
-
-              .water-bubble-1 { animation: waterBubbleRise1 5.5s ease-in-out infinite; }
-              .water-bubble-2 { animation: waterBubbleRise2 7.5s ease-in-out infinite 1.2s; }
-              .water-bubble-3 { animation: waterBubbleRise3 6.0s ease-in-out infinite 0.6s; }
-              .water-bubble-4 { animation: waterBubbleRise4 8.2s ease-in-out infinite 2.0s; }
-              .water-bubble-5 { animation: waterBubbleRise5 6.8s ease-in-out infinite 3.1s; }
-
-              .water-wave-layer-1 { animation: waveSurgeDeep 20s ease-in-out infinite; }
-              .water-wave-layer-2 { animation: waveSurgeMid 15s ease-in-out infinite; }
-              .water-wave-layer-3 { animation: waveSurgeRipple 12s ease-in-out infinite; }
-              .water-wave-layer-4 { animation: waveSurgeSwell 9s ease-in-out infinite; }
-              .water-wave-layer-5 { animation: waveSurgeFront 8s ease-in-out infinite; }
-              .water-wave-layer-crest { animation: waveSurgeFront 8s ease-in-out infinite; }
-            `}</style>
+          {/* Multi-Layered Natural Surging Ocean & Aqua Water Wave Bottom Divider */}
+          <div className="absolute bottom-0 left-0 right-0 overflow-hidden leading-none z-10 pointer-events-none h-28 sm:h-36 lg:h-44">
             
-            {/* Luminous Aqua-Blue Water Bubbles */}
-            <div className="water-bubble-1 absolute bottom-0 w-2.5 h-2.5 rounded-full bg-cyan-300/80 shadow-[0_0_8px_#38bdf8] border border-white/60" />
-            <div className="water-bubble-2 absolute bottom-0 w-3.5 h-3.5 rounded-full bg-sky-200/70 shadow-[0_0_10px_#7dd3fc] border border-cyan-100" />
-            <div className="water-bubble-3 absolute bottom-0 w-2 h-2 rounded-full bg-blue-300/75 shadow-[0_0_6px_#60a5fa]" />
-            <div className="water-bubble-4 absolute bottom-0 w-4 h-4 rounded-full bg-cyan-200/60 shadow-[0_0_12px_#38bdf8] border border-white/80" />
-            <div className="water-bubble-5 absolute bottom-0 w-2.5 h-2.5 rounded-full bg-sky-300/80 shadow-[0_0_8px_#0ea5e9]" />
+            {/* Floating Crystal Water Droplets & Bubbles */}
+            <div className="absolute inset-0 z-20 pointer-events-none overflow-hidden">
+              <style>{`
+                @keyframes waterBubbleRise1 {
+                  0% { transform: translate(10vw, 100%) scale(0.6); opacity: 0; }
+                  40% { opacity: 0.9; }
+                  100% { transform: translate(14vw, -30px) scale(1.3); opacity: 0; }
+                }
+                @keyframes waterBubbleRise2 {
+                  0% { transform: translate(30vw, 100%) scale(0.8); opacity: 0; }
+                  50% { opacity: 0.95; }
+                  100% { transform: translate(27vw, -35px) scale(1.4); opacity: 0; }
+                }
+                @keyframes waterBubbleRise3 {
+                  0% { transform: translate(55vw, 100%) scale(0.5); opacity: 0; }
+                  45% { opacity: 0.85; }
+                  100% { transform: translate(58vw, -25px) scale(1.2); opacity: 0; }
+                }
+                @keyframes waterBubbleRise4 {
+                  0% { transform: translate(75vw, 100%) scale(0.7); opacity: 0; }
+                  50% { opacity: 0.9; }
+                  100% { transform: translate(72vw, -40px) scale(1.45); opacity: 0; }
+                }
+                @keyframes waterBubbleRise5 {
+                  0% { transform: translate(90vw, 100%) scale(0.6); opacity: 0; }
+                  40% { opacity: 0.8; }
+                  100% { transform: translate(93vw, -30px) scale(1.25); opacity: 0; }
+                }
+
+                @keyframes waveSurgeDeep {
+                  0% { transform: translate3d(0, 0, 0) scaleY(1); }
+                  25% { transform: translate3d(-12.5%, -8px, 0) scaleY(1.2); }
+                  50% { transform: translate3d(-25%, 6px, 0) scaleY(0.88); }
+                  75% { transform: translate3d(-37.5%, -10px, 0) scaleY(1.25); }
+                  100% { transform: translate3d(-50%, 0, 0) scaleY(1); }
+                }
+
+                @keyframes waveSurgeMid {
+                  0% { transform: translate3d(-50%, 0, 0) scaleY(1.15); }
+                  30% { transform: translate3d(-35%, 8px, 0) scaleY(0.85); }
+                  70% { transform: translate3d(-15%, -12px, 0) scaleY(1.3); }
+                  100% { transform: translate3d(0, 0, 0) scaleY(1.15); }
+                }
+
+                @keyframes waveSurgeRipple {
+                  0% { transform: translate3d(0, 0, 0) scaleY(0.9); }
+                  40% { transform: translate3d(-20%, -14px, 0) scaleY(1.35); }
+                  80% { transform: translate3d(-40%, 7px, 0) scaleY(0.85); }
+                  100% { transform: translate3d(-50%, 0, 0) scaleY(0.9); }
+                }
+
+                @keyframes waveSurgeSwell {
+                  0% { transform: translate3d(-50%, 0, 0) scaleY(1); }
+                  50% { transform: translate3d(-25%, -10px, 0) scaleY(1.25); }
+                  100% { transform: translate3d(0, 0, 0) scaleY(1); }
+                }
+
+                @keyframes waveSurgeFront {
+                  0% { transform: translate3d(0, 0, 0) scaleY(1); }
+                  35% { transform: translate3d(-17.5%, -9px, 0) scaleY(1.22); }
+                  70% { transform: translate3d(-35%, 6px, 0) scaleY(0.9); }
+                  100% { transform: translate3d(-50%, 0, 0) scaleY(1); }
+                }
+
+                .water-bubble-1 { animation: waterBubbleRise1 5.5s ease-in-out infinite; }
+                .water-bubble-2 { animation: waterBubbleRise2 7.5s ease-in-out infinite 1.2s; }
+                .water-bubble-3 { animation: waterBubbleRise3 6.0s ease-in-out infinite 0.6s; }
+                .water-bubble-4 { animation: waterBubbleRise4 8.2s ease-in-out infinite 2.0s; }
+                .water-bubble-5 { animation: waterBubbleRise5 6.8s ease-in-out infinite 3.1s; }
+
+                .water-wave-layer-1 { animation: waveSurgeDeep 20s ease-in-out infinite; }
+                .water-wave-layer-2 { animation: waveSurgeMid 15s ease-in-out infinite; }
+                .water-wave-layer-3 { animation: waveSurgeRipple 12s ease-in-out infinite; }
+                .water-wave-layer-4 { animation: waveSurgeSwell 9s ease-in-out infinite; }
+                .water-wave-layer-5 { animation: waveSurgeFront 8s ease-in-out infinite; }
+                .water-wave-layer-crest { animation: waveSurgeFront 8s ease-in-out infinite; }
+              `}</style>
+              
+              <div className="water-bubble-1 absolute bottom-0 w-2.5 h-2.5 rounded-full bg-cyan-300/80 shadow-[0_0_8px_#38bdf8] border border-white/60" />
+              <div className="water-bubble-2 absolute bottom-0 w-3.5 h-3.5 rounded-full bg-sky-200/70 shadow-[0_0_10px_#7dd3fc] border border-cyan-100" />
+              <div className="water-bubble-3 absolute bottom-0 w-2 h-2 rounded-full bg-blue-300/75 shadow-[0_0_6px_#60a5fa]" />
+              <div className="water-bubble-4 absolute bottom-0 w-4 h-4 rounded-full bg-cyan-200/60 shadow-[0_0_12px_#38bdf8] border border-white/80" />
+              <div className="water-bubble-5 absolute bottom-0 w-2.5 h-2.5 rounded-full bg-sky-300/80 shadow-[0_0_8px_#0ea5e9]" />
+            </div>
+
+            {/* SVG Wave Canvas with 5 Layers */}
+            <div className="relative w-full h-full">
+              <svg 
+                className="absolute bottom-0 left-0 w-[200%] h-full block"
+                viewBox="0 0 2880 150" 
+                preserveAspectRatio="none"
+              >
+                <defs>
+                  <linearGradient id="deepOceanGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stopColor="#0284c7" stopOpacity="0.65" />
+                    <stop offset="60%" stopColor="#0369a1" stopOpacity="0.85" />
+                    <stop offset="100%" stopColor="#075985" stopOpacity="0.95" />
+                  </linearGradient>
+
+                  <linearGradient id="midAquaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.55" />
+                    <stop offset="50%" stopColor="#0284c7" stopOpacity="0.7" />
+                    <stop offset="100%" stopColor="#0369a1" stopOpacity="0.85" />
+                  </linearGradient>
+
+                  <linearGradient id="softSkyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stopColor="#7dd3fc" stopOpacity="0.5" />
+                    <stop offset="60%" stopColor="#38bdf8" stopOpacity="0.65" />
+                    <stop offset="100%" stopColor="#0284c7" stopOpacity="0.8" />
+                  </linearGradient>
+
+                  <linearGradient id="translucentWaveGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stopColor="#bae6fd" stopOpacity="0.45" />
+                    <stop offset="50%" stopColor="#7dd3fc" stopOpacity="0.6" />
+                    <stop offset="100%" stopColor="#38bdf8" stopOpacity="0.75" />
+                  </linearGradient>
+
+                  <linearGradient id="frontWaterGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stopColor="#e0f2fe" stopOpacity="0.65" />
+                    <stop offset="35%" stopColor="#bae6fd" stopOpacity="0.8" />
+                    <stop offset="70%" stopColor="#dbeafe" stopOpacity="0.92" />
+                    <stop offset="100%" stopColor="#FAF8F5" stopOpacity="1" />
+                  </linearGradient>
+
+                  <linearGradient id="waterCrestGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#0284c7" stopOpacity="0.4" />
+                    <stop offset="25%" stopColor="#38bdf8" stopOpacity="0.95" />
+                    <stop offset="50%" stopColor="#ffffff" stopOpacity="1" />
+                    <stop offset="75%" stopColor="#38bdf8" stopOpacity="0.95" />
+                    <stop offset="100%" stopColor="#0284c7" stopOpacity="0.4" />
+                  </linearGradient>
+                </defs>
+
+                <path 
+                  className="water-wave-layer-1"
+                  fill="url(#deepOceanGrad)"
+                  d="M 0,60 C 260,110 520,10 780,65 C 1040,115 1240,20 1440,60 C 1700,110 1960,10 2220,65 C 2480,115 2680,20 2880,60 L 2880,150 L 0,150 Z"
+                />
+
+                <path 
+                  className="water-wave-layer-2"
+                  fill="url(#midAquaGrad)"
+                  d="M 0,45 C 300,105 600,-5 900,55 C 1150,110 1320,15 1440,45 C 1740,105 2040,-5 2340,55 C 2590,110 2760,15 2880,45 L 2880,150 L 0,150 Z"
+                />
+
+                <path 
+                  className="water-wave-layer-3"
+                  fill="url(#softSkyGrad)"
+                  d="M 0,52 C 240,8 480,95 720,40 C 980,-2 1220,90 1440,52 C 1680,8 1920,95 2160,40 C 2420,-2 2660,90 2880,52 L 2880,150 L 0,150 Z"
+                />
+
+                <path 
+                  className="water-wave-layer-4"
+                  fill="url(#translucentWaveGrad)"
+                  d="M 0,35 C 320,90 640,-10 960,48 C 1200,98 1350,10 1440,35 C 1760,90 2080,-10 2400,48 C 2640,98 2790,10 2880,35 L 2880,150 L 0,150 Z"
+                />
+
+                <path 
+                  className="water-wave-layer-5"
+                  fill="url(#frontWaterGrad)"
+                  d="M 0,42 C 280,0 560,92 860,32 C 1120,-8 1320,78 1440,42 C 1720,0 2000,92 2300,32 C 2560,-8 2760,78 2880,42 L 2880,150 L 0,150 Z"
+                />
+
+                <path 
+                  className="water-wave-layer-crest"
+                  fill="none"
+                  stroke="url(#waterCrestGrad)"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                  d="M 0,42 C 280,0 560,92 860,32 C 1120,-8 1320,78 1440,42 C 1720,0 2000,92 2300,32 C 2560,-8 2760,78 2880,42"
+                />
+              </svg>
+            </div>
+
           </div>
-
-          {/* SVG Wave Canvas with 5 Layers + Dynamic Crest Highlight */}
-          <div className="relative w-full h-full">
-            <svg 
-              className="absolute bottom-0 left-0 w-[200%] h-full block"
-              viewBox="0 0 2880 150" 
-              preserveAspectRatio="none"
-            >
-              <defs>
-                {/* Natural Translucent Cyan & Ocean Blue Water Gradients */}
-                <linearGradient id="deepOceanGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stopColor="#0284c7" stopOpacity="0.65" />
-                  <stop offset="60%" stopColor="#0369a1" stopOpacity="0.85" />
-                  <stop offset="100%" stopColor="#075985" stopOpacity="0.95" />
-                </linearGradient>
-
-                <linearGradient id="midAquaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.55" />
-                  <stop offset="50%" stopColor="#0284c7" stopOpacity="0.7" />
-                  <stop offset="100%" stopColor="#0369a1" stopOpacity="0.85" />
-                </linearGradient>
-
-                <linearGradient id="softSkyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stopColor="#7dd3fc" stopOpacity="0.5" />
-                  <stop offset="60%" stopColor="#38bdf8" stopOpacity="0.65" />
-                  <stop offset="100%" stopColor="#0284c7" stopOpacity="0.8" />
-                </linearGradient>
-
-                <linearGradient id="translucentWaveGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stopColor="#bae6fd" stopOpacity="0.45" />
-                  <stop offset="50%" stopColor="#7dd3fc" stopOpacity="0.6" />
-                  <stop offset="100%" stopColor="#38bdf8" stopOpacity="0.75" />
-                </linearGradient>
-
-                {/* Front Wave: Soft Water Cyan Gradient blending gently into the page base */}
-                <linearGradient id="frontWaterGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stopColor="#e0f2fe" stopOpacity="0.65" />
-                  <stop offset="35%" stopColor="#bae6fd" stopOpacity="0.8" />
-                  <stop offset="70%" stopColor="#dbeafe" stopOpacity="0.92" />
-                  <stop offset="100%" stopColor="#FAF8F5" stopOpacity="1" />
-                </linearGradient>
-
-                {/* Shimmering Aqua Water Crest Gradient */}
-                <linearGradient id="waterCrestGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#0284c7" stopOpacity="0.4" />
-                  <stop offset="25%" stopColor="#38bdf8" stopOpacity="0.95" />
-                  <stop offset="50%" stopColor="#ffffff" stopOpacity="1" />
-                  <stop offset="75%" stopColor="#38bdf8" stopOpacity="0.95" />
-                  <stop offset="100%" stopColor="#0284c7" stopOpacity="0.4" />
-                </linearGradient>
-              </defs>
-
-              {/* Layer 1: Deep Ocean Rolling Swell (High amplitude crests: 15 to 95) */}
-              <path 
-                className="water-wave-layer-1"
-                fill="url(#deepOceanGrad)"
-                d="M 0,60 C 260,110 520,10 780,65 C 1040,115 1240,20 1440,60 C 1700,110 1960,10 2220,65 C 2480,115 2680,20 2880,60 L 2880,150 L 0,150 Z"
-              />
-
-              {/* Layer 2: Mid Aqua Marine Rolling Wave (Counter Swell: 20 to 105) */}
-              <path 
-                className="water-wave-layer-2"
-                fill="url(#midAquaGrad)"
-                d="M 0,45 C 300,105 600,-5 900,55 C 1150,110 1320,15 1440,45 C 1740,105 2040,-5 2340,55 C 2590,110 2760,15 2880,45 L 2880,150 L 0,150 Z"
-              />
-
-              {/* Layer 3: Added Wave 1 - Soft Azure Sky Blue Ripple Wave (Surging crests: 12 to 85) */}
-              <path 
-                className="water-wave-layer-3"
-                fill="url(#softSkyGrad)"
-                d="M 0,52 C 240,8 480,95 720,40 C 980,-2 1220,90 1440,52 C 1680,8 1920,95 2160,40 C 2420,-2 2660,90 2880,52 L 2880,150 L 0,150 Z"
-              />
-
-              {/* Layer 4: Added Wave 2 - Crystal Translucent Water Swell (Dynamic rolling) */}
-              <path 
-                className="water-wave-layer-4"
-                fill="url(#translucentWaveGrad)"
-                d="M 0,35 C 320,90 640,-10 960,48 C 1200,98 1350,10 1440,35 C 1760,90 2080,-10 2400,48 C 2640,98 2790,10 2880,35 L 2880,150 L 0,150 Z"
-              />
-
-              {/* Layer 5: Main Foreground Surface Wave (Natural water gradient transitioning gently to #FAF8F5) */}
-              <path 
-                className="water-wave-layer-5"
-                fill="url(#frontWaterGrad)"
-                d="M 0,42 C 280,0 560,92 860,32 C 1120,-8 1320,78 1440,42 C 1720,0 2000,92 2300,32 C 2560,-8 2760,78 2880,42 L 2880,150 L 0,150 Z"
-              />
-
-              {/* Layer 6: Crystal Cyan-White Water Reflection Crest Line */}
-              <path 
-                className="water-wave-layer-crest"
-                fill="none"
-                stroke="url(#waterCrestGrad)"
-                strokeWidth="3"
-                strokeLinecap="round"
-                d="M 0,42 C 280,0 560,92 860,32 C 1120,-8 1320,78 1440,42 C 1720,0 2000,92 2300,32 C 2560,-8 2760,78 2880,42"
-              />
-            </svg>
-          </div>
-
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* 2. IMPORTANT AGENCY INFORMATION (একটু জেনে নিন...) */}
-      <section className="max-w-5xl mx-auto px-4 sm:px-6 pt-2">
-        <div className="text-center mb-5">
-          <span className="text-xs font-bold text-[#B38712] uppercase tracking-wider block font-sans">
-            Important Guidance
-          </span>
-          <h2 className="text-2xl sm:text-3xl font-black text-[#0D472B]">
-            {lang === 'bn' ? 'একটু জেনে নিন...' : 'Key Information for Pilgrims'}
-          </h2>
-        </div>
-
-        <div className="relative bg-gradient-to-br from-rose-50/80 via-[#FAF4EC] to-emerald-50/80 p-6 sm:p-10 rounded-3xl border border-rose-200/80 shadow-md overflow-hidden text-slate-800 space-y-4">
-          
-          <p className="text-xs sm:text-sm text-slate-700 leading-relaxed text-justify font-medium">
-            {lang === 'bn' ? (
-              <>
-                যাঁরা পবিত্র উমরাহ্ ও হজ্ব পালন করতে চান, আমরা সরাসরি বাংলাদেশ সরকার ও সৌদি আরব ধর্ম মন্ত্রণালয়ের নিয়ম মেনে স্বচ্ছতার সাথে সেবা প্রদান করি। বিশেষত ঢাকা, কুমিল্লা, সিলেট ও চট্টগ্রামসহ সারা দেশের সম্মানিত হাজীদের এয়ার টিকিট, ভিসা প্রসেসিং এবং হারামের নিকটবর্তী থ্রি-স্টার / ফাইভ-স্টার হোটেল সুবিধা নিশ্চিত করা হয়।
-              </>
-            ) : (
-              <>
-                For pilgrims intending to perform Holy Umrah or Hajj, we strictly adhere to the guidelines of the Ministry of Religious Affairs Bangladesh and Saudi Arabia. We ensure seamless air tickets, visa processing, and guaranteed 3-star/5-star hotels near Haram.
-              </>
-            )}
-          </p>
-
-          <div className="bg-white/90 p-4.5 rounded-2xl border border-rose-200/60 space-y-2 text-xs font-semibold text-slate-800 shadow-2xs">
-            <p className="font-bold text-[#0D472B] text-sm flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-[#D4AF37]" />
-              <span>{lang === 'bn' ? 'গুরত্বপূর্ণ যে বিষয়গুলো খেয়াল রাখবেন:' : 'Key Prerequisites:'}</span>
-            </p>
-            <ul className="list-disc list-inside space-y-1.5 text-slate-700 pl-1">
-              <li>{lang === 'bn' ? 'পাসপোর্টের মেয়াদ ন্যূনতম ৬ মাস অবশিষ্ট থাকতে হবে।' : 'Passport must have at least 6 months validity.'}</li>
-              <li>{lang === 'bn' ? 'অভিজ্ঞ মোয়াল্লেম দ্বারা উমরাহের তাওয়াফ ও সাঈ হাতে-কলমে প্রশিক্ষণ দেওয়া হয়।' : 'Hands-on Tawaf and Sa’i training provided by experienced Moallem.'}</li>
-              <li>{lang === 'bn' ? 'মক্কা ও মদিনায় ৩ বেলা দেশীয় সুস্বাদু খাবার অন্তর্ভুক্ত প্যাকেজের ব্যবস্থা রয়েছে।' : 'Delicious 3-time Bengali meals included in standard packages.'}</li>
-            </ul>
+      {config.showImportantInfoSection !== false && (
+        <section className="max-w-5xl mx-auto px-4 sm:px-6 pt-2">
+          <div className="text-center mb-5">
+            <span className="text-xs font-bold text-[#B38712] uppercase tracking-wider block font-sans">
+              {isBn ? (config.importantTaglineBn || 'Important Guidance') : (config.importantTaglineEn || 'Important Guidance')}
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-black text-[#0D472B]">
+              {isBn ? (config.importantTitleBn || 'একটু জেনে নিন...') : (config.importantTitleEn || 'Key Information for Pilgrims')}
+            </h2>
           </div>
 
-          <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-2 opacity-70">
-              <div className="w-4 h-4 rotate-45 border-2 border-rose-400 bg-rose-200/50" />
-              <div className="w-4 h-4 rotate-45 border-2 border-[#D4AF37] bg-amber-200/50 -ml-1.5" />
-              <div className="w-4 h-4 rotate-45 border-2 border-emerald-500 bg-emerald-200/50 -ml-1.5" />
+          <div className="relative bg-gradient-to-br from-rose-50/80 via-[#FAF4EC] to-emerald-50/80 p-6 sm:p-10 rounded-3xl border border-rose-200/80 shadow-md overflow-hidden text-slate-800 space-y-4">
+            
+            <p className="text-xs sm:text-sm text-slate-700 leading-relaxed text-justify font-medium">
+              {isBn ? (
+                config.importantDescBn || 'যাঁরা পবিত্র উমরাহ্ ও হজ্ব পালন করতে চান, আমরা সরাসরি বাংলাদেশ সরকার ও সৌদি আরব ধর্ম মন্ত্রণালয়ের নিয়ম মেনে স্বচ্ছতার সাথে সেবা প্রদান করি। বিশেষত ঢাকা, কুমিল্লা, সিলেট ও চট্টগ্রামসহ সারা দেশের সম্মানিত হাজীদের এয়ার টিকিট, ভিসা প্রসেসিং এবং হারামের নিকটবর্তী থ্রি-স্টার / ফাইভ-স্টার হোটেল সুবিধা নিশ্চিত করা হয়।'
+              ) : (
+                config.importantDescEn || 'For pilgrims intending to perform Holy Umrah or Hajj, we strictly adhere to the guidelines of the Ministry of Religious Affairs Bangladesh and Saudi Arabia. We ensure seamless air tickets, visa processing, and guaranteed 3-star/5-star hotels near Haram.'
+              )}
+            </p>
+
+            <div className="bg-white/90 p-4.5 rounded-2xl border border-rose-200/60 space-y-2 text-xs font-semibold text-slate-800 shadow-2xs">
+              <p className="font-bold text-[#0D472B] text-sm flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-[#D4AF37]" />
+                <span>{isBn ? (config.importantBoxTitleBn || 'গুরত্বপূর্ণ যে বিষয়গুলো খেয়াল রাখবেন:') : (config.importantBoxTitleEn || 'Key Prerequisites:')}</span>
+              </p>
+              <ul className="list-disc list-inside space-y-1.5 text-slate-700 pl-1">
+                {(isBn 
+                  ? (config.importantBoxPointsBn && config.importantBoxPointsBn.length > 0 ? config.importantBoxPointsBn : initialHomePageConfig.importantBoxPointsBn)
+                  : (config.importantBoxPointsEn && config.importantBoxPointsEn.length > 0 ? config.importantBoxPointsEn : initialHomePageConfig.importantBoxPointsEn)
+                ).map((pt, idx) => (
+                  <li key={idx}>{pt}</li>
+                ))}
+              </ul>
             </div>
 
-            <button
-              onClick={() => onOpenBookingModal(
-                lang === 'bn' ? 'হজ্ব ও উমরাহ্ সেবা' : 'Hajj & Umrah Service',
-                lang === 'bn' ? 'পবিত্র উমরাহ্ ও হজ্ব সরাসরি পরামর্শ ও বুকিং তথ্য' : 'Holy Umrah & Hajj Direct Booking & Guidance'
-              )}
-              className="inline-flex items-center gap-2 bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white font-extrabold px-7 py-2.5 rounded-full text-xs sm:text-sm shadow-md hover:shadow-lg transition-all transform hover:scale-105"
-            >
-              <span>{lang === 'bn' ? 'বিস্তারিত জানতে যোগাযোগ করুন' : 'Contact for More Details'}</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
-            <div className="hidden sm:block w-10" />
-          </div>
+            <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div className="flex items-center gap-2 opacity-70">
+                <div className="w-4 h-4 rotate-45 border-2 border-rose-400 bg-rose-200/50" />
+                <div className="w-4 h-4 rotate-45 border-2 border-[#D4AF37] bg-amber-200/50 -ml-1.5" />
+                <div className="w-4 h-4 rotate-45 border-2 border-emerald-500 bg-emerald-200/50 -ml-1.5" />
+              </div>
 
-        </div>
-      </section>
+              <button
+                onClick={() => onOpenBookingModal(
+                  isBn ? 'হজ্ব ও উমরাহ্ সেবা' : 'Hajj & Umrah Service',
+                  isBn ? 'পবিত্র উমরাহ্ ও হজ্ব সরাসরি পরামর্শ ও বুকিং তথ্য' : 'Holy Umrah & Hajj Direct Booking & Guidance'
+                )}
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-500 hover:to-rose-500 text-white font-extrabold px-7 py-2.5 rounded-full text-xs sm:text-sm shadow-md hover:shadow-lg transition-all transform hover:scale-105"
+              >
+                <span>{isBn ? (config.importantBtnTextBn || 'বিস্তারিত জানতে যোগাযোগ করুন') : (config.importantBtnTextEn || 'Contact for More Details')}</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+              <div className="hidden sm:block w-10" />
+            </div>
+
+          </div>
+        </section>
+      )}
 
       {/* 3. MAJOR SERVICES (৪ টি প্রধান সার্ভিস) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 pt-4">
-        <div className="text-center max-w-2xl mx-auto space-y-2 mb-8">
-          <span className="text-xs font-extrabold text-[#B38712] uppercase tracking-wider block font-sans">
-            Our Core Services
-          </span>
-          <h2 className="text-2xl sm:text-3xl font-black text-[#0D472B]">
-            {lang === 'bn' ? 'আমাদের প্রধান সেবাসমূহ' : 'Our Major Services'}
-          </h2>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          
-          {/* Service Card 1: Umrah */}
-          <div className="bg-white rounded-3xl p-6 border border-slate-200 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1">
-            <div className="space-y-3">
-              <div className="w-14 h-14 bg-emerald-50 rounded-2xl flex items-center justify-center text-3xl border border-emerald-200 shadow-2xs group-hover:bg-[#0D472B] group-hover:text-white transition-colors">
-                🕋
-              </div>
-              <h3 className="text-lg font-bold text-[#0D472B]">
-                {getTranslation(lang, 'navUmrah')}
-              </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                {lang === 'bn'
-                  ? 'শরীয়তসম্মত ও সুশৃঙ্খল উমরাহ্ সফরের জন্য বিভিন্ন ক্যাটাগরির বাজেট ও প্রিমিয়াম প্যাকেজ।'
-                  : 'Shariah-compliant and disciplined Umrah packages for pilgrims.'
-                }
-              </p>
-            </div>
-            <button
-              onClick={() => onNavigate('umrah')}
-              className="mt-6 w-full bg-[#FAF8F5] group-hover:bg-[#0D472B] text-[#0D472B] group-hover:text-white py-2.5 rounded-full text-xs font-bold transition-all border border-emerald-200 flex items-center justify-center gap-1.5 shadow-2xs"
-            >
-              <span>{getTranslation(lang, 'viewDetails')}</span>
-              <ChevronRight className="w-4 h-4 text-[#D4AF37]" />
-            </button>
+      {config.showServicesSection !== false && (
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 pt-4">
+          <div className="text-center max-w-2xl mx-auto space-y-2 mb-8">
+            <span className="text-xs font-extrabold text-[#B38712] uppercase tracking-wider block font-sans">
+              {isBn ? (config.servicesTaglineBn || 'Our Core Services') : (config.servicesTaglineEn || 'Our Core Services')}
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-black text-[#0D472B]">
+              {isBn ? (config.servicesTitleBn || 'আমাদের প্রধান সেবাসমূহ') : (config.servicesTitleEn || 'Our Major Services')}
+            </h2>
           </div>
 
-          {/* Service Card 2: Hajj */}
-          <div className="bg-white rounded-3xl p-6 border border-slate-200 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1">
-            <div className="space-y-3">
-              <div className="w-14 h-14 bg-emerald-50 rounded-2xl flex items-center justify-center text-3xl border border-emerald-200 shadow-2xs group-hover:bg-[#0D472B] group-hover:text-white transition-colors">
-                🕌
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {(config.servicesList && config.servicesList.length > 0 ? config.servicesList : initialHomePageConfig.servicesList).map((srv) => (
+              <div key={srv.id} className="bg-white rounded-3xl p-6 border border-slate-200 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1">
+                <div className="space-y-3">
+                  <div className="w-14 h-14 bg-emerald-50 rounded-2xl flex items-center justify-center text-3xl border border-emerald-200 shadow-2xs group-hover:bg-[#0D472B] group-hover:text-white transition-colors">
+                    {srv.emoji || '🕋'}
+                  </div>
+                  <h3 className="text-lg font-bold text-[#0D472B]">
+                    {isBn ? srv.titleBn : srv.titleEn}
+                  </h3>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    {isBn ? srv.descBn : srv.descEn}
+                  </p>
+                </div>
+                <button
+                  onClick={() => onNavigate(srv.pageId || 'umrah')}
+                  className="mt-6 w-full bg-[#FAF8F5] group-hover:bg-[#0D472B] text-[#0D472B] group-hover:text-white py-2.5 rounded-full text-xs font-bold transition-all border border-emerald-200 flex items-center justify-center gap-1.5 shadow-2xs"
+                >
+                  <span>{isBn ? (srv.btnTextBn || 'বিস্তারিত দেখুন') : (srv.btnTextEn || 'View Details')}</span>
+                  <ChevronRight className="w-4 h-4 text-[#D4AF37]" />
+                </button>
               </div>
-              <h3 className="text-lg font-bold text-[#0D472B]">
-                {getTranslation(lang, 'navHajj')}
-              </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                {lang === 'bn'
-                  ? '২০২৭ সালের পবিত্র হজ্ব্বসহ দীর্ঘ ৪০ দিন ও সংক্ষিপ্ত মেয়াদী প্যাকেজ সুবিধা।'
-                  : 'Long & short duration Holy Hajj 2027 packages.'
-                }
-              </p>
-            </div>
-            <button
-              onClick={() => onNavigate('hajj')}
-              className="mt-6 w-full bg-[#FAF8F5] group-hover:bg-[#0D472B] text-[#0D472B] group-hover:text-white py-2.5 rounded-full text-xs font-bold transition-all border border-emerald-200 flex items-center justify-center gap-1.5 shadow-2xs"
-            >
-              <span>{getTranslation(lang, 'viewDetails')}</span>
-              <ChevronRight className="w-4 h-4 text-[#D4AF37]" />
-            </button>
+            ))}
           </div>
-
-          {/* Service Card 3: Air Tickets */}
-          <div className="bg-white rounded-3xl p-6 border border-slate-200 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1">
-            <div className="space-y-3">
-              <div className="w-14 h-14 bg-emerald-50 rounded-2xl flex items-center justify-center text-3xl border border-emerald-200 shadow-2xs group-hover:bg-[#0D472B] group-hover:text-white transition-colors">
-                ✈
-              </div>
-              <h3 className="text-lg font-bold text-[#0D472B]">
-                {getTranslation(lang, 'navAirTickets')}
-              </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                {lang === 'bn'
-                  ? 'সৌদিয়া, বিমান বাংলাদেশসহ দেশী-বিদেশী সকল এয়ারলাইন্সের টিকিট বুকিং।'
-                  : 'Domestic & International flight bookings at best rates.'
-                }
-              </p>
-            </div>
-            <button
-              onClick={() => onNavigate('air-tickets')}
-              className="mt-6 w-full bg-[#FAF8F5] group-hover:bg-[#0D472B] text-[#0D472B] group-hover:text-white py-2.5 rounded-full text-xs font-bold transition-all border border-emerald-200 flex items-center justify-center gap-1.5 shadow-2xs"
-            >
-              <span>{getTranslation(lang, 'viewDetails')}</span>
-              <ChevronRight className="w-4 h-4 text-[#D4AF37]" />
-            </button>
-          </div>
-
-          {/* Service Card 4: Tours & Visas */}
-          <div className="bg-white rounded-3xl p-6 border border-slate-200 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1">
-            <div className="space-y-3">
-              <div className="w-14 h-14 bg-emerald-50 rounded-2xl flex items-center justify-center text-3xl border border-emerald-200 shadow-2xs group-hover:bg-[#0D472B] group-hover:text-white transition-colors">
-                🌍
-              </div>
-              <h3 className="text-lg font-bold text-[#0D472B]">
-                {getTranslation(lang, 'navToursVisas')}
-              </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                {lang === 'bn'
-                  ? 'থাইল্যান্ড, মালয়েশিয়া, দুবাই ও তুরস্ক ট্যুর প্যাকেজ এবং দ্রুত ই-ভিসা।'
-                  : 'International tour packages and fast e-visa processing.'
-                }
-              </p>
-            </div>
-            <button
-              onClick={() => onNavigate('tours-visas')}
-              className="mt-6 w-full bg-[#FAF8F5] group-hover:bg-[#0D472B] text-[#0D472B] group-hover:text-white py-2.5 rounded-full text-xs font-bold transition-all border border-emerald-200 flex items-center justify-center gap-1.5 shadow-2xs"
-            >
-              <span>{getTranslation(lang, 'viewDetails')}</span>
-              <ChevronRight className="w-4 h-4 text-[#D4AF37]" />
-            </button>
-          </div>
-
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* 4. FEATURED UMRAH & HAJJ PACKAGES SHOWCASE */}
-      <section className="bg-emerald-950/5 py-12 border-y border-emerald-900/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
-            <div>
-              <span className="text-xs font-bold text-[#B38712] uppercase tracking-wider block font-sans">
-                Featured Packages
-              </span>
-              <h2 className="text-2xl sm:text-3xl font-black text-[#0D472B]">
-                {lang === 'bn' ? 'আমাদের বিশেষ আকর্ষণীয় প্যাকেজসমূহ' : 'Featured Umrah & Hajj Packages'}
-              </h2>
+      {config.showFeaturedPackagesSection !== false && (
+        <section className="bg-emerald-950/5 py-12 border-y border-emerald-900/10">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+              <div>
+                <span className="text-xs font-bold text-[#B38712] uppercase tracking-wider block font-sans">
+                  {isBn ? (config.featuredTaglineBn || 'Featured Packages') : (config.featuredTaglineEn || 'Featured Packages')}
+                </span>
+                <h2 className="text-2xl sm:text-3xl font-black text-[#0D472B]">
+                  {isBn ? (config.featuredTitleBn || 'আমাদের বিশেষ আকর্ষণীয় প্যাকেজসমূহ') : (config.featuredTitleEn || 'Featured Umrah & Hajj Packages')}
+                </h2>
+              </div>
+
+              {/* Category Filter Pills */}
+              <div className="flex items-center gap-2 bg-white p-1 rounded-full border border-slate-200 shadow-2xs text-xs font-bold">
+                <button
+                  onClick={() => setPackageCategory('all')}
+                  className={`px-4 py-1.5 rounded-full transition-all ${
+                    packageCategory === 'all' ? 'bg-[#0D472B] text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'
+                  }`}
+                >
+                  {isBn ? (config.featuredFilterAllBn || 'সব') : (config.featuredFilterAllEn || 'All')}
+                </button>
+                <button
+                  onClick={() => setPackageCategory('umrah')}
+                  className={`px-4 py-1.5 rounded-full transition-all ${
+                    packageCategory === 'umrah' ? 'bg-[#0D472B] text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'
+                  }`}
+                >
+                  {isBn ? (config.featuredFilterUmrahBn || 'উমরাহ্') : (config.featuredFilterUmrahEn || 'Umrah')}
+                </button>
+                <button
+                  onClick={() => setPackageCategory('hajj')}
+                  className={`px-4 py-1.5 rounded-full transition-all ${
+                    packageCategory === 'hajj' ? 'bg-[#0D472B] text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'
+                  }`}
+                >
+                  {isBn ? (config.featuredFilterHajjBn || 'হজ্ব') : (config.featuredFilterHajjEn || 'Hajj')}
+                </button>
+              </div>
             </div>
 
-            {/* Category Filter Pills */}
-            <div className="flex items-center gap-2 bg-white p-1 rounded-full border border-slate-200 shadow-2xs text-xs font-bold">
-              <button
-                onClick={() => setPackageCategory('all')}
-                className={`px-4 py-1.5 rounded-full transition-all ${
-                  packageCategory === 'all' ? 'bg-[#0D472B] text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'
-                }`}
-              >
-                {lang === 'bn' ? 'সব' : 'All'}
-              </button>
-              <button
-                onClick={() => setPackageCategory('umrah')}
-                className={`px-4 py-1.5 rounded-full transition-all ${
-                  packageCategory === 'umrah' ? 'bg-[#0D472B] text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'
-                }`}
-              >
-                {lang === 'bn' ? 'উমরাহ্' : 'Umrah'}
-              </button>
-              <button
-                onClick={() => setPackageCategory('hajj')}
-                className={`px-4 py-1.5 rounded-full transition-all ${
-                  packageCategory === 'hajj' ? 'bg-[#0D472B] text-white shadow-sm' : 'text-slate-600 hover:text-slate-900'
-                }`}
-              >
-                {lang === 'bn' ? 'হজ্ব' : 'Hajj'}
-              </button>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {packageCategory === 'hajj' ? (
-              (hajjPackages && hajjPackages.length > 0 ? hajjPackages : hajjPackage ? [hajjPackage] : []).map((pkg) => {
-                const adapted = adaptHajjPackage(pkg);
-                return (
-                  <PackageCard
-                    key={pkg.id}
-                    lang={lang}
-                    pkg={adapted}
-                    onViewDetails={(item) => setSelectedDetailPackage(item)}
-                  />
-                );
-              })
-            ) : packageCategory === 'umrah' ? (
-              umrahPackages.slice(0, 3).map((pkg) => {
-                const adapted = adaptUmrahPackage(pkg);
-                return (
-                  <PackageCard
-                    key={pkg.id}
-                    lang={lang}
-                    pkg={adapted}
-                    onViewDetails={(item) => setSelectedDetailPackage(item)}
-                  />
-                );
-              })
-            ) : (
-              <>
-                {umrahPackages.slice(0, 2).map((pkg) => {
-                  const adapted = adaptUmrahPackage(pkg);
-                  return (
-                    <PackageCard
-                      key={pkg.id}
-                      lang={lang}
-                      pkg={adapted}
-                      onViewDetails={(item) => setSelectedDetailPackage(item)}
-                    />
-                  );
-                })}
-                {(hajjPackages && hajjPackages.length > 0 ? hajjPackages.slice(0, 1) : hajjPackage ? [hajjPackage] : []).map((pkg) => {
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {packageCategory === 'hajj' ? (
+                (hajjPackages && hajjPackages.length > 0 ? hajjPackages : hajjPackage ? [hajjPackage] : []).map((pkg) => {
                   const adapted = adaptHajjPackage(pkg);
                   return (
                     <PackageCard
@@ -718,180 +603,187 @@ export const HomePage: React.FC<HomePageProps> = ({
                       onViewDetails={(item) => setSelectedDetailPackage(item)}
                     />
                   );
-                })}
-              </>
-            )}
-          </div>
+                })
+              ) : packageCategory === 'umrah' ? (
+                umrahPackages.slice(0, 3).map((pkg) => {
+                  const adapted = adaptUmrahPackage(pkg);
+                  return (
+                    <PackageCard
+                      key={pkg.id}
+                      lang={lang}
+                      pkg={adapted}
+                      onViewDetails={(item) => setSelectedDetailPackage(item)}
+                    />
+                  );
+                })
+              ) : (
+                <>
+                  {umrahPackages.slice(0, 2).map((pkg) => {
+                    const adapted = adaptUmrahPackage(pkg);
+                    return (
+                      <PackageCard
+                        key={pkg.id}
+                        lang={lang}
+                        pkg={adapted}
+                        onViewDetails={(item) => setSelectedDetailPackage(item)}
+                      />
+                    );
+                  })}
+                  {(hajjPackages && hajjPackages.length > 0 ? hajjPackages.slice(0, 1) : hajjPackage ? [hajjPackage] : []).map((pkg) => {
+                    const adapted = adaptHajjPackage(pkg);
+                    return (
+                      <PackageCard
+                        key={pkg.id}
+                        lang={lang}
+                        pkg={adapted}
+                        onViewDetails={(item) => setSelectedDetailPackage(item)}
+                      />
+                    );
+                  })}
+                </>
+              )}
+            </div>
 
-          <div className="text-center pt-8">
-            <button
-              onClick={() => onNavigate('umrah')}
-              className="inline-flex items-center gap-2 bg-white text-[#0D472B] border-2 border-[#0D472B] hover:bg-[#0D472B] hover:text-white px-8 py-3 rounded-full text-xs sm:text-sm font-bold shadow-sm transition-all"
-            >
-              <span>{lang === 'bn' ? 'সকল প্যাকেজ একসাথে দেখুন' : 'Explore All Travel Packages'}</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
+            <div className="text-center pt-8">
+              <button
+                onClick={() => onNavigate('umrah')}
+                className="inline-flex items-center gap-2 bg-white text-[#0D472B] border-2 border-[#0D472B] hover:bg-[#0D472B] hover:text-white px-8 py-3 rounded-full text-xs sm:text-sm font-bold shadow-sm transition-all"
+              >
+                <span>{isBn ? (config.featuredExploreBtnBn || 'সকল প্যাকেজ একসাথে দেখুন') : (config.featuredExploreBtnEn || 'Explore All Travel Packages')}</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* 5. ACCORDION FAQ & GUIDES ("আরও দেখুন") */}
-      <section className="max-w-5xl mx-auto px-4 sm:px-6">
-        <div className="bg-white rounded-3xl border border-slate-200 shadow-md overflow-hidden">
-          <div className="bg-gradient-to-r from-slate-100 via-emerald-50/80 to-slate-100 px-6 py-4 border-b border-slate-200">
-            <h3 className="text-base font-black text-[#0D472B]">
-              {lang === 'bn' ? 'আরও দেখুন & প্রয়োজনীয় নির্দেশিকা' : 'Explore More Guides & Instructions'}
-            </h3>
-          </div>
+      {config.showAccordionSection !== false && (
+        <section className="max-w-5xl mx-auto px-4 sm:px-6">
+          <div className="bg-white rounded-3xl border border-slate-200 shadow-md overflow-hidden">
+            <div className="bg-gradient-to-r from-slate-100 via-emerald-50/80 to-slate-100 px-6 py-4 border-b border-slate-200">
+              <h3 className="text-base font-black text-[#0D472B]">
+                {isBn ? (config.accordionTitleBn || 'আরও দেখুন & প্রয়োজনীয় নির্দেশিকা') : (config.accordionTitleEn || 'Explore More Guides & Instructions')}
+              </h3>
+            </div>
 
-          <div className="divide-y divide-slate-100">
-            {[
-              {
-                titleBn: 'ইতিহাস ও এজেন্সী পরিচিতি (Agency Background & History)',
-                titleEn: 'Agency History & Background',
-                contentBn: 'ওয়ার্ল্ড হেরিটেজ ট্যুর্স অ্যান্ড ট্রাভেলস বিগত দীর্ঘ সময় ধরে সততা ও বিশ্বস্ততার সাথে বাংলাদেশ থেকে উমরাহ্, হজ্ব ও আন্তর্জাতিক ফ্লাইট সেবা প্রদান করে আসছে। আমাদের প্রধান লক্ষ্য হাজীদের সর্বোচ্চ খেদমত প্রদান করা।',
-                contentEn: 'World Heritage Tours & Travels has been faithfully serving pilgrims and travelers from Bangladesh with top-rated flight and pilgrimage packages.'
-              },
-              {
-                titleBn: 'মেডিকেল ও ভ্রমণ নির্দেশিকা (Medical & Travel Rules)',
-                titleEn: 'Medical & Travel Guidelines',
-                contentBn: 'পবিত্র ভূমি মক্কা ও মদিনায় ভ্রমণের পূর্বে প্রয়োজনীয় স্বাস্থ্য পরীক্ষা, ম্যানিনজাইটিস টিকাদান এবং ট্রাভেল ইন্স্যুরেন্স সংক্রান্ত নির্দেশনাবলী আমাদের অফিস থেকে সার্বক্ষণিক প্রদান করা হয়।',
-                contentEn: 'Health checkups, mandatory vaccinations, and travel insurance guidelines are thoroughly managed by our experienced team.'
-              },
-              {
-                titleBn: 'ভ্রমণ নির্দেশিকা ও ভিসা নীতি (Travel Guides & Visas)',
-                titleEn: 'Travel Guides & Visa Policies',
-                contentBn: 'সৌদি উমরাহ ভিসা, দুবাই ই-ভিসা, থাইল্যান্ড ট্যুরিস্ট ভিসা এবং এয়ার টিকিট বুকিংয়ের সঠিক ও সময়োপযোগী তথ্য জানতে আমাদের পান্থপথ অফিসে যোগাযোগ করুন।',
-                contentEn: 'Contact our Panthapath office for Saudi Umrah E-visa, Dubai E-visa, and tourist visa processing.'
-              }
-            ].map((item, idx) => {
-              const isOpen = openAccordion === idx;
-              return (
-                <div key={idx} className="transition-colors">
-                  <button
-                    onClick={() => setOpenAccordion(isOpen ? null : idx)}
-                    className="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-slate-50 transition-colors focus:outline-none"
-                  >
-                    <span className="text-sm font-bold text-slate-800">
-                      {lang === 'bn' ? item.titleBn : item.titleEn}
-                    </span>
-                    <ChevronRight className={`w-4 h-4 text-slate-400 transition-transform ${isOpen ? 'rotate-90 text-[#0D472B]' : ''}`} />
-                  </button>
+            <div className="divide-y divide-slate-100">
+              {(config.accordionItems && config.accordionItems.length > 0 ? config.accordionItems : initialHomePageConfig.accordionItems).map((item, idx) => {
+                const isOpen = openAccordion === idx;
+                return (
+                  <div key={item.id || idx} className="transition-colors">
+                    <button
+                      onClick={() => setOpenAccordion(isOpen ? null : idx)}
+                      className="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-slate-50 transition-colors focus:outline-none"
+                    >
+                      <span className="text-sm font-bold text-slate-800">
+                        {isBn ? item.titleBn : item.titleEn}
+                      </span>
+                      <ChevronRight className={`w-4 h-4 text-slate-400 transition-transform ${isOpen ? 'rotate-90 text-[#0D472B]' : ''}`} />
+                    </button>
 
-                  {isOpen && (
-                    <div className="px-6 pb-4 pt-1 text-xs sm:text-sm text-slate-600 leading-relaxed bg-emerald-50/30 border-t border-emerald-100/50">
-                      {lang === 'bn' ? item.contentBn : item.contentEn}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
+                    {isOpen && (
+                      <div className="px-6 pb-4 pt-1 text-xs sm:text-sm text-slate-600 leading-relaxed bg-emerald-50/30 border-t border-emerald-100/50">
+                        {isBn ? item.contentBn : item.contentEn}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* 6. OUR DISTINCTIVE FEATURES (আমাদের বৈশিষ্ঠ্য) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="bg-gradient-to-br from-[#0D472B] via-[#083620] to-[#03180D] text-white rounded-3xl p-6 sm:p-10 shadow-2xl border-2 border-[#D4AF37] relative overflow-hidden">
-          <div className="text-center max-w-xl mx-auto mb-8 space-y-2">
-            <h2 className="text-2xl sm:text-3xl font-black font-sans">
-              {getTranslation(lang, 'featuresTitle')}
-            </h2>
-            <div className="w-16 h-1 bg-[#D4AF37] mx-auto rounded-full"></div>
-          </div>
+      {config.showFeaturesSection !== false && (
+        <section className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="bg-gradient-to-br from-[#0D472B] via-[#083620] to-[#03180D] text-white rounded-3xl p-6 sm:p-10 shadow-2xl border-2 border-[#D4AF37] relative overflow-hidden">
+            <div className="text-center max-w-xl mx-auto mb-8 space-y-2">
+              <h2 className="text-2xl sm:text-3xl font-black font-sans">
+                {isBn ? (config.featuresTitleBn || 'আমাদের বিশেষ বৈশিষ্ট্যসমূহ') : (config.featuresTitleEn || 'Our Distinctive Features')}
+              </h2>
+              <div className="w-16 h-1 bg-[#D4AF37] mx-auto rounded-full"></div>
+            </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {[
-              getTranslation(lang, 'f1'),
-              getTranslation(lang, 'f2'),
-              getTranslation(lang, 'f3'),
-              getTranslation(lang, 'f4'),
-              getTranslation(lang, 'f5'),
-              getTranslation(lang, 'f6'),
-            ].map((feature, idx) => (
-              <div key={idx} className="bg-white/10 backdrop-blur-md p-4.5 rounded-2xl border border-white/15 flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-[#D4AF37] shrink-0 mt-0.5" />
-                <span className="text-xs sm:text-sm font-bold leading-snug">{feature}</span>
-              </div>
-            ))}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {(isBn 
+                ? (config.featuresListBn && config.featuresListBn.length > 0 ? config.featuresListBn : initialHomePageConfig.featuresListBn)
+                : (config.featuresListEn && config.featuresListEn.length > 0 ? config.featuresListEn : initialHomePageConfig.featuresListEn)
+              ).map((feature, idx) => (
+                <div key={idx} className="bg-white/10 backdrop-blur-md p-4.5 rounded-2xl border border-white/15 flex items-start gap-3">
+                  <CheckCircle2 className="w-5 h-5 text-[#D4AF37] shrink-0 mt-0.5" />
+                  <span className="text-xs sm:text-sm font-bold leading-snug">{feature}</span>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* 7. GOVERNMENT ACCREDITATIONS & LICENSES */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-md">
-          <div className="text-center mb-6">
-            <span className="text-xs font-bold text-[#B38712] uppercase tracking-wider block font-sans">
-              Govt. Approved & Licensed Agency
-            </span>
-            <h3 className="text-xl font-black text-[#0D472B]">
-              {lang === 'bn' ? 'আমাদের সরকারি স্বীকৃতি ও আইএটিএ সদস্যপদ' : 'Our Government Approvals & Licenses'}
-            </h3>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-            <div className="p-4.5 rounded-2xl bg-emerald-50/80 border border-emerald-200/80 space-y-1">
-              <ShieldCheck className="w-8 h-8 text-[#0D472B] mx-auto" />
-              <p className="text-xs font-bold text-[#0D472B]">{lang === 'bn' ? 'বাংলাদেশ ধর্ম মন্ত্রণালয়' : 'Ministry of Religious Affairs'}</p>
-              <p className="text-[11px] text-slate-600 font-sans font-semibold">Approved Hajj Agency</p>
+      {config.showAccreditationsSection !== false && (
+        <section className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-md">
+            <div className="text-center mb-6">
+              <span className="text-xs font-bold text-[#B38712] uppercase tracking-wider block font-sans">
+                {isBn ? (config.accreditationsTaglineBn || 'Govt. Approved & Licensed Agency') : (config.accreditationsTaglineEn || 'Govt. Approved & Licensed Agency')}
+              </span>
+              <h3 className="text-xl font-black text-[#0D472B]">
+                {isBn ? (config.accreditationsTitleBn || 'আমাদের সরকারি স্বীকৃতি ও আইএটিএ সদস্যপদ') : (config.accreditationsTitleEn || 'Our Government Approvals & Licenses')}
+              </h3>
             </div>
 
-            <div className="p-4.5 rounded-2xl bg-amber-50/80 border border-amber-200/80 space-y-1">
-              <Award className="w-8 h-8 text-[#D4AF37] mx-auto" />
-              <p className="text-xs font-bold text-amber-900">{lang === 'bn' ? 'সৌদি উমরাহ্ মন্ত্রণালয়' : 'Saudi Ministry of Hajj & Umrah'}</p>
-              <p className="text-[11px] text-slate-600 font-sans font-semibold">Registered Saudi Partner</p>
-            </div>
-
-            <div className="p-4.5 rounded-2xl bg-emerald-50/80 border border-emerald-200/80 space-y-1">
-              <Building2 className="w-8 h-8 text-[#0D472B] mx-auto" />
-              <p className="text-xs font-bold text-[#0D472B]">{lang === 'bn' ? 'সিভিল এভিয়েশন কর্তৃপক্ষ' : 'Civil Aviation Authority (CAAB)'}</p>
-              <p className="text-[11px] text-slate-600 font-sans font-semibold">Licensed Ticket Agent</p>
-            </div>
-
-            <div className="p-4.5 rounded-2xl bg-rose-50/80 border border-rose-200/80 space-y-1">
-              <Plane className="w-8 h-8 text-rose-700 mx-auto" />
-              <p className="text-xs font-bold text-rose-950">{lang === 'bn' ? 'আইএটিএ মেম্বার' : 'IATA Member'}</p>
-              <p className="text-[11px] text-slate-600 font-sans font-semibold">Global Airline Access</p>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+              {(config.accreditationsList && config.accreditationsList.length > 0 ? config.accreditationsList : initialHomePageConfig.accreditationsList).map((acc) => (
+                <div key={acc.id} className="p-4.5 rounded-2xl bg-emerald-50/80 border border-emerald-200/80 space-y-1">
+                  {renderAccreditationIcon(acc.iconName)}
+                  <p className="text-xs font-bold text-[#0D472B]">{isBn ? acc.titleBn : acc.titleEn}</p>
+                  <p className="text-[11px] text-slate-600 font-sans font-semibold">{isBn ? acc.subBn : acc.subEn}</p>
+                </div>
+              ))}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* 8. DIRECT CONTACT BANNER */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="bg-[#052917] text-white rounded-3xl p-6 sm:p-8 border-2 border-[#D4AF37] shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="space-y-2 text-center md:text-left">
-            <h3 className="text-xl sm:text-2xl font-black font-sans">
-              {lang === 'bn' ? 'যেকোনো জিজ্ঞাসায় সরাসরি আমাদের হটলাইনে যোগাযোগ করুন' : 'Call Us Directly for Any Flight or Package Query'}
-            </h3>
-            <p className="text-xs sm:text-sm text-emerald-200">
-              {lang === 'bn' ? 'প্রধান অফিস: পশ্চিম পান্থপথ জামে-মসজিদের বিপরীত পাশে, ঢাকা-১২১৫' : 'Panthapath Main Office, Dhaka-1215'}
-            </p>
-          </div>
+      {config.showContactBannerSection !== false && (
+        <section className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="bg-[#052917] text-white rounded-3xl p-6 sm:p-8 border-2 border-[#D4AF37] shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="space-y-2 text-center md:text-left">
+              <h3 className="text-xl sm:text-2xl font-black font-sans">
+                {isBn ? (config.contactBannerTitleBn || 'যেকোনো জিজ্ঞাসায় সরাসরি আমাদের হটলাইনে যোগাযোগ করুন') : (config.contactBannerTitleEn || 'Call Us Directly for Any Flight or Package Query')}
+              </h3>
+              <p className="text-xs sm:text-sm text-emerald-200">
+                {isBn ? (config.contactBannerSubtitleBn || 'প্রধান অফিস: পশ্চিম পান্থপথ জামে-মসজিদের বিপরীত পাশে, ঢাকা-১২১৫') : (config.contactBannerSubtitleEn || 'Panthapath Main Office, Dhaka-1215')}
+              </p>
+            </div>
 
-          <div className="flex flex-wrap items-center gap-3">
-            <a
-              href={`tel:${agencyInfo.hotline}`}
-              className="bg-[#D4AF37] text-emerald-950 px-7 py-3.5 rounded-full font-extrabold text-base sm:text-lg shadow-md hover:bg-[#C59B27] transition-all flex items-center gap-2.5"
-            >
-              <Phone className="w-5 h-5 text-emerald-950 shrink-0" />
-              <span>{lang === 'bn' ? toBengaliDigits(agencyInfo.hotline) : agencyInfo.hotline}</span>
-              <span className="text-sm sm:text-base font-bold text-emerald-900 font-bengali">
-                ({lang === 'bn' ? 'হোয়াটসঅ্যাপ & ইমো' : 'WhatsApp & Imo'})
-              </span>
-            </a>
+            <div className="flex flex-wrap items-center gap-3">
+              <a
+                href={`tel:${config.contactBannerHotline || agencyInfo.hotline}`}
+                className="bg-[#D4AF37] text-emerald-950 px-7 py-3.5 rounded-full font-extrabold text-base sm:text-lg shadow-md hover:bg-[#C59B27] transition-all flex items-center gap-2.5"
+              >
+                <Phone className="w-5 h-5 text-emerald-950 shrink-0" />
+                <span>{isBn ? toBengaliDigits(config.contactBannerHotline || agencyInfo.hotline) : (config.contactBannerHotline || agencyInfo.hotline)}</span>
+                <span className="text-sm sm:text-base font-bold text-emerald-900 font-bengali">
+                  ({isBn ? (config.contactBannerHotlineLabelBn || 'হোয়াটসঅ্যাপ & ইমো') : (config.contactBannerHotlineLabelEn || 'WhatsApp & Imo')})
+                </span>
+              </a>
 
-            <button
-              onClick={() => onNavigate('contact')}
-              className="bg-emerald-900 border border-emerald-700 text-white px-7 py-3.5 rounded-full font-bold text-base hover:bg-emerald-800 transition-all"
-            >
-              {getTranslation(lang, 'contactCTA')}
-            </button>
+              <button
+                onClick={() => onNavigate('contact')}
+                className="bg-emerald-900 border border-emerald-700 text-white px-7 py-3.5 rounded-full font-bold text-base hover:bg-emerald-800 transition-all cursor-pointer"
+              >
+                {isBn ? (config.contactBannerCtaBtnBn || getTranslation(lang, 'contactCTA')) : (config.contactBannerCtaBtnEn || 'Contact Us')}
+              </button>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
     </div>
   );
 };
+

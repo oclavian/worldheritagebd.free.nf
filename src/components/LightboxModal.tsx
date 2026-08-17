@@ -1,6 +1,6 @@
-import React from 'react';
-import { X } from 'lucide-react';
-import { Language, GalleryItem } from '../types';
+import React from "react";
+import { X } from "lucide-react";
+import { Language, GalleryItem } from "../types";
 
 interface LightboxModalProps {
   item: GalleryItem | null;
@@ -8,7 +8,11 @@ interface LightboxModalProps {
   lang: Language;
 }
 
-export const LightboxModal: React.FC<LightboxModalProps> = ({ item, onClose, lang }) => {
+export const LightboxModal: React.FC<LightboxModalProps> = ({
+  item,
+  onClose,
+  lang,
+}) => {
   if (!item) return null;
 
   return (
@@ -25,7 +29,7 @@ export const LightboxModal: React.FC<LightboxModalProps> = ({ item, onClose, lan
         <div className="aspect-video w-full bg-black flex items-center justify-center">
           <img
             src={item.imageUrl}
-            alt={lang === 'bn' ? item.titleBn : item.titleEn}
+            alt={lang === "bn" ? item.titleBn : item.titleEn}
             className="w-full h-full object-contain"
             referrerPolicy="no-referrer"
           />
@@ -33,11 +37,11 @@ export const LightboxModal: React.FC<LightboxModalProps> = ({ item, onClose, lan
 
         <div className="p-4 sm:p-5 bg-gradient-to-t from-slate-950 to-slate-900 text-white">
           <h3 className="text-base sm:text-lg font-bold text-[#D4AF37]">
-            {lang === 'bn' ? item.titleBn : item.titleEn}
+            {lang === "bn" ? item.titleBn : item.titleEn}
           </h3>
           {(item.captionBn || item.captionEn) && (
             <p className="text-xs sm:text-sm text-slate-300 mt-1">
-              {lang === 'bn' ? item.captionBn : item.captionEn}
+              {lang === "bn" ? item.captionBn : item.captionEn}
             </p>
           )}
         </div>

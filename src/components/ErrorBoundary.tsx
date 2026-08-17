@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 interface Props {
   children: React.ReactNode;
@@ -19,7 +19,7 @@ export class ErrorBoundary extends React.Component<Props, State> {
   }
 
   public componentDidCatch(error: React.ErrorInfo) {
-    console.error('Uncaught error in React tree:', error);
+    console.error("Uncaught error in React tree:", error);
   }
 
   public render() {
@@ -34,7 +34,8 @@ export class ErrorBoundary extends React.Component<Props, State> {
               সিস্টেম পুনরায় লোড করুন
             </h2>
             <p className="text-sm text-slate-600">
-              সাইটটি লোড করতে সাময়িক সমস্যা হয়েছে। নিচের বাটনে ক্লিক করে ওয়েবসাইটটি রিফ্রেশ করুন।
+              সাইটটি লোড করতে সাময়িক সমস্যা হয়েছে। নিচের বাটনে ক্লিক করে
+              ওয়েবসাইটটি রিফ্রেশ করুন।
             </p>
             <button
               onClick={() => {

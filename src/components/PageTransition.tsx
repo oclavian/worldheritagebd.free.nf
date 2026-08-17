@@ -1,13 +1,16 @@
-import React from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { PageId } from '../types';
+import React from "react";
+import { motion, AnimatePresence } from "motion/react";
+import { PageId } from "../types";
 
 interface PageTransitionProps {
   currentPage: PageId;
   children: React.ReactNode;
 }
 
-export const PageTransition: React.FC<PageTransitionProps> = ({ currentPage, children }) => {
+export const PageTransition: React.FC<PageTransitionProps> = ({
+  currentPage,
+  children,
+}) => {
   return (
     <div className="relative min-h-screen w-full overflow-x-hidden">
       <AnimatePresence mode="wait" initial={false}>
@@ -41,4 +44,3 @@ export const PageTransition: React.FC<PageTransitionProps> = ({ currentPage, chi
     </div>
   );
 };
-
