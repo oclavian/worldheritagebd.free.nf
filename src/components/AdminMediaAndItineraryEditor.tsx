@@ -535,7 +535,10 @@ export const MultiImageManager: React.FC<MultiImageManagerProps> = ({
             </h4>
             <p className="text-[11px] text-gray-500">
               আপনি এখানে ১ থেকে ২০-৩০+ ছবি যুক্ত করতে পারেন। প্রথম ছবিটি কভার
-              ফটো হিসেবে প্রদর্শিত হবে।
+              ফটো হিসেবে প্রদর্শিত হবে। <br />
+              <strong className="text-red-500">
+                সতর্কতা: এখান থেকে ছবি যোগ বা মুছে ফেলার পর অবশ্যই নিচে থাকা "সেভ করুন" বাটনে ক্লিক করতে হবে।
+              </strong>
             </p>
           </div>
         </div>

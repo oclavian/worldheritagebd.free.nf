@@ -2447,7 +2447,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({
                       className="flex items-center gap-1.5 px-4 py-2.5 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 rounded-xl text-xs font-bold transition-colors cursor-pointer"
                     >
                       <Trash2 className="w-4 h-4" />
-                      <span>প্যাকেজটি ডিলিট করুন</span>
+                      <span>সম্পূর্ণ প্যাকেজটি ডিলিট করুন</span>
                     </button>
                   )}
                 </div>
@@ -2921,7 +2921,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({
                       className="flex items-center gap-1.5 px-4 py-2.5 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 rounded-xl text-xs font-bold transition-colors cursor-pointer"
                     >
                       <Trash2 className="w-4 h-4" />
-                      <span>প্যাকেজটি ডিলিট করুন</span>
+                      <span>সম্পূর্ণ প্যাকেজটি ডিলিট করুন</span>
                     </button>
                   )}
                 </div>
@@ -3208,7 +3208,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({
                       className="flex items-center gap-1.5 px-4 py-2.5 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 rounded-xl text-xs font-bold transition-colors cursor-pointer"
                     >
                       <Trash2 className="w-4 h-4" />
-                      <span>প্যাকেজটি ডিলিট করুন</span>
+                      <span>সম্পূর্ণ প্যাকেজটি ডিলিট করুন</span>
                     </button>
                   )}
                 </div>
@@ -3400,7 +3400,7 @@ export const AdminPage: React.FC<AdminPageProps> = ({
                       className="flex items-center gap-1.5 px-4 py-2.5 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 rounded-xl text-xs font-bold transition-colors cursor-pointer"
                     >
                       <Trash2 className="w-4 h-4" />
-                      <span>পোস্টটি ডিলিট করুন</span>
+                      <span>সম্পূর্ণ পোস্টটি ডিলিট করুন</span>
                     </button>
                   )}
                 </div>

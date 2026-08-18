@@ -137,7 +137,6 @@ export const PackageDetailView: React.FC<PackageDetailViewProps> = ({
   }, [pkg.id, pkg.serviceType]);
 
   const isBn = lang === "bn";
-  const isHajj = pkg.serviceType === "Hajj";
   const title = isBn ? pkg.titleBn : pkg.titleEn;
   const duration = isBn ? pkg.durationBn : pkg.durationEn;
   const location = isBn ? pkg.locationBn : pkg.locationEn;
@@ -145,47 +144,18 @@ export const PackageDetailView: React.FC<PackageDetailViewProps> = ({
   const suitableFor = isBn ? pkg.suitableForBn : pkg.suitableForEn;
   const groupSize = isBn ? pkg.groupSizeBn : pkg.groupSizeEn;
 
-  // Selected Category filter for Hajj gallery
-  const [selectedCategory, setSelectedCategory] = useState<
-    "all" | "makkah" | "madinah" | "mina" | "arafat" | "muzdalifah"
-  >("all");
-
-  // Filtered gallery images
+  // Filtered gallery images - strictly use what the admin provided
   const currentGalleryImages = useMemo(() => {
-    if (!isHajj) {
-      return pkg.galleryImages && pkg.galleryImages.length > 0
-        ? pkg.galleryImages
-        : [pkg.image];
-    }
-
-    if (selectedCategory === "all") {
-      return ALL_HAJJ_DRIVE_PHOTOS.map((p) => p.url);
-    } else if (selectedCategory === "makkah") {
-      return MAKKAH_DRIVE_IMAGES.map((p) => p.url);
-    } else if (selectedCategory === "madinah") {
-      return MADINAH_DRIVE_IMAGES.map((p) => p.url);
-    } else if (selectedCategory === "mina") {
-      return MINA_DRIVE_IMAGES.map((p) => p.url);
-    } else if (selectedCategory === "arafat") {
-      return ARAFAT_DRIVE_IMAGES.map((p) => p.url);
-    } else if (selectedCategory === "muzdalifah") {
-      return MUZDALIFAH_DRIVE_IMAGES.map((p) => p.url);
-    }
     return pkg.galleryImages && pkg.galleryImages.length > 0
       ? pkg.galleryImages
       : [pkg.image];
-  }, [isHajj, selectedCategory, pkg.galleryImages, pkg.image]);
+  }, [pkg.galleryImages, pkg.image]);
 
   // Active Image State for Gallery
   const [activeImageIndex, setActiveImageIndex] = useState<number>(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState<boolean>(true);
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const thumbnailsRef = useRef<HTMLDivElement>(null);
-
-  // Reset active image index when category changes
-  useEffect(() => {
-    setActiveImageIndex(0);
-  }, [selectedCategory]);
 
   // Auto sliding interval (every 3.5 seconds)
   useEffect(() => {
@@ -315,114 +285,6 @@ export const PackageDetailView: React.FC<PackageDetailViewProps> = ({
         <div className="lg:col-span-8 space-y-8">
           {/* Main Gallery Container */}
           <div className="bg-white p-4 sm:p-5 rounded-3xl border border-slate-200/80 shadow-sm space-y-4">
-            {/* Category Filter Pills (Specifically for Hajj) */}
-            {isHajj && (
-              <div className="space-y-2 border-b border-slate-100 pb-3">
-                <div className="flex items-center justify-between gap-2">
-                  <div className="flex items-center gap-1.5 text-xs font-black text-[#0D472B]">
-                    <MapPin className="w-3.5 h-3.5 text-[#D4AF37]" />
-                    <span>
-                      {isBn
-                        ? "পবিত্র স্থানসমূহ অনুযায়ী ছবি নির্বাচন করুন:"
-                        : "Filter Photos by Holy Site:"}
-                    </span>
-                  </div>
-                  <span className="text-[11px] font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded-full">
-                    {isBn
-                      ? `মোট ${toBengaliDigits(currentGalleryImages.length)}টি ছবি`
-                      : `${currentGalleryImages.length} Photos`}
-                  </span>
-                </div>
-
-                <div className="flex flex-wrap items-center gap-1.5">
-                  <button
-                    onClick={() => setSelectedCategory("all")}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1 ${
-                      selectedCategory === "all"
-                        ? "bg-[#0D472B] text-white shadow-sm ring-1 ring-[#D4AF37]"
-                        : "bg-slate-100 text-slate-700 hover:bg-slate-200"
-                    }`}
-                  >
-                    <span>
-                      {isBn ? `সবগুলো (${toBengaliDigits(38)})` : "All (38)"}
-                    </span>
-                  </button>
-
-                  <button
-                    onClick={() => setSelectedCategory("makkah")}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1 ${
-                      selectedCategory === "makkah"
-                        ? "bg-[#0D472B] text-white shadow-sm ring-1 ring-[#D4AF37]"
-                        : "bg-slate-100 text-slate-700 hover:bg-slate-200"
-                    }`}
-                  >
-                    <span>🕋</span>
-                    <span>
-                      {isBn ? `মক্কা (${toBengaliDigits(10)})` : "Makkah (10)"}
-                    </span>
-                  </button>
-
-                  <button
-                    onClick={() => setSelectedCategory("madinah")}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1 ${
-                      selectedCategory === "madinah"
-                        ? "bg-[#0D472B] text-white shadow-sm ring-1 ring-[#D4AF37]"
-                        : "bg-slate-100 text-slate-700 hover:bg-slate-200"
-                    }`}
-                  >
-                    <span>🕌</span>
-                    <span>
-                      {isBn ? `মদিনা (${toBengaliDigits(6)})` : "Madinah (6)"}
-                    </span>
-                  </button>
-
-                  <button
-                    onClick={() => setSelectedCategory("mina")}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1 ${
-                      selectedCategory === "mina"
-                        ? "bg-[#0D472B] text-white shadow-sm ring-1 ring-[#D4AF37]"
-                        : "bg-slate-100 text-slate-700 hover:bg-slate-200"
-                    }`}
-                  >
-                    <span>⛺</span>
-                    <span>
-                      {isBn ? `মিনা (${toBengaliDigits(9)})` : "Mina (9)"}
-                    </span>
-                  </button>
-
-                  <button
-                    onClick={() => setSelectedCategory("arafat")}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1 ${
-                      selectedCategory === "arafat"
-                        ? "bg-[#0D472B] text-white shadow-sm ring-1 ring-[#D4AF37]"
-                        : "bg-slate-100 text-slate-700 hover:bg-slate-200"
-                    }`}
-                  >
-                    <span>🌄</span>
-                    <span>
-                      {isBn ? `আরাফাত (${toBengaliDigits(10)})` : "Arafat (10)"}
-                    </span>
-                  </button>
-
-                  <button
-                    onClick={() => setSelectedCategory("muzdalifah")}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1 ${
-                      selectedCategory === "muzdalifah"
-                        ? "bg-[#0D472B] text-white shadow-sm ring-1 ring-[#D4AF37]"
-                        : "bg-slate-100 text-slate-700 hover:bg-slate-200"
-                    }`}
-                  >
-                    <span>🌌</span>
-                    <span>
-                      {isBn
-                        ? `মুজদালিফা (${toBengaliDigits(3)})`
-                        : "Muzdalifah (3)"}
-                    </span>
-                  </button>
-                </div>
-              </div>
-            )}
-
             {/* Active Display Stage with Auto Slide */}
             <div
               className="relative aspect-16/9 rounded-2xl overflow-hidden bg-slate-950 shadow-md group select-none"
