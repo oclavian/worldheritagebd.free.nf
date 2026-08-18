@@ -1,16 +1,16 @@
-export type Language = 'bn' | 'en';
+export type Language = "bn" | "en";
 
-export type PageId = 
-  | 'home'
-  | 'umrah'
-  | 'hajj'
-  | 'air-tickets'
-  | 'tours-visas'
-  | 'gallery'
-  | 'reviews'
-  | 'blog'
-  | 'contact'
-  | 'admin';
+export type PageId =
+  | "home"
+  | "umrah"
+  | "hajj"
+  | "air-tickets"
+  | "tours-visas"
+  | "gallery"
+  | "reviews"
+  | "blog"
+  | "contact"
+  | "admin";
 
 export interface PackageItineraryDay {
   dayNumber: string;
@@ -125,7 +125,7 @@ export interface TourPackage {
   id: string;
   titleBn: string;
   titleEn: string;
-  category: 'domestic' | 'international' | 'group' | 'couple' | 'family';
+  category: "domestic" | "international" | "group" | "couple" | "family";
   countryBn: string;
   countryEn: string;
   durationBn: string;
@@ -167,7 +167,13 @@ export interface BlogPost {
   titleEn: string;
   categoryBn: string;
   categoryEn: string;
-  categoryKey: 'hajj-guide' | 'umrah-guide' | 'travel-tips' | 'visa-info' | 'air-travel' | 'saudi';
+  categoryKey:
+    | "hajj-guide"
+    | "umrah-guide"
+    | "travel-tips"
+    | "visa-info"
+    | "air-travel"
+    | "saudi";
   date: string;
   authorBn: string;
   authorEn: string;
@@ -183,7 +189,7 @@ export interface GalleryItem {
   id: string;
   titleBn: string;
   titleEn: string;
-  category: 'umrah' | 'hajj' | 'tours' | 'office' | 'group';
+  category: "umrah" | "hajj" | "tours" | "office" | "group";
   imageUrl: string;
   galleryImages?: string[];
   captionBn?: string;
@@ -196,12 +202,13 @@ export interface BookingInquiry {
   customerName: string;
   phone: string;
   email: string;
-  serviceType: 'Umrah' | 'Hajj' | 'Air Ticket' | 'Tour & Visa' | 'General Inquiry';
+  serviceType:
+    "Umrah" | "Hajj" | "Air Ticket" | "Tour & Visa" | "General Inquiry";
   packageTitle?: string;
   travelersCount: number;
   expectedDate?: string;
   message?: string;
-  status: 'new' | 'contacted' | 'confirmed' | 'cancelled';
+  status: "new" | "contacted" | "confirmed" | "cancelled";
 }
 
 export interface AgencyInfo {
@@ -255,7 +262,7 @@ export interface HomePageAccordionItem {
 
 export interface HomePageAccreditationItem {
   id: string;
-  iconName: 'ShieldCheck' | 'Award' | 'Building2' | 'Plane';
+  iconName: "ShieldCheck" | "Award" | "Building2" | "Plane";
   titleBn: string;
   titleEn: string;
   subBn: string;
@@ -397,4 +404,3 @@ export interface HomePageConfig {
   contactBannerCtaBtnBn: string;
   contactBannerCtaBtnEn: string;
 }
-
