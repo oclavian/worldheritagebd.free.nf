@@ -1,3 +1,4 @@
+import { compressImageUrl } from "../utils/imageCompressor";
 import React, { useState, useEffect } from "react";
 import {
   Lock,
@@ -777,12 +778,22 @@ export const AdminPage: React.FC<AdminPageProps> = ({
     }
     setIsProcessing(true);
     try {
+      // Compress and backup image
+      let finalImageUrl = editingGallery.imageUrl;
+      if (finalImageUrl && !finalImageUrl.startsWith("data:image")) {
+        try {
+          finalImageUrl = await compressImageUrl(finalImageUrl, 800, 0.7);
+        } catch (imgErr) {
+          console.warn("Could not compress gallery image", imgErr);
+        }
+      }
+
       const galleryData: GalleryItem = {
         id: editingGallery.id || "",
         titleBn: editingGallery.titleBn || "",
         titleEn: editingGallery.titleEn || editingGallery.titleBn,
         category: editingGallery.category || "umrah",
-        imageUrl: editingGallery.imageUrl || "",
+        imageUrl: finalImageUrl || "",
         captionBn: editingGallery.captionBn || "",
         captionEn: editingGallery.captionEn || "",
       };

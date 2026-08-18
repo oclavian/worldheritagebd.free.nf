@@ -70,9 +70,9 @@ export const IslamicPreloader: React.FC<IslamicPreloaderProps> = ({
               initial={{ opacity: 0, y: -15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.1 }}
-              className="mb-6"
+              className="mb-8"
             >
-              <span className="text-xl sm:text-2xl font-serif text-[#D4AF37] tracking-widest drop-shadow-[0_2px_10px_rgba(212,175,55,0.3)]">
+              <span className="text-3xl sm:text-4xl font-serif text-[#D4AF37] tracking-widest drop-shadow-[0_2px_10px_rgba(212,175,55,0.4)]">
                 بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
               </span>
             </motion.div>
@@ -87,22 +87,22 @@ export const IslamicPreloader: React.FC<IslamicPreloaderProps> = ({
                 type: "spring",
                 stiffness: 200,
               }}
-              className="relative mb-6"
+              className="relative mb-8"
             >
               {/* Outer Rotating Golden Geometric Star Aura */}
-              <div className="absolute -inset-4 rounded-full border border-[#D4AF37]/30 border-dashed animate-[spin_12s_linear_infinite] pointer-events-none" />
-              <div className="absolute -inset-2 rounded-full border border-emerald-400/20 pointer-events-none" />
+              <div className="absolute -inset-5 rounded-full border border-[#D4AF37]/40 border-dashed animate-[spin_12s_linear_infinite] pointer-events-none" />
+              <div className="absolute -inset-3 rounded-full border border-emerald-400/30 pointer-events-none" />
 
               {/* Glowing Ambient Halo */}
-              <div className="absolute inset-0 bg-[#D4AF37]/25 rounded-full blur-xl animate-pulse" />
+              <div className="absolute inset-0 bg-[#D4AF37]/30 rounded-full blur-2xl animate-pulse" />
 
               {/* Main Logo Image Frame */}
-              <div className="relative w-28 h-28 sm:w-32 sm:h-32 rounded-full p-1.5 bg-gradient-to-b from-[#D4AF37] via-emerald-700 to-[#D4AF37] shadow-[0_0_35px_rgba(212,175,55,0.4)] flex items-center justify-center">
-                <div className="w-full h-full rounded-full bg-[#031A0F] p-2 flex items-center justify-center overflow-hidden border border-[#D4AF37]/40">
+              <div className="relative w-40 h-40 sm:w-48 sm:h-48 rounded-full p-2 bg-gradient-to-b from-[#D4AF37] via-emerald-700 to-[#D4AF37] shadow-[0_0_45px_rgba(212,175,55,0.5)] flex items-center justify-center">
+                <div className="w-full h-full rounded-full bg-[#031A0F] p-3 flex items-center justify-center overflow-hidden border border-[#D4AF37]/50">
                   <img
                     src={logoImg}
                     alt="World Heritage Tours & Travels"
-                    className="w-full h-full object-contain filter drop-shadow-md"
+                    className="w-full h-full object-contain filter drop-shadow-lg scale-110"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
                       if (!target.dataset.tried) {

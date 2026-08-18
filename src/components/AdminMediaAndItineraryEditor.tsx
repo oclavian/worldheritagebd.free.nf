@@ -396,6 +396,8 @@ export const DEFAULT_TOUR_ITINERARY: PackageItineraryDay[] = [
   },
 ];
 
+import { compressImageUrl } from "../utils/imageCompressor";
+
 // =================== COMPONENT 1: MULTI-IMAGE GALLERY MANAGER ===================
 interface MultiImageManagerProps {
   mainImage: string;
@@ -416,46 +418,74 @@ export const MultiImageManager: React.FC<MultiImageManagerProps> = ({
   const [bulkInput, setBulkInput] = useState("");
   const [showBulkInput, setShowBulkInput] = useState(false);
   const [showPresets, setShowPresets] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   // Combine mainImage and galleryImages for complete list
   const allImages = Array.from(
     new Set([mainImage, ...(galleryImages || [])].filter(Boolean)),
   );
 
-  const handleAddSingleUrl = (e?: React.FormEvent) => {
+  const handleAddSingleUrl = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
     const trimmed = singleUrlInput.trim();
     if (!trimmed) return;
-    if (!allImages.includes(trimmed)) {
-      const updated = [...allImages, trimmed];
-      onChangeGallery(updated);
-      if (!mainImage) {
-        onChangeMainImage(trimmed);
+
+    setIsProcessing(true);
+    try {
+      const processedUrl = await compressImageUrl(trimmed);
+      if (!allImages.includes(processedUrl)) {
+        const updated = [...allImages, processedUrl];
+        onChangeGallery(updated);
+        if (!mainImage) {
+          onChangeMainImage(processedUrl);
+        }
       }
+      setSingleUrlInput("");
+    } catch (err) {
+      console.error("Failed to process image:", err);
+      alert(
+        "ছবি প্রসেস করতে সমস্যা হয়েছে। অনুগ্রহ করে অন্য লিংক চেষ্টা করুন।",
+      );
+    } finally {
+      setIsProcessing(false);
     }
-    setSingleUrlInput("");
   };
 
-  const handleAddBulkUrls = () => {
+  const handleAddBulkUrls = async () => {
     if (!bulkInput.trim()) return;
-    // Split by newlines, commas, or semicolons
     const urls = bulkInput
       .split(/[\n,;]+/)
       .map((u) => u.trim())
-      .filter((u) => u.startsWith("http://") || u.startsWith("https://"));
+      .filter(
+        (u) =>
+          u.startsWith("http://") ||
+          u.startsWith("https://") ||
+          u.startsWith("data:image"),
+      );
 
     if (urls.length === 0) {
       alert("অনুগ্রহ করে সঠিক ইমেজ URL লিংক পেস্ট করুন (https://...)");
       return;
     }
 
-    const merged = Array.from(new Set([...allImages, ...urls]));
-    onChangeGallery(merged);
-    if (!mainImage && merged.length > 0) {
-      onChangeMainImage(merged[0]);
+    setIsProcessing(true);
+    try {
+      const processedUrls = await Promise.all(
+        urls.map((url) => compressImageUrl(url)),
+      );
+      const merged = Array.from(new Set([...allImages, ...processedUrls]));
+      onChangeGallery(merged);
+      if (!mainImage && merged.length > 0) {
+        onChangeMainImage(merged[0]);
+      }
+      setBulkInput("");
+      setShowBulkInput(false);
+    } catch (err) {
+      console.error("Failed to process bulk images:", err);
+      alert("কিছু ছবি প্রসেস করতে সমস্যা হয়েছে।");
+    } finally {
+      setIsProcessing(false);
     }
-    setBulkInput("");
-    setShowBulkInput(false);
   };
 
   const handleSetCover = (url: string) => {
@@ -619,9 +649,10 @@ export const MultiImageManager: React.FC<MultiImageManagerProps> = ({
             <button
               type="button"
               onClick={handleAddBulkUrls}
-              className="bg-[#0D472B] hover:bg-emerald-800 text-[#F3E0A0] text-xs font-black py-1.5 px-4 rounded-xl border border-[#D4AF37] cursor-pointer shadow-xs"
+              disabled={isProcessing}
+              className={`text-[#F3E0A0] text-xs font-black py-1.5 px-4 rounded-xl border border-[#D4AF37] cursor-pointer shadow-xs ${isProcessing ? "bg-emerald-800 opacity-70 cursor-not-allowed" : "bg-[#0D472B] hover:bg-emerald-800"}`}
             >
-              সকল ছবি যোগ করুন
+              {isProcessing ? "প্রসেস হচ্ছে..." : "সকল ছবি যোগ করুন"}
             </button>
           </div>
         </div>
@@ -634,21 +665,29 @@ export const MultiImageManager: React.FC<MultiImageManagerProps> = ({
           value={singleUrlInput}
           onChange={(e) => setSingleUrlInput(e.target.value)}
           onKeyDown={(e) => {
-            if (e.key === "Enter") {
+            if (e.key === "Enter" && !isProcessing) {
               e.preventDefault();
               handleAddSingleUrl();
             }
           }}
+          disabled={isProcessing}
           placeholder="ছবির ওয়েব লিঙ্ক (URL) পেস্ট করুন... (https://...)"
-          className="flex-1 px-3.5 py-2.5 bg-white border border-gray-300 rounded-xl text-xs sm:text-sm outline-none focus:ring-2 focus:ring-emerald-800 font-medium"
+          className="flex-1 px-3.5 py-2.5 bg-white border border-gray-300 rounded-xl text-xs sm:text-sm outline-none focus:ring-2 focus:ring-emerald-800 font-medium disabled:bg-gray-100 disabled:text-gray-400"
         />
         <button
           type="button"
           onClick={handleAddSingleUrl}
-          className="bg-[#0D472B] hover:bg-emerald-800 text-[#F3E0A0] text-xs font-black px-4 py-2.5 rounded-xl border border-[#D4AF37] shadow-xs flex items-center gap-1 cursor-pointer shrink-0"
+          disabled={isProcessing}
+          className={`text-[#F3E0A0] text-xs font-black px-4 py-2.5 rounded-xl border border-[#D4AF37] shadow-xs flex items-center gap-1 cursor-pointer shrink-0 ${isProcessing ? "bg-emerald-800 opacity-70 cursor-not-allowed" : "bg-[#0D472B] hover:bg-emerald-800"}`}
         >
-          <Plus className="w-4 h-4" />
-          <span>ছবি যোগ করুন</span>
+          {isProcessing ? (
+            <span>অপেক্ষা করুন...</span>
+          ) : (
+            <>
+              <Plus className="w-4 h-4" />
+              <span>ছবি যোগ করুন</span>
+            </>
+          )}
         </button>
       </div>
 
